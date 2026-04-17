@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" fill="none">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#0D1222"/>
+        <stop offset="100%" stop-color="#121827"/>
+      </linearGradient>
+      <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+    </defs>
+    <rect width="1400" height="820" rx="30" fill="url(#bg)"/>
+    <text x="70" y="90" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="white">Embodied AI Topic Constellation</text>
+    <text x="70" y="124" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="white" fill-opacity="0.8">A visual map of the major directions curated in this repository</text>
+    <path d="M 700 410 C 535.0 280.0, 535.0 360.0, 370 230" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 700 410 C 850.0 280.0, 850.0 360.0, 1000 230" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 700 410 C 880.0 460.0, 880.0 540.0, 1060 590" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 700 410 C 700.0 255.0, 700.0 335.0, 700 180" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 700 410 C 565.0 470.0, 565.0 550.0, 430 610" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 700 410 C 810.0 485.0, 810.0 565.0, 920 640" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 700 410 C 780.0 425.0, 780.0 505.0, 860 520" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 700 410 C 935.0 370.0, 935.0 450.0, 1170 410" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 370 230 C 455.0 135.0, 455.0 215.0, 540 120" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 370 230 C 310.0 245.0, 310.0 325.0, 250 340" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 430 610 C 345.0 515.0, 345.0 595.0, 260 500" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 1000 230 C 950.0 130.0, 950.0 210.0, 900 110" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 700 180 C 800.0 105.0, 800.0 185.0, 900 110" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 1060 590 C 745.0 560.0, 745.0 640.0, 430 610" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+<path d="M 860 520 C 645.0 525.0, 645.0 605.0, 430 610" stroke="white" stroke-opacity="0.22" stroke-width="3"/>
+
+    <circle cx="700" cy="410" r="85" fill="#7C9CFF" fill-opacity="0.18" stroke="#7C9CFF" stroke-opacity="0.75" stroke-width="2"/>
+<text x="700" y="408" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Embodied</text>
+<text x="700" y="432" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Intelligence</text>
+<circle cx="370" cy="230" r="60" fill="#5ED0C6" fill-opacity="0.18" stroke="#5ED0C6" stroke-opacity="0.75" stroke-width="2"/>
+<text x="370" y="238" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Perception</text>
+<circle cx="1000" cy="230" r="60" fill="#F6A24A" fill-opacity="0.18" stroke="#F6A24A" stroke-opacity="0.75" stroke-width="2"/>
+<text x="1000" y="238" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Language</text>
+<circle cx="1060" cy="590" r="60" fill="#E06C75" fill-opacity="0.18" stroke="#E06C75" stroke-opacity="0.75" stroke-width="2"/>
+<text x="1060" y="598" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Action</text>
+<circle cx="700" cy="180" r="68" fill="#6A8BFF" fill-opacity="0.18" stroke="#6A8BFF" stroke-opacity="0.75" stroke-width="2"/>
+<text x="700" y="178" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">World</text>
+<text x="700" y="202" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Model</text>
+<circle cx="430" cy="610" r="60" fill="#FF8B5E" fill-opacity="0.18" stroke="#FF8B5E" stroke-opacity="0.75" stroke-width="2"/>
+<text x="430" y="618" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Manipulation</text>
+<circle cx="260" cy="500" r="52" fill="#56C2FF" fill-opacity="0.18" stroke="#56C2FF" stroke-opacity="0.75" stroke-width="2"/>
+<text x="260" y="508" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Grasping</text>
+<circle cx="250" cy="340" r="56" fill="#78D26B" fill-opacity="0.18" stroke="#78D26B" stroke-opacity="0.75" stroke-width="2"/>
+<text x="250" y="348" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Affordance</text>
+<circle cx="920" cy="640" r="56" fill="#B08EFF" fill-opacity="0.18" stroke="#B08EFF" stroke-opacity="0.75" stroke-width="2"/>
+<text x="920" y="648" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Navigation</text>
+<circle cx="860" cy="520" r="54" fill="#F2CE5B" fill-opacity="0.18" stroke="#F2CE5B" stroke-opacity="0.75" stroke-width="2"/>
+<text x="860" y="528" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Sim2Real</text>
+<circle cx="1170" cy="410" r="52" fill="#4BC0C8" fill-opacity="0.18" stroke="#4BC0C8" stroke-opacity="0.75" stroke-width="2"/>
+<text x="1170" y="418" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Benchmarks</text>
+<circle cx="540" cy="120" r="56" fill="#5AD1E6" fill-opacity="0.18" stroke="#5AD1E6" stroke-opacity="0.75" stroke-width="2"/>
+<text x="540" y="118" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">3D</text>
+<text x="540" y="142" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Perception</text>
+<circle cx="900" cy="110" r="56" fill="#8FD26E" fill-opacity="0.18" stroke="#8FD26E" stroke-opacity="0.75" stroke-width="2"/>
+<text x="900" y="118" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">Planning</text>
+
+    </svg>

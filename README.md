@@ -1,12 +1,14 @@
 <div align="center">
 
+<img src="assets/figures/hero_overview.svg" alt="Embodied Intelligence Playbook banner" width="100%"/>
+
 # Embodied Intelligence Playbook
 
 **A curated open-source playbook for embodied intelligence**  
-**roadmaps, papers, practical checklists, and reproducible resources**
+**roadmaps, papers, practical checklists, visual maps, and reproducible resources**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Building-blue)]()
+[![Status](https://img.shields.io/badge/Status-V1%20Design%20Edition-4F7DF3)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]()
 
 </div>
@@ -15,145 +17,161 @@
 
 ## What is this?
 
-**Embodied Intelligence Playbook** is a structured, open-source knowledge base for embodied intelligence.
+**Embodied Intelligence Playbook** is a structured research-and-practice atlas for embodied AI.
 
-It is designed not just as a paper list, but as a **research and practice entry point** for students, researchers, and engineers working on embodied AI.
+It is designed to be more than a paper index. The goal is to make the field **navigable**, **buildable**, and **memorable**:
 
-This repository focuses on:
-
-- **topic roadmaps** across major embodied AI subfields
-- **paper collections** organized by topic and top venues
-- **practical checklists** for learning, reproduction, and project building
-- **resources** including datasets, simulators, frameworks, and benchmarks
+- **navigable**, because major directions are organized as readable roadmaps rather than loose bookmarks
+- **buildable**, because each topic is tied to concrete system questions, project paths, and implementation cues
+- **memorable**, because the repository uses visual structure, topic-specific styling, and compact conceptual diagrams
 
 ---
 
-## Why this repo?
+## Why this repository feels different
 
-Many repositories collect papers.  
-This one aims to do something slightly different:
+Many repositories are broad collections. This one tries to become a **designed entry point**.
 
-- organize embodied intelligence by **research direction**
-- connect reading with **implementation and reproduction**
-- provide a clearer path from **beginner → practitioner → researcher**
-- maintain a structure that can grow into a long-term community resource
+It is built around four ideas:
 
-In short, this repo is meant to be a **playbook**, not just a bookmark list.
+1. **Direction before detail**  
+   First understand the shape of a topic, then dive into papers.
+
+2. **Practice before accumulation**  
+   A smaller, better-structured set of materials is more useful than a giant uncurated list.
+
+3. **Visual memory matters**  
+   Readers remember diagrams, pathways, and conceptual landmarks better than raw links.
+
+4. **A repository should feel like a work**  
+   A good first version should already feel intentional, coherent, and worth returning to.
 
 ---
 
-## Who is this for?
+## Visual Field
 
-- students entering embodied AI
-- researchers building a direction map
-- engineers reproducing systems and papers
-- reading groups and labs organizing shared knowledge
+<p align="center">
+  <img src="assets/figures/embodied_wordcloud.svg" alt="Embodied intelligence word cloud" width="92%"/>
+</p>
+
+<p align="center">
+  <img src="assets/figures/topic_constellation.svg" alt="Embodied AI topic constellation" width="92%"/>
+</p>
 
 ---
 
 ## Quick Start
 
-### 1. Start from the big picture
+### Start from the big picture
 - [Overview](docs/roadmap/overview.md)
 
-### 2. Choose a direction
+### Choose a core direction
 - [Vision-Language-Action](docs/roadmap/vla.md)
 - [World Models](docs/roadmap/world_model.md)
 - [Manipulation](docs/roadmap/manipulation.md)
 - [Grasping](docs/roadmap/grasping.md)
 - [Affordance Learning](docs/roadmap/affordance.md)
 
-### 3. Explore practical resources
+### Explore practical resources
 - [Datasets](docs/resources/datasets.md)
 - [Simulators](docs/resources/simulators.md)
 - [Frameworks](docs/resources/frameworks.md)
 
-### 4. Take notes in a consistent way
+### Keep notes in a consistent format
 - [Paper Note Template](docs/templates/paper_note_template.md)
 
 ---
 
-## Topic Map
+## Topic Gallery
 
-| Topic | Focus | Entry |
+| Topic | Core Question | What you will find |
 |---|---|---|
-| Vision-Language-Action | connecting perception, language, and control | [Open](docs/roadmap/vla.md) |
-| World Models | dynamics, prediction, planning, and state abstraction | [Open](docs/roadmap/world_model.md) |
-| Manipulation | interaction, task execution, contact-rich control | [Open](docs/roadmap/manipulation.md) |
-| Grasping | grasp pose generation, task-oriented grasping | [Open](docs/roadmap/grasping.md) |
-| Affordance Learning | actionable regions, functionality, interaction priors | [Open](docs/roadmap/affordance.md) |
+| Vision-Language-Action | How do perception and language become executable action? | model archetypes, grounding problems, control bottlenecks, project paths |
+| World Models | How should an embodied agent represent and predict a changing world? | latent-state thinking, dynamics views, planning bridges, failure modes |
+| Manipulation | How do robots complete tasks under contact and uncertainty? | task structure, interaction loops, control challenges, build-first advice |
+| Grasping | How does a robot choose and verify stable, task-appropriate interaction? | proposal–scoring–execution logic, geometry cues, practical metrics |
+| Affordance Learning | What actions are possible on an object, where, and why? | functional semantics, interaction regions, task grounding, representation choices |
 
 ---
 
-## Paper Collections
+## Repository Design
 
-### By conference
-- [ICRA](docs/paper_lists/by_conference/icra.md)
-- [RSS](docs/paper_lists/by_conference/rss.md)
-- [CoRL](docs/paper_lists/by_conference/corl.md)
+```text
+embodied-intelligence-playbook/
+├── README.md
+├── assets/
+│   └── figures/
+├── docs/
+│   ├── roadmap/
+│   ├── resources/
+│   ├── paper_lists/
+│   └── templates/
+└── .github/
+```
 
-### By topic
-- [World Models](docs/paper_lists/by_topic/world_model.md)
-- [Vision-Language-Action](docs/paper_lists/by_topic/vla.md)
-- [Manipulation](docs/paper_lists/by_topic/manipulation.md)
-
----
-
-## Resources
-
-### Core resources
-- [Datasets](docs/resources/datasets.md)
-- [Simulators](docs/resources/simulators.md)
-- [Frameworks](docs/resources/frameworks.md)
-
-### Documentation templates
-- [Paper Note Template](docs/templates/paper_note_template.md)
+### Design notes
+- `roadmap/` contains the conceptual and strategic pages
+- `resources/` gathers operational material for building and reproducing
+- `paper_lists/` is the future home for venue-based and topic-based reading collections
+- `assets/figures/` stores original visuals created specifically for this repository
 
 ---
 
-## Design Principles
+## Current V1 Focus
 
-This repository follows four principles:
+The first design edition centers on five thematic roadmaps:
 
-1. **Clarity over clutter**  
-   Keep the structure clean and readable.
+- **Vision-Language-Action**
+- **World Models**
+- **Manipulation**
+- **Grasping**
+- **Affordance Learning**
 
-2. **Practice over collection**  
-   Prefer resources that help people build, reproduce, and understand.
-
-3. **Curated over exhaustive**  
-   A smaller but structured collection is more useful than a large but messy list.
-
-4. **Grow with structure**  
-   The repository should remain navigable as it expands.
+This is deliberate. A sharp first version is better than a wide but shallow one.
 
 ---
 
-## Current Status
+## Suggested Reading Path
 
-This repository is currently in **Version 1 building stage**.
+### Path A — new to embodied AI
+1. Read [Overview](docs/roadmap/overview.md)
+2. Pick one roadmap page
+3. Use the page to identify key sub-problems
+4. Start taking notes with the [Paper Note Template](docs/templates/paper_note_template.md)
 
-The first version focuses on:
+### Path B — already building systems
+1. Start from [Manipulation](docs/roadmap/manipulation.md) or [Grasping](docs/roadmap/grasping.md)
+2. Cross-link with [Affordance Learning](docs/roadmap/affordance.md)
+3. Bring in [World Models](docs/roadmap/world_model.md) when planning or prediction becomes the bottleneck
 
-- establishing a clean information architecture
-- building roadmap pages for core embodied AI topics
-- preparing paper list pages by venue and by topic
-- collecting practical resources for learning and reproduction
+### Path C — interested in foundation-model style robotics
+1. Start from [Vision-Language-Action](docs/roadmap/vla.md)
+2. Pair it with [World Models](docs/roadmap/world_model.md)
+3. Track how representation, instruction, and action interface with control and embodiment
 
 ---
 
-## Contribution
+## Principles for Future Growth
 
-Contributions are welcome.
+This repository will grow under these principles:
 
-You can contribute by:
+- **clarity over clutter**
+- **cohesion over noise**
+- **practice over trend-chasing**
+- **curation over exhaustiveness**
+- **structure before scale**
 
-- adding paper summaries
-- improving roadmaps
-- organizing resources
-- fixing broken links
-- adding reproduction notes
-- proposing better structure
+---
+
+## Contributing
+
+This project welcomes high-quality contributions:
+
+- roadmap improvements
+- paper summaries
+- visual topic maps
+- reproduction notes
+- resource curation
+- issue-driven improvements to structure
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
