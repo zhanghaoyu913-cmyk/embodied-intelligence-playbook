@@ -19,3 +19,40 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+# Overview
+
+This section gives a structured overview of embodied intelligence as a research area.
+
+## Scope
+
+Embodied intelligence sits at the intersection of:
+
+- perception
+- action
+- control
+- planning
+- language
+- world modeling
+- physical interaction
+
+## Core Questions
+
+- How should an embodied agent represent the world?
+- How should it connect perception to action?
+- How can it generalize across tasks, objects, and embodiments?
+- How should physical constraints be incorporated?
+- How can simulation knowledge transfer to the real world?
+
+## Main Subfields
+
+- Vision-Language-Action
+- World Models
+- Manipulation
+- Grasping
+- Affordance Learning
+- Navigation
+- 3D Perception
+- Sim2Real
+- Benchmarking and Evaluation
+
+More detailed topic pages will be added progressively.
