@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="250" viewBox="0 0 1400 250" fill="none">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#101726"/>
+        <stop offset="100%" stop-color="#0C1020"/>
+      </linearGradient>
+    </defs>
+    <rect width="1400" height="250" rx="26" fill="url(#bg)"/>
+    <text x="70" y="58" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="white">Manipulation Loop</text>
+    <text x="70" y="84" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="white" fill-opacity="0.75">A compact systems view</text>
+    <path d="M 300 130 L 312 130" stroke="white" stroke-opacity="0.65" stroke-width="3"/>
+<path d="M 302 122 L 312 130 L 302 138" stroke="white" stroke-opacity="0.65" stroke-width="3" fill="none"/>
+<path d="M 560 130 L 572 130" stroke="white" stroke-opacity="0.65" stroke-width="3"/>
+<path d="M 562 122 L 572 130 L 562 138" stroke="white" stroke-opacity="0.65" stroke-width="3" fill="none"/>
+<path d="M 820 130 L 832 130" stroke="white" stroke-opacity="0.65" stroke-width="3"/>
+<path d="M 822 122 L 832 130 L 822 138" stroke="white" stroke-opacity="0.65" stroke-width="3" fill="none"/>
+<path d="M 1080 130 L 1092 130" stroke="white" stroke-opacity="0.65" stroke-width="3"/>
+<path d="M 1082 122 L 1092 130 L 1082 138" stroke="white" stroke-opacity="0.65" stroke-width="3" fill="none"/>
+
+    <rect x="70" y="95" width="220" height="70" rx="22" fill="#FF9A6C" fill-opacity="0.18" stroke="#FF9A6C" stroke-opacity="0.45"/>
+<text x="180.0" y="138" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600" fill="#EAF2FF">Perceive</text>
+<rect x="330" y="95" width="220" height="70" rx="22" fill="#FF6B6B" fill-opacity="0.18" stroke="#FF6B6B" stroke-opacity="0.45"/>
+<text x="440.0" y="138" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600" fill="#EAF2FF">Localize</text>
+<rect x="590" y="95" width="220" height="70" rx="22" fill="#FF9A6C" fill-opacity="0.18" stroke="#FF9A6C" stroke-opacity="0.45"/>
+<text x="700.0" y="138" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600" fill="#EAF2FF">Approach</text>
+<rect x="850" y="95" width="220" height="70" rx="22" fill="#FF6B6B" fill-opacity="0.18" stroke="#FF6B6B" stroke-opacity="0.45"/>
+<text x="960.0" y="138" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600" fill="#EAF2FF">Interact</text>
+<rect x="1110" y="95" width="220" height="70" rx="22" fill="#FF9A6C" fill-opacity="0.18" stroke="#FF9A6C" stroke-opacity="0.45"/>
+<text x="1220.0" y="138" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600" fill="#EAF2FF">Recover</text>
+
+    </svg>
