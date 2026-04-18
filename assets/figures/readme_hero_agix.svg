@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1020"/>
+      <stop offset="42%" stop-color="#131b34"/>
+      <stop offset="100%" stop-color="#070b16"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.24"/>
+      <stop offset="65%" stop-color="#7c3aed" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="cardShadow">
+      <feDropShadow dx="0" dy="14" stdDeviation="24" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1080" cy="450" r="340" fill="url(#glow1)"/>
+  <circle cx="1140" cy="450" r="170" fill="url(#glow2)"/>
+  <g opacity="0.15">
+    <path d="M170 165 C 350 120, 535 140, 680 230" stroke="#7dd3fc" stroke-width="1.5" fill="none"/>
+    <path d="M160 735 C 400 700, 580 740, 830 660" stroke="#8b5cf6" stroke-width="1.4" fill="none"/>
+    <path d="M910 120 C 1100 170, 1280 160, 1450 100" stroke="#7dd3fc" stroke-width="1.2" fill="none"/>
+    <path d="M1020 760 C 1190 710, 1310 700, 1470 790" stroke="#8b5cf6" stroke-width="1.2" fill="none"/>
+  </g>
+  <g opacity="0.22">
+    <circle cx="240" cy="190" r="2" fill="#ffffff"/>
+    <circle cx="290" cy="120" r="1.8" fill="#ffffff"/>
+    <circle cx="480" cy="150" r="1.5" fill="#ffffff"/>
+    <circle cx="720" cy="770" r="2" fill="#ffffff"/>
+    <circle cx="1260" cy="132" r="1.8" fill="#ffffff"/>
+    <circle cx="1420" cy="740" r="2.2" fill="#ffffff"/>
+    <circle cx="1200" cy="690" r="1.5" fill="#ffffff"/>
+  </g>
+
+  <g transform="translate(975 190)">
+    <circle cx="165" cy="255" r="158" fill="none" stroke="url(#line)" stroke-width="2.4" opacity="0.55"/>
+    <circle cx="165" cy="255" r="112" fill="none" stroke="url(#line)" stroke-width="1.8" opacity="0.50"/>
+    <circle cx="165" cy="255" r="68" fill="none" stroke="url(#line)" stroke-width="1.5" opacity="0.45"/>
+    <path d="M165 97 L260 168 L224 280 L106 280 L70 168 Z" fill="none" stroke="url(#line)" stroke-width="2.6" opacity="0.85"/>
+    <path d="M165 143 L217 181 L198 243 L132 243 L113 181 Z" fill="rgba(34,211,238,0.08)" stroke="url(#line)" stroke-width="2" opacity="0.95"/>
+    <circle cx="165" cy="255" r="12" fill="#22d3ee" filter="url(#softGlow)"/>
+    <circle cx="165" cy="97" r="10" fill="#a78bfa" filter="url(#softGlow)"/>
+    <circle cx="260" cy="168" r="9" fill="#22d3ee" filter="url(#softGlow)"/>
+    <circle cx="224" cy="280" r="8" fill="#7dd3fc" filter="url(#softGlow)"/>
+    <circle cx="106" cy="280" r="8" fill="#7dd3fc" filter="url(#softGlow)"/>
+    <circle cx="70" cy="168" r="9" fill="#a78bfa" filter="url(#softGlow)"/>
+    <text x="165" y="270" text-anchor="middle" font-size="58" font-weight="800" fill="white" font-family="DejaVu Sans, Arial">AGI‑X</text>
+    <text x="165" y="315" text-anchor="middle" font-size="16" letter-spacing="4" fill="#dbeafe" font-family="DejaVu Sans, Arial">PERSONAL RESEARCH MARK</text>
+  </g>
+
+  <g transform="translate(100 118)">
+    <rect x="0" y="0" width="720" height="664" rx="34" fill="rgba(7,11,22,0.50)" stroke="rgba(125,211,252,0.20)" filter="url(#cardShadow)"/>
+    <text x="48" y="98" font-size="24" letter-spacing="4" fill="#7dd3fc" font-family="DejaVu Sans, Arial">EMBODIED INTELLIGENCE PLAYBOOK</text>
+    <text x="48" y="182" font-size="66" font-weight="800" fill="#ffffff" font-family="DejaVu Sans, Arial">Research atlas for</text>
+    <text x="48" y="258" font-size="66" font-weight="800" fill="#ffffff" font-family="DejaVu Sans, Arial">VLA · World Models · RL</text>
+    <text x="48" y="334" font-size="66" font-weight="800" fill="#ffffff" font-family="DejaVu Sans, Arial">Manipulation · Grasping · Affordance</text>
+    <text x="48" y="404" font-size="28" fill="#cbd5e1" font-family="DejaVu Sans, Arial">Structured roadmaps, paper systems, build paths, labs,</text>
+    <text x="48" y="446" font-size="28" fill="#cbd5e1" font-family="DejaVu Sans, Arial">industry signal, and reproducible resources for embodied AI.</text>
+
+    <g transform="translate(48 510)">
+      <rect x="0" y="0" width="140" height="42" rx="21" fill="rgba(34,211,238,0.12)" stroke="rgba(34,211,238,0.45)"/>
+      <text x="70" y="27" text-anchor="middle" font-size="18" fill="#dff8ff" font-family="DejaVu Sans, Arial">roadmaps</text>
+      <rect x="156" y="0" width="132" height="42" rx="21" fill="rgba(167,139,250,0.12)" stroke="rgba(167,139,250,0.45)"/>
+      <text x="222" y="27" text-anchor="middle" font-size="18" fill="#efe7ff" font-family="DejaVu Sans, Arial">papers</text>
+      <rect x="304" y="0" width="146" height="42" rx="21" fill="rgba(125,211,252,0.12)" stroke="rgba(125,211,252,0.45)"/>
+      <text x="377" y="27" text-anchor="middle" font-size="18" fill="#e7f7ff" font-family="DejaVu Sans, Arial">build paths</text>
+      <rect x="466" y="0" width="126" height="42" rx="21" fill="rgba(34,211,238,0.12)" stroke="rgba(34,211,238,0.45)"/>
+      <text x="529" y="27" text-anchor="middle" font-size="18" fill="#dff8ff" font-family="DejaVu Sans, Arial">maps</text>
+    </g>
+
+    <g transform="translate(48 586)" opacity="0.92">
+      <path d="M0 12 H450" stroke="url(#line)" stroke-width="2"/>
+      <circle cx="0" cy="12" r="5" fill="#22d3ee"/>
+      <circle cx="112" cy="12" r="5" fill="#7dd3fc"/>
+      <circle cx="225" cy="12" r="5" fill="#a78bfa"/>
+      <circle cx="338" cy="12" r="5" fill="#22d3ee"/>
+      <circle cx="450" cy="12" r="5" fill="#a78bfa"/>
+      <text x="0" y="50" font-size="18" fill="#94a3b8" font-family="DejaVu Sans, Arial">perception</text>
+      <text x="92" y="50" font-size="18" fill="#94a3b8" font-family="DejaVu Sans, Arial">state</text>
+      <text x="198" y="50" font-size="18" fill="#94a3b8" font-family="DejaVu Sans, Arial">policy</text>
+      <text x="304" y="50" font-size="18" fill="#94a3b8" font-family="DejaVu Sans, Arial">interaction</text>
+      <text x="400" y="50" font-size="18" fill="#94a3b8" font-family="DejaVu Sans, Arial">deployment</text>
+    </g>
+  </g>
+</svg>
