@@ -1,7 +1,7 @@
-# ICCV Selections
+# ICCV
 
-Selected embodied-intelligence papers from ICCV.
+## Why watch ICCV
+ICCV regularly hosts strong work on 3D vision, video understanding, and multimodal grounding that later migrates into embodied systems.
 
-| Paper | Year | Why it matters | Links |
-|---|---|---|---|
-| Graspness Discovery in Clutters for Fast and Accurate Grasp Detection | 2021 | dense graspability reasoning and fast cluttered-scene grasp selection | [Publications page](https://graspnet.net/publications.html) |
+## Official entry
+https://iccv.thecvf.com/

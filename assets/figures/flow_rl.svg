@@ -1,0 +1,46 @@
+<svg width="1200" height="260" viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#13264A"/>
+      <stop offset="100%" stop-color="#284878"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="260" rx="24" fill="#0E172C"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g>
+      <rect x="60" y="78" width="180" height="86" rx="18" fill="url(#g1)"/>
+      <text x="150" y="116" fill="#fff" font-size="28" text-anchor="middle" font-weight="700">Environment</text>
+      <text x="150" y="145" fill="#DCE8FF" font-size="20" text-anchor="middle">state / pixels / sensors</text>
+    </g>
+    <g>
+      <rect x="300" y="78" width="180" height="86" rx="18" fill="url(#g1)"/>
+      <text x="390" y="116" fill="#fff" font-size="28" text-anchor="middle" font-weight="700">Policy</text>
+      <text x="390" y="145" fill="#DCE8FF" font-size="20" text-anchor="middle">actor / planner / VLA</text>
+    </g>
+    <g>
+      <rect x="540" y="78" width="180" height="86" rx="18" fill="url(#g1)"/>
+      <text x="630" y="116" fill="#fff" font-size="28" text-anchor="middle" font-weight="700">Rollout</text>
+      <text x="630" y="145" fill="#DCE8FF" font-size="20" text-anchor="middle">simulation or world model</text>
+    </g>
+    <g>
+      <rect x="780" y="78" width="180" height="86" rx="18" fill="url(#g1)"/>
+      <text x="870" y="116" fill="#fff" font-size="28" text-anchor="middle" font-weight="700">Reward</text>
+      <text x="870" y="145" fill="#DCE8FF" font-size="20" text-anchor="middle">task / VLM / safety</text>
+    </g>
+    <g>
+      <rect x="1020" y="78" width="120" height="86" rx="18" fill="url(#g1)"/>
+      <text x="1080" y="116" fill="#fff" font-size="28" text-anchor="middle" font-weight="700">Update</text>
+      <text x="1080" y="145" fill="#DCE8FF" font-size="20" text-anchor="middle">critic / replay</text>
+    </g>
+    <g stroke="#CFE0FF" stroke-width="4" fill="none" opacity="0.85">
+      <path d="M240 121 H286"/><path d="M480 121 H526"/><path d="M720 121 H766"/><path d="M960 121 H1006"/>
+      <path d="M1080 170 V215 H150 V170"/>
+      <polygon points="277,112 293,121 277,130" fill="#CFE0FF"/>
+      <polygon points="517,112 533,121 517,130" fill="#CFE0FF"/>
+      <polygon points="757,112 773,121 757,130" fill="#CFE0FF"/>
+      <polygon points="997,112 1013,121 997,130" fill="#CFE0FF"/>
+      <polygon points="160,206 144,215 160,224" fill="#CFE0FF"/>
+    </g>
+    <text x="600" y="230" fill="#AFC3E8" font-size="20" text-anchor="middle">The practical loop: collect → score → improve → deploy</text>
+  </g>
+</svg>

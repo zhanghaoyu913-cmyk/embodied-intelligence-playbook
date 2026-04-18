@@ -1,0 +1,30 @@
+<svg width="1600" height="420" viewBox="0 0 1600 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0D1830"/>
+      <stop offset="100%" stop-color="#1D2F59"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="28"/></filter>
+  </defs>
+  <rect width="1600" height="420" rx="32" fill="url(#bg)"/>
+  <g opacity="0.12" stroke="#B8C7E0">
+    <path d="M0 70H1600"/><path d="M0 140H1600"/><path d="M0 210H1600"/><path d="M0 280H1600"/><path d="M0 350H1600"/>
+    <path d="M120 0V420"/><path d="M280 0V420"/><path d="M440 0V420"/><path d="M600 0V420"/><path d="M760 0V420"/><path d="M920 0V420"/><path d="M1080 0V420"/><path d="M1240 0V420"/><path d="M1400 0V420"/>
+  </g>
+  <circle cx="1280" cy="110" r="76" fill="#D8E2FF" opacity="0.35" filter="url(#blur)"/>
+  <circle cx="1180" cy="240" r="62" fill="#C2D2FF" opacity="0.28" filter="url(#blur)"/>
+  <circle cx="470" cy="110" r="68" fill="#DFE8FF" opacity="0.18" filter="url(#blur)"/>
+  <g fill="none" stroke="#D7E3FF" stroke-width="4" opacity="0.55">
+    <path d="M1050 110 C1120 190, 1250 130, 1320 220"/>
+    <path d="M1140 300 C1250 250, 1360 335, 1490 280"/>
+    <path d="M170 150 C250 100, 330 160, 390 90"/>
+  </g>
+  <g fill="#F7FAFF">
+    <circle cx="1220" cy="110" r="12" opacity="0.8"/>
+    <circle cx="1395" cy="275" r="13" opacity="0.55"/>
+    <circle cx="1350" cy="220" r="12" opacity="0.5"/>
+    <circle cx="250" cy="160" r="20" opacity="0.55"/>
+  </g>
+  <text x="88" y="230" fill="#FFFFFF" font-size="64" font-family="Arial, Helvetica, sans-serif" font-weight="700">Reinforcement Learning for Embodied AI</text>
+  <text x="88" y="286" fill="#F1F6FF" font-size="30" font-family="Arial, Helvetica, sans-serif">policies • rewards • world models • sim-to-real • safety</text>
+</svg>

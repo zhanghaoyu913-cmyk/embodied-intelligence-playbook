@@ -5,10 +5,10 @@
 # Embodied Intelligence Playbook
 
 **A curated open-source playbook for embodied intelligence**  
-**roadmaps, papers, practical checklists, visual maps, and reproducible resources**
+**roadmaps, papers, practical checklists, visual maps, project links, and reproducible resources**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Curated-4F7DF3)]()
+[![Status](https://img.shields.io/badge/Status-Curated-blue)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]()
 
 </div>
@@ -22,8 +22,21 @@
 It is designed to be more than a paper index. The goal is to make the field **navigable**, **buildable**, and **memorable**:
 
 - **navigable**, because major directions are organized as readable roadmaps rather than loose bookmarks
-- **buildable**, because each topic is tied to concrete system questions, project paths, implementation cues, and benchmark choices
+- **buildable**, because each topic is tied to concrete system questions, project paths, datasets, codebases, and implementation cues
 - **memorable**, because the repository uses visual structure, topic-specific styling, and compact conceptual diagrams
+
+---
+
+## Why this repository feels different
+
+Many repositories are broad collections. This one tries to become a **designed entry point**.
+
+It is built around four ideas:
+
+1. **Direction before detail** — first understand the shape of a topic, then dive into papers.
+2. **Practice before accumulation** — code, data, and reproducibility matter as much as citations.
+3. **Recent + classic curation** — 2025–2026 frontier work is mixed with a compact classic foundation.
+4. **Academia + industry maps** — readers can follow not just papers, but also labs, companies, and open projects.
 
 ---
 
@@ -47,6 +60,7 @@ It is designed to be more than a paper index. The goal is to make the field **na
 ### Choose a core direction
 - [Vision-Language-Action](docs/roadmap/vla.md)
 - [World Models](docs/roadmap/world_model.md)
+- [Reinforcement Learning](docs/roadmap/rl.md)
 - [Manipulation](docs/roadmap/manipulation.md)
 - [Grasping](docs/roadmap/grasping.md)
 - [Affordance Learning](docs/roadmap/affordance.md)
@@ -55,6 +69,9 @@ It is designed to be more than a paper index. The goal is to make the field **na
 - [Datasets](docs/resources/datasets.md)
 - [Simulators](docs/resources/simulators.md)
 - [Frameworks](docs/resources/frameworks.md)
+- [Conferences & Journals](docs/resources/venues.md)
+- [Academic Labs & Universities](docs/resources/academia_map.md)
+- [Industry & Company Projects](docs/resources/industry_map.md)
 
 ### Keep notes in a consistent format
 - [Paper Note Template](docs/templates/paper_note_template.md)
@@ -65,63 +82,22 @@ It is designed to be more than a paper index. The goal is to make the field **na
 
 | Topic | Core Question | What you will find |
 |---|---|---|
-| Vision-Language-Action | How do perception and language become executable action? | model archetypes, grounding problems, control bottlenecks, practical VLA stacks |
-| World Models | How should an embodied agent represent and predict a changing world? | latent-dynamics control, 3D world models, planning bridges, failure modes |
-| Manipulation | How do robots complete tasks under contact and uncertainty? | benchmark map, policy families, teleoperation stacks, long-horizon build paths |
-| Grasping | How does a robot choose and verify stable, task-appropriate interaction? | proposal–scoring–execution logic, point-cloud pipelines, datasets, evaluation |
-| Affordance Learning | What actions are possible on an object, where, and why? | functional semantics, interaction regions, articulated objects, grounding methods |
+| Vision-Language-Action | How do perception and language become executable action? | recent 2025–2026 VLAs, classic milestones, project pages, open training stacks |
+| World Models | How should an embodied agent represent and predict a changing world? | latent dynamics, video world models, planning bridges, recent robot world-model work |
+| Reinforcement Learning | How should agents improve through interaction, reward, and planning? | RL-for-robotics roadmap, sim-to-real toolchains, classic + recent RL systems |
+| Manipulation | How do robots complete tasks under contact and uncertainty? | long-horizon skills, imitation/RL links, datasets, teleop and evaluation pointers |
+| Grasping | How does a robot choose and verify stable, task-appropriate interaction? | benchmarks, point-cloud methods, task-oriented grasping, real-time systems |
+| Affordance Learning | What actions are possible on an object, where, and why? | functional semantics, interaction regions, part-level datasets, grounded action cues |
 
 ---
 
-## Paper Directory
+## New in the current curation pass
 
-### By topic
-- [VLA](docs/paper_lists/by_topic/vla.md)
-- [World Models](docs/paper_lists/by_topic/world_model.md)
-- [Manipulation](docs/paper_lists/by_topic/manipulation.md)
-- [Grasping](docs/paper_lists/by_topic/grasping.md)
-- [Affordance](docs/paper_lists/by_topic/affordance.md)
-
-### By conference
-- [ICRA](docs/paper_lists/by_conference/icra.md)
-- [RSS](docs/paper_lists/by_conference/rss.md)
-- [CoRL](docs/paper_lists/by_conference/corl.md)
-- [CVPR](docs/paper_lists/by_conference/cvpr.md)
-- [ICCV](docs/paper_lists/by_conference/iccv.md)
-- [ICLR](docs/paper_lists/by_conference/iclr.md)
-- [ICML](docs/paper_lists/by_conference/icml.md)
-
-### By journal
-- [RA-L](docs/paper_lists/by_journal/ral.md)
-- [T-RO](docs/paper_lists/by_journal/tro.md)
-
----
-
-## Resource Directory
-
-- [Datasets](docs/resources/datasets.md)
-- [Simulators](docs/resources/simulators.md)
-- [Frameworks](docs/resources/frameworks.md)
-
----
-
-## Suggested Reading Paths
-
-### Path A — new to embodied AI
-1. Read [Overview](docs/roadmap/overview.md)
-2. Pick one roadmap page
-3. Use the roadmap to identify the key sub-problems, benchmarks, and starter projects
-4. Track your notes with the [Paper Note Template](docs/templates/paper_note_template.md)
-
-### Path B — already building systems
-1. Start from [Manipulation](docs/roadmap/manipulation.md) or [Grasping](docs/roadmap/grasping.md)
-2. Cross-link with [Affordance Learning](docs/roadmap/affordance.md)
-3. Bring in [World Models](docs/roadmap/world_model.md) when planning, prediction, or data efficiency becomes the bottleneck
-
-### Path C — foundation-model style robotics
-1. Start from [Vision-Language-Action](docs/roadmap/vla.md)
-2. Pair it with [World Models](docs/roadmap/world_model.md)
-3. Use [Datasets](docs/resources/datasets.md) and [Frameworks](docs/resources/frameworks.md) to choose a practical stack
+- added a full **Reinforcement Learning** roadmap
+- expanded topic pages with **recent 2025–2026 work** plus compact classics
+- added **academic institution map** for Stanford, Berkeley, CMU, Tsinghua, PKU, Fudan, SJTU, ZJU, Nanjing University, and USTC
+- added **industry project map** for Google DeepMind, Meta, NVIDIA, ByteDance Seed, Alibaba DAMO, Huawei, Meituan, OpenAI, and selected frontier robotics companies
+- expanded venue coverage to include major conferences and journals used by embodied-AI researchers
 
 ---
 
@@ -136,29 +112,48 @@ embodied-intelligence-playbook/
 │   ├── roadmap/
 │   ├── resources/
 │   ├── paper_lists/
+│   │   ├── by_topic/
 │   │   ├── by_conference/
-│   │   ├── by_journal/
-│   │   └── by_topic/
+│   │   └── by_journal/
 │   └── templates/
 └── .github/
 ```
 
 ### Design notes
-- `roadmap/` contains the conceptual and strategic pages
-- `resources/` gathers operational material for building and reproducing
-- `paper_lists/` organizes reading by topic, venue, and journal
+- `roadmap/` contains conceptual pages with reading strategy and project guidance
+- `resources/` gathers datasets, simulators, frameworks, venues, and institution maps
+- `paper_lists/` stores topic-based, conference-based, and journal-based entry lists
 - `assets/figures/` stores original visuals created specifically for this repository
 
 ---
 
-## Principles for Growth
+## Suggested Reading Paths
 
-This repository grows under five principles:
+### Path A — new to embodied AI
+1. Read [Overview](docs/roadmap/overview.md)
+2. Read [Vision-Language-Action](docs/roadmap/vla.md) and [Manipulation](docs/roadmap/manipulation.md)
+3. Use [Datasets](docs/resources/datasets.md) and [Frameworks](docs/resources/frameworks.md) to pick a reproducible stack
+
+### Path B — interested in world models and RL
+1. Read [World Models](docs/roadmap/world_model.md)
+2. Pair it with [Reinforcement Learning](docs/roadmap/rl.md)
+3. Follow [MuJoCo Playground](docs/resources/simulators.md), [Isaac Lab](docs/resources/frameworks.md), and recent world-model RL entries in the topic pages
+
+### Path C — looking for real institutions and projects to follow
+1. Open [Academic Labs & Universities](docs/resources/academia_map.md)
+2. Open [Industry & Company Projects](docs/resources/industry_map.md)
+3. Cross-reference the project links with the topic pages and paper lists
+
+---
+
+## Principles for Future Growth
+
+This repository will grow under these principles:
 
 - **clarity over clutter**
 - **cohesion over noise**
 - **practice over trend-chasing**
-- **curation over exhaustiveness**
+- **recent work with explicit links**
 - **structure before scale**
 
 ---

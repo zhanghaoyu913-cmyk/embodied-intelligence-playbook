@@ -1,217 +1,39 @@
 # Frameworks
 
-This page lists practical frameworks and codebases that are especially useful for embodied-intelligence work.
-
----
-
-## Quick recommendation table
-
-| Goal | Framework |
-|---|---|
-| easiest practical robotics ML entry | [LeRobot](#lerobot) |
-| offline imitation learning baselines | [robomimic](#robomimic) |
-| open VLA training and fine-tuning | [OpenVLA](#openvla) |
-| open generalist robot policies | [Octo](#octo) |
-| model-based continuous control | [TD-MPC2](#td-mpc2) |
-| GPU-accelerated robot-learning playground | [MuJoCo Playground](#mujoco-playground) |
-
----
-
-## LeRobot
-
-A rapidly maturing open-source robotics stack with datasets, models, docs, and hardware interfaces.
-
-Why use it:
-- very practical onboarding experience
-- integrates models, datasets, training, and deployment
-- supports real-world robotics workflows
-
-Links:
-- [Hub](https://huggingface.co/lerobot)
-- [GitHub](https://github.com/huggingface/lerobot)
-
-Best for:
-- quick prototyping
-- training ACT and related policies
-- real-world experiments
-- dataset and deployment pipelines
-
----
-
-## robomimic
-
-A classic framework for robot learning from demonstration.
-
-Why use it:
-- standardized offline imitation-learning baselines
-- strong documentation
-- clean dataset + baseline structure
-
-Links:
-- [Project](https://robomimic.github.io/)
-- [Code](https://github.com/ARISE-Initiative/robomimic)
-
-Best for:
-- offline imitation learning
-- benchmark reproduction
-- baseline comparisons
-
----
-
-## OpenVLA
-
-Open-source VLA training and fine-tuning codebase.
-
-Why use it:
-- reference stack for open VLA work
-- supports RLDS-format data mixtures
-- practical fine-tuning path for downstream robots
-
-Links:
-- [Project](https://openvla.github.io/)
-- [Code](https://github.com/openvla/openvla)
-
-Best for:
-- VLA research
-- robot-policy fine-tuning
-- Open-X-style data mixtures
-
----
-
-## Octo
-
-Open-source generalist robot policy project.
-
-Why use it:
-- compact and practical open-source generalist policy
-- flexible observation and action definitions
-- good bridge from Open-X data to downstream fine-tuning
-
-Links:
-- [Project](https://octo-models.github.io/)
-- [Code](https://github.com/octo-models/octo)
-
-Best for:
-- generalist policy experimentation
-- cross-dataset robotics work
-- starting open policy research
-
----
-
-## TD-MPC2
-
-Model-based RL framework for continuous control and multitask scaling.
-
-Why use it:
-- strong model-based control baseline
-- good if your question is really about planning/control efficiency rather than language grounding
-
-Links:
-- [Project](https://www.tdmpc2.com/)
-- [Code](https://github.com/nicklashansen/tdmpc2)
-
-Best for:
-- continuous control
-- model-based RL
-- multitask world-model experiments
-
----
-
-## MuJoCo Playground
-
-Open-source framework for GPU-accelerated robot learning and sim-to-real transfer.
-
-Why use it:
-- fast setup
-- modern MJX/MuJoCo ecosystem
-- convenient for control-heavy iteration
-
-Links:
-- [Website](https://playground.mujoco.org/)
-- [Code](https://github.com/google-deepmind/mujoco_playground)
-
-Best for:
-- rapid robot-learning iteration
-- control and sim-to-real experiments
-- modern MuJoCo workflows
-
----
-
-## CALVIN codebase
-
-Long-horizon language-conditioned manipulation benchmark and baselines.
-
-Links:
-- [Project](https://calvin.cs.uni-freiburg.de/)
-- [Code](https://github.com/mees/calvin)
-
-Best for:
-- long-horizon language-conditioned policy evaluation
-
----
-
-## LIBERO
-
-Benchmark and codebase for transfer and lifelong robot learning.
-
-Links:
-- [Project](https://libero-project.github.io/main.html)
-- [Code](https://github.com/Lifelong-Robot-Learning/LIBERO)
-
-Best for:
-- transfer studies
-- benchmark-driven evaluation
-- continual / lifelong learning
-
----
-
-## BridgeData V2 codebase
-
-Training code and reference implementations on BridgeData V2.
-
-Links:
-- [Project](https://rail-berkeley.github.io/bridgedata/)
-- [Code](https://github.com/rail-berkeley/bridge_data_v2)
-
-Best for:
-- goal-conditioned BC
-- diffusion / language-conditioned robot learning on real data
-
----
-
-## PerAct / Diffusion Policy / ACT
-
-These are not general-purpose frameworks in the same sense as LeRobot or robomimic, but they are critical reference implementations.
-
-- [PerAct](https://github.com/peract/peract)
-- [Diffusion Policy](https://github.com/real-stanford/diffusion_policy)
-- [ACT](https://github.com/tonyzhaozh/act)
-
-Use them when:
-- you want paper-faithful reproduction
-- you care about a specific policy family
-- you want to compare action interfaces
-
----
-
-## How to choose a framework
-
-### If you want to build quickly
-- LeRobot
-- robomimic
-- ManiSkill ecosystem
-
-### If you want to study foundation-model robotics
-- OpenVLA
-- Octo
-- Open X tooling
-
-### If you want strong control / world-model baselines
-- TD-MPC2
-- DreamerV3
-- MuJoCo Playground
-
-### If you want paper-faithful manipulation baselines
-- PerAct
-- Diffusion Policy
-- ACT
+This page collects codebases that repeatedly show up in practical embodied-AI work.
+
+## Policy learning and robot learning
+
+| Framework | Use case | Links |
+|---|---|---|
+| OpenVLA | open-source VLA training and fine-tuning | [project](https://openvla.github.io/) · [code](https://github.com/openvla/openvla) |
+| Octo | open-source generalist robot policy | [project](https://octo-models.github.io/) · [code](https://github.com/octo-models/octo) |
+| robomimic | imitation learning and offline robot learning | [project](https://robomimic.github.io/) · [code](https://github.com/ARISE-Initiative/robomimic) |
+| LeRobot | end-to-end open robotics toolkit in PyTorch | [docs](https://huggingface.co/docs/lerobot/index) · [code](https://github.com/huggingface/lerobot) |
+| ACT | action-chunking implementation for real manipulation | [code](https://github.com/tonyzhaozh/act) |
+| Diffusion Policy | diffusion-based manipulation policy baseline | [project](https://diffusion-policy.cs.columbia.edu/) |
+
+## RL and control
+
+| Framework | Use case | Links |
+|---|---|---|
+| DreamerV3 | world-model RL baseline | [code](https://github.com/danijar/dreamerv3) |
+| TD-MPC2 | latent-planning model-based RL | [project](https://www.tdmpc2.com/) · [code](https://github.com/nicklashansen/tdmpc2) |
+| legged_gym | rough-terrain locomotion and sim-to-real | [code](https://github.com/leggedrobotics/legged_gym) |
+| Isaac Lab RL docs | RL workflows on Isaac Lab | [docs](https://isaac-sim.github.io/IsaacLab/main/source/overview/reinforcement-learning/index.html) |
+
+## Grasping / affordance / object interaction
+
+| Framework | Use case | Links |
+|---|---|---|
+| GraspNet baseline | 6-DoF grasp detection | [project](https://graspnet.net/) |
+| Contact-GraspNet | point-cloud grasp estimation | [project](https://contact-graspnet.github.io/) · [code](https://github.com/NVlabs/contact_graspnet) |
+| GPD | classic grasp proposal and scoring | [code](https://github.com/atenpas/gpd) |
+| SAPIEN | articulated-object simulation and affordance-heavy manipulation | [project](https://sapien.ucsd.edu/) |
+
+## How to pick
+
+- **Want an open VLA baseline?** Use OpenVLA or Octo.
+- **Want imitation / offline manipulation?** Use robomimic or LeRobot.
+- **Want RL / model-based control?** Use DreamerV3, TD-MPC2, Isaac Lab, or MuJoCo Playground.
+- **Want grasping?** Start with GraspNet or Contact-GraspNet.

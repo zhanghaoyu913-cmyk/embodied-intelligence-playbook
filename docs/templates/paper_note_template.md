@@ -2,65 +2,87 @@
 
 ## Basic Information
 
-- Title:
-- Venue / Journal:
-- Year:
-- Topic:
-- Keywords:
-- Paper Link:
-- Project Link:
-- Code Link:
-- Dataset / Benchmark:
+- **Title**:
+- **Venue**:
+- **Year**:
+- **Primary Topic**:
+- **Keywords**:
+- **Paper Link**:
+- **Code Link**:
 
-## Summary
+---
 
-Write a concise summary of the paper in 3 to 5 sentences.
+## One-Paragraph Summary
+
+Write a concise summary in 3–5 sentences.
+
+---
+
+## Problem Setting
+
+- What problem is the paper trying to solve?
+- Why is the problem difficult or important?
+- What assumptions does the paper make?
+
+---
+
+## Core Idea
+
+Explain the main idea in plain language.
+
+---
+
+## Method Breakdown
+
+### Inputs
+### Representation
+### Model or policy structure
+### Training strategy
+### Inference or deployment logic
+### Evaluation protocol
+
+---
 
 ## Main Contributions
 
-- Contribution 1
-- Contribution 2
-- Contribution 3
+1.
+2.
+3.
 
-## Problem Formulation
+---
 
-- What problem is being solved?
-- What assumptions are made?
-- What is the action / state / observation interface?
+## Why It Matters
 
-## Method
+- What does this paper change in its subfield?
+- What kind of reader or builder should care about it?
 
-- Core idea:
-- Model structure:
-- Training strategy:
-- Evaluation setup:
-- What makes this method different?
-
-## Practical Value
-
-- Why should a builder care?
-- What would be easy to reproduce?
-- What is likely to be brittle?
+---
 
 ## Strengths
 
-- Strength 1
-- Strength 2
+- 
+- 
 
 ## Limitations
 
-- Limitation 1
-- Limitation 2
+- 
+- 
 
-## Reproduction Value
+---
 
-- Difficulty:
-- Code availability:
-- Dataset accessibility:
-- Suggested for beginners: Yes / No
+## Reproduction View
+
+- **Difficulty**:
+- **Code availability**:
+- **Data accessibility**:
+- **Engineering burden**:
+- **Best use case**:
+
+---
 
 ## My Notes
 
-- Related works:
-- Open questions:
-- Follow-up experiments I want to try:
+- related works:
+- possible extensions:
+- open questions:
+- what I would test next:
