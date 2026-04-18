@@ -12,182 +12,314 @@
 
 ---
 
-## What this topic is really about
+## Topic Thesis
 
-Vision-Language-Action (VLA) asks how a robot should turn **visual context + natural-language intent** into **closed-loop action**.
+Vision-Language-Action (VLA) is not just multimodality.  
+It is the attempt to make the chain
 
-That sounds simple. In practice it combines at least five difficult interfaces:
+**instruction → grounding → action → recovery**
 
-- language grounding
-- visual attention and task relevance
-- action representation
-- temporal consistency
-- recovery under execution drift
+stay coherent when the robot is operating in the real world.
 
-A VLA model becomes impressive only when the chain from **instruction → grounding → action** stays coherent under uncertainty.
+A VLA paper becomes practically valuable when it answers three questions together:
 
----
-
-## Research map
-
-```mermaid
-flowchart LR
-    A[Vision Encoder] --> D[Fused Representation]
-    B[Language / Prompt] --> D
-    D --> E[Action Head / Decoder]
-    E --> F[Robot Action]
-    F --> G[Environment Feedback]
-    G --> A
-    G --> D
-```
+1. What does language actually change?
+2. How is action represented?
+3. What happens after the first mistake?
 
 ---
 
-## Typical problem decomposition
+## Why this topic matters
 
-| Component | The hidden question |
-|---|---|
-| visual grounding | which objects, regions, or relations matter for this instruction? |
-| language grounding | how do vague or underspecified words become task-relevant constraints? |
-| action interface | should the model predict low-level control, action chunks, diffusion trajectories, or tokenized actions? |
-| memory | what keeps task identity stable over long horizons? |
-| adaptation | what happens when the scene or execution deviates from the nominal path? |
+VLA became the most visible face of embodied AI because it offers a compelling interface:
 
----
+- the robot sees a scene
+- a human gives a language instruction
+- the robot acts
 
-## Main technical routes
+But the real significance is deeper. VLA systems sit at the point where:
+- vision must become task-relevant rather than descriptive
+- language must select goals, constraints, and disambiguation cues
+- action must remain controllable under latency, contact, and embodiment mismatch
+- policy learning must move from one robot to many
 
-### 1. Language-conditioned behavior cloning
-The most direct route: learn a policy from demonstrations with text as task context.
-
-### 2. Vision-language backbone + action head
-Repurpose a powerful multimodal encoder and attach an action decoder.
-
-### 3. Tokenized or chunked action modeling
-Convert action into discrete or chunked outputs so that sequence models can operate more naturally.
-
-### 4. Large-scale robot pretraining
-Pretrain on diverse robot datasets and fine-tune to a downstream embodiment or task family.
-
-### 5. Hierarchical or memory-augmented VLA
-Separate high-level reasoning from low-level control, or explicitly model longer context.
+That is why VLA is both a model-design problem and a system-integration problem.
 
 ---
 
-## Must-read papers
+## Problem Decomposition
 
-| Paper | Venue / Year | Why it matters | Links |
-|---|---|---|---|
-| RT-1: Robotics Transformer for Real-World Control at Scale | arXiv 2022 | Canonical large-scale transformer control paper; strong early evidence for scalable robot policy learning | [Paper](https://arxiv.org/abs/2212.06817) |
-| RT-2: Vision-Language-Action Models | 2023 | Clear statement of the VLA recipe: actions as text tokens inside a vision-language model | [Project](https://robotics-transformer2.github.io/) |
-| PaLM-E: An Embodied Multimodal Language Model | arXiv 2023 | Important for embodied grounding and multimodal foundation-model thinking | [Paper](https://arxiv.org/abs/2303.03378) |
-| Open X-Embodiment: Robotic Learning Datasets and RT-X Models | ICRA 2024 | The data backbone behind much recent generalist robotics work | [Project](https://robotics-transformer-x.github.io/) · [Code](https://github.com/google-deepmind/open_x_embodiment) |
-| Octo: An Open-Source Generalist Robot Policy | 2024 | A practical open-source generalist robot policy with flexible observation and action definitions | [Project](https://octo-models.github.io/) · [Code](https://github.com/octo-models/octo) |
-| OpenVLA: An Open-Source Vision-Language-Action Model | CoRL 2024 | The most practical open VLA reference stack for fine-tuning and downstream adoption | [Project](https://openvla.github.io/) · [Code](https://github.com/openvla/openvla) |
-| VIMA: General Robot Manipulation with Multimodal Prompts | ICML 2023 | Strong prompt-centric view of manipulation; useful for multimodal task specification | [Project](https://vimalabs.github.io/) · [Paper](https://arxiv.org/abs/2210.03094) · [Code](https://github.com/vimalabs/vima) |
-| PerAct: A Multi-Task Transformer for Robotic Manipulation | CoRL 2022 | A very influential 3D language-conditioned manipulation baseline | [Project](https://peract.github.io/) · [Code](https://github.com/peract/peract) |
+### 1. Instruction grounding
+How does the model decide which parts of the scene matter for the current command?
+
+### 2. Action representation
+How are robot actions emitted?
+- joint targets
+- end-effector deltas
+- chunked trajectories
+- tokenized actions
+- high-level skills + low-level controller
+
+### 3. Closed-loop execution
+How does the system recover when:
+- an object is occluded
+- a grasp slips
+- the scene has changed
+- the target is ambiguous
+
+### 4. Cross-embodiment transfer
+What stays fixed when moving from one robot to another?
+- backbone
+- language interface
+- policy head
+- controller
+- calibration / retargeting layer
+
+### 5. Data scaling
+How much can generalization be bought with:
+- more robot trajectories
+- internet video
+- human video
+- simulation
+- synthetic or world-model-generated data
 
 ---
 
-## Benchmarks and datasets that matter
+## Core Technical Routes
 
-| Resource | Why it matters | Links |
+### Route A — language-conditioned behavior cloning
+The fastest way to build a working baseline.
+
+**Best for**
+- low-cost setups
+- direct task imitation
+- limited robot embodiments
+
+**Typical examples**
+- ACT-style learning on teleoperated demonstrations
+- language-conditioned visuomotor transformers
+
+---
+
+### Route B — pretrained vision-language backbone + action head
+A common route when semantic grounding is the bottleneck.
+
+**Best for**
+- open-vocabulary instructions
+- compositional object descriptions
+- transferring semantics from internet-scale models
+
+**Key tradeoff**
+Strong semantics do not automatically imply strong motor control.
+
+---
+
+### Route C — large-scale robot pretraining
+This route tries to build a reusable robot prior across embodiments, labs, and tasks.
+
+**Best for**
+- cross-task generalization
+- fine-tuning with few demonstrations
+- benchmarking foundation-policy behavior
+
+**Canonical stack**
+Open X-Embodiment → Octo / OpenVLA → downstream fine-tuning.
+
+---
+
+### Route D — hierarchical VLA
+Separate high-level reasoning from low-level control.
+
+**Best for**
+- long-horizon tasks
+- systems where action precision and symbolic planning both matter
+- cases where a single monolithic model is hard to debug
+
+---
+
+### Route E — on-device and whole-body VLA
+A rapidly growing route in 2025–2026.
+
+**Best for**
+- low-latency deployment
+- humanoids and mobile manipulators
+- settings where cloud-only execution is too brittle or too slow
+
+---
+
+## Frontier Watchlist (2025–2026)
+
+| Work | Why it matters | Links |
 |---|---|---|
-| Open X-Embodiment | multi-lab, multi-embodiment real-robot data mixture | [Project](https://robotics-transformer-x.github.io/) |
-| BridgeData V2 | accessible real-robot dataset for scalable manipulation and goal/language conditioning | [Project](https://rail-berkeley.github.io/bridgedata/) |
-| CALVIN | long-horizon language-conditioned manipulation benchmark | [Project](https://calvin.cs.uni-freiburg.de/) · [Code](https://github.com/mees/calvin) |
-| LIBERO | transfer- and lifelong-learning oriented benchmark suites | [Project](https://libero-project.github.io/main.html) · [Code](https://github.com/Lifelong-Robot-Learning/LIBERO) |
-| RLBench | diverse language-like task variations in simulation; very common in manipulation papers | [Website](https://sites.google.com/view/rlbench) · [Code](https://github.com/stepjam/RLBench) |
+| Gemini Robotics (2025) | high-profile frontier VLA family from Google DeepMind | [official](https://deepmind.google/models/gemini-robotics/) |
+| Gemini Robotics-ER 1.6 (2026) | embodied reasoning layer focused on spatial logic, planning, and success detection | [official](https://deepmind.google/models/gemini-robotics/gemini-robotics-er/) |
+| Gemini Robotics On-Device (2026) | signals a serious move toward deployable, on-robot VLA execution | [overview](https://ai.google.dev/gemini-api/docs/robotics-overview) |
+| Helix (2025) | Figure’s generalist humanoid VLA framing of perception, movement, and reasoning | [official](https://www.figure.ai/helix) |
+| Helix 02 (2026) | full-body extension from upper-body control to room-scale autonomy | [official](https://www.figure.ai/news/helix-02) |
+| GR00T N1 (2025) | NVIDIA’s open humanoid foundation-model line enters the public ecosystem | [paper](https://research.nvidia.com/publication/2025-03_nvidia-isaac-gr00t-n1-open-foundation-model-humanoid-robots) |
+| GR00T N1.5 / N1.6 (2025) | stronger post-training and real-robot performance on humanoid manipulation | [N1.5](https://research.nvidia.com/labs/gear/gr00t-n1_5/) · [N1.6](https://research.nvidia.com/labs/gear/gr00t-n1_6/) |
+| Seed GR-3 (2025) | ByteDance’s large-scale VLA with strong emphasis on real-world generalization | [official](https://seed.bytedance.com/GR3) · [report](https://seed.bytedance.com/public_papers/gr-3-technical-report) |
+| RynnBrain (2026) | DAMO’s open embodied foundation-model ecosystem and benchmark entry | [github](https://github.com/alibaba-damo-academy/RynnBrain) |
+| OneTwoVLA / UniVLA (ICLR 2026) | representative of the push toward unified reasoning-and-acting VLA models | [OneTwoVLA](https://openreview.net/forum?id=tWMfhoP3as) · [UniVLA](https://openreview.net/forum?id=PklMD8PwUy) |
 
 ---
 
-## Open-source project stack
+## Classical Backbone
 
-| Project | Best use case | Links |
+| Work | Why it remains important | Links |
 |---|---|---|
-| OpenVLA | fine-tuning and evaluating an open VLA on robot data | [Project](https://openvla.github.io/) · [Code](https://github.com/openvla/openvla) |
-| Octo | lightweight starting point for generalist robot policy research | [Project](https://octo-models.github.io/) · [Code](https://github.com/octo-models/octo) |
-| PerAct | 3D language-conditioned manipulation baseline on RLBench | [Project](https://peract.github.io/) · [Code](https://github.com/peract/peract) |
-| LeRobot | practical training/deployment ecosystem with policies, datasets, and docs | [Hub](https://huggingface.co/lerobot) · [Code](https://github.com/huggingface/lerobot) |
-| BridgeData V2 codebase | goal-conditioned / language-conditioned learning on real robot data | [Code](https://github.com/rail-berkeley/bridge_data_v2) |
+| RT-1 | early large-scale transformer policy for robotics | [project](https://robotics-transformer1.github.io/) |
+| RT-2 | explicit transfer from internet-scale semantics to robotic control | [project](https://robotics-transformer2.github.io/) |
+| PaLM-E | major milestone for embodied multimodal reasoning | [project](https://palm-e.github.io/) |
+| Open X-Embodiment | largest open real-robot dataset release and RT-X ecosystem anchor | [project](https://robotics-transformer-x.github.io/) |
+| Octo | open generalist robot policy and an excellent reproduction reference | [project](https://octo-models.github.io/) · [code](https://github.com/octo-models/octo) |
+| OpenVLA | open 7B VLA baseline with immediate practical relevance | [project](https://openvla.github.io/) · [code](https://github.com/openvla/openvla) |
+| π0 | generalist policy framing from Physical Intelligence | [official](https://www.physicalintelligence.company/blog/pi0) |
+| VIMA | an influential formulation for multimodal prompting and robot manipulation | [project](https://vimalabs.github.io/) |
 
 ---
 
-## Where VLA systems usually break
+## Open-source Projects, Datasets, and Toolchains
 
-### 1. The instruction is grounded, but not operational
-The system knows what the words refer to, but cannot turn them into a robust executable sequence.
+### Datasets and data ecosystems
+- [Open X-Embodiment](https://robotics-transformer-x.github.io/)
+- [BridgeData V2](https://rail-berkeley.github.io/bridgedata/)
+- [CALVIN](https://github.com/mees/calvin)
+- [LIBERO](https://libero-project.github.io/main.html)
+- [BEHAVIOR-1K](https://behavior.stanford.edu/index.html)
 
-### 2. The action space is expressive, but brittle
-A model may predict plausible action tokens while still failing at precise control.
+### Open-source model / training stacks
+- [Octo](https://github.com/octo-models/octo)
+- [OpenVLA](https://github.com/openvla/openvla)
+- [ACT / ALOHA](https://github.com/tonyzhaozh/act)
+- [LeRobot](https://huggingface.co/docs/lerobot/index)
+- [robomimic](https://robomimic.github.io/)
 
-### 3. Language helps at the beginning, then disappears
-The instruction shapes early action but not long-horizon recovery.
-
-### 4. Generality is claimed at the wrong level
-The model generalizes over prompts or scenes, but not over recoverable execution.
+### Real-robot system references
+- [Mobile ALOHA](https://src.stanford.edu/demo/moble-aloha)
+- [TidyBot++](https://tidybot2.github.io/)
+- [SO-101 / LeRobot hardware docs](https://huggingface.co/docs/lerobot/so101)
 
 ---
 
-## Build-first reading order
+## A practical VLA reading ladder
 
-### If you want a practical stack
+### Level 1 — learn the open backbone
 1. Open X-Embodiment  
 2. Octo  
 3. OpenVLA  
-4. BridgeData V2 / LIBERO / CALVIN evaluation
+4. BridgeData V2  
 
-### If you want a conceptual stack
+**Goal**  
+Understand data format, action representation, and fine-tuning assumptions.
+
+---
+
+### Level 2 — understand system design choices
 1. RT-1  
 2. RT-2  
 3. PaLM-E  
-4. OpenVLA and recent open-source descendants
+4. π0  
 
-### If you want a 3D manipulation bridge
-1. PerAct  
-2. VIMA  
-3. OpenVLA  
-4. Compare action representations and benchmarks
+**Goal**  
+Compare where semantics enter, how action is represented, and how deployment differs.
 
 ---
 
-## Common pitfalls when reading VLA papers
+### Level 3 — inspect the 2025–2026 frontier
+1. Gemini Robotics / ER 1.6  
+2. Helix / Helix 02  
+3. GR00T N1.x  
+4. Seed GR-3  
+5. RynnBrain  
 
-- confusing **semantic understanding** with **reliable control**
-- comparing methods across incompatible action spaces
-- trusting offline prediction metrics too much
-- ignoring recovery behavior in long-horizon tasks
-- overlooking embodiment mismatch in dataset mixtures
-
----
-
-## A good first project
-
-Pick one benchmark and one action interface.
-
-Suggested combinations:
-- **OpenVLA + BridgeData V2**
-- **PerAct + RLBench**
-- **Octo + Open X subset**
-- **LeRobot ACT/OpenVLA + a small real or simulated setup**
-
-Then evaluate three things:
-1. what language changes,
-2. what action representation helps,
-3. where failure first appears in closed loop.
+**Goal**  
+Identify what changed:
+- more embodiment coverage
+- stronger whole-body control
+- explicit reasoning layers
+- better post-training and adaptation
 
 ---
 
-## Related paper lists
+## Build Paths
 
-- [Topic paper list — VLA](../paper_lists/by_topic/vla.md)
-- [CoRL selections](../paper_lists/by_conference/corl.md)
-- [ICML selections](../paper_lists/by_conference/icml.md)
-- [ICRA selections](../paper_lists/by_conference/icra.md)
+### Build Path A — open-source manipulation VLA
+Open X-Embodiment → OpenVLA / Octo → BridgeData V2 or LeRobot → real-robot fine-tuning.
+
+**Best for**
+- lab projects
+- benchmark work
+- open-source friendly reproduction
 
 ---
 
-## Closing thought
+### Build Path B — low-cost real-robot route
+LeRobot / SO-101 / ALOHA-style setup → ACT baseline → language conditioning → limited VLA fine-tuning.
 
-The most interesting VLA models are not the ones that **sound** intelligent.  
+**Best for**
+- first embodied project
+- budget-constrained real hardware
+- quick iteration
+
+---
+
+### Build Path C — frontier system analysis route
+Gemini Robotics / Helix / GR00T / Seed GR-3 → compare:
+- action interface
+- embodiment transfer
+- on-device vs cloud
+- recovery behavior
+- full-body vs manipulator-only control
+
+**Best for**
+- research surveying
+- thesis design
+- system-comparison writeups
+
+---
+
+## What to verify in any VLA paper
+
+1. **What does language actually control?**  
+   Goal selection, object grounding, trajectory refinement, safety constraints, or all of them?
+
+2. **What is the action interface?**  
+   Continuous actions, tokenized actions, chunks, skills, or planner calls?
+
+3. **How is recovery handled?**  
+   Replanning, reactive correction, self-verification, or no explicit mechanism?
+
+4. **What changes when the embodiment changes?**  
+   A model that works on one embodiment but needs a full retrain on another is less general than it looks.
+
+5. **Is the gain semantic or motor?**  
+   Some models improve instruction understanding but not actual physical reliability.
+
+---
+
+## Common Failure Modes
+
+- language looks strong, but motor execution is brittle
+- impressive demos hide narrow action interfaces
+- cross-embodiment transfer is overstated
+- evaluation focuses on nominal runs rather than recovery
+- more semantics are added without a reliable controller underneath
+- closed-loop latency is ignored
+
+---
+
+## Open Questions
+
+- How much of VLA should be unified in one network, and how much should remain modular?
+- Can on-device models become good enough for fast, safe closed-loop deployment?
+- What is the right pretraining mix: robot trajectories, human video, simulation, or world-model-generated data?
+- How should VLA systems represent memory over long-horizon tasks?
+- Can a single model truly span language, perception, manipulation, and full-body mobility without collapsing into unreadable engineering complexity?
+
+---
+
+## Closing Thought
+
+The strongest VLA systems are not the ones that merely **sound** intelligent.  
 They are the ones that make language matter precisely where action becomes hard.

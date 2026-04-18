@@ -4,7 +4,7 @@
 
 # Grasping
 
-> **A grasp is never just a pose. It is a prediction about stability, geometry, and the next task.**
+> **Grasping is not only about contact.** It is about choosing a contact that makes the next part of the task possible.
 
 <p align="center">
   <img src="../../assets/figures/flow_grasping.svg" alt="Grasping flow" width="92%"/>
@@ -12,138 +12,293 @@
 
 ---
 
-## What this topic is really about
+## Topic Thesis
 
-Grasping asks how a robot should choose and execute **stable, task-relevant contact** on objects under:
+A useful grasping system must answer three questions together:
 
-- partial observation
+1. **Where can I contact the object?**
+2. **Will that grasp be stable?**
+3. **Is it the right grasp for the downstream task?**
+
+That is why modern grasping is not just geometry estimation.  
+It is also:
+- scene reasoning
+- partial-observation handling
+- task conditioning
+- active perception
+- execution monitoring
+
+---
+
+## Why grasping matters
+
+Grasping is the gateway from perception to physical interaction.
+
+A weak grasping stack causes downstream failures everywhere:
+- pick-and-place becomes inconsistent
+- articulated-object manipulation starts from the wrong contact
+- pouring fails because the chosen grasp blocks the next action
+- long-horizon manipulation fails before it begins
+
+Good grasping is therefore not only about “holding”; it is about **holding in the service of a longer task**.
+
+---
+
+## Problem Decomposition
+
+### 1. Candidate generation
+Where are plausible contacts?
+
+### 2. Stability estimation
+Which candidates are likely to succeed?
+
+### 3. Task awareness
+Which grasp is compatible with:
+- lifting
+- placing
+- pouring
+- cutting
+- handing over
+- opening articulated objects
+
+### 4. Scene uncertainty
+How do we handle:
+- occlusion
 - clutter
-- novel shapes
-- sensor noise
-- downstream task constraints
+- transparent objects
+- partial depth
+- deformable contact surfaces
 
-It is the most direct place where **geometry, uncertainty, and action feasibility** meet.
-
----
-
-## Research map
-
-```mermaid
-flowchart LR
-    A[RGB / Depth / Point Cloud] --> B[Candidate Grasp Generation]
-    B --> C[Scoring / Filtering]
-    C --> D[Collision / Reachability Check]
-    D --> E[Execution]
-    E --> F[Feedback / Re-grasp]
-```
+### 5. Real-time execution
+Can the system detect and correct failure during execution?
 
 ---
 
-## Main technical routes
+## Core Technical Routes
 
-### 1. Analytic grasp synthesis
-Traditional route based on geometry, force closure, and hand/object contact models.
+### Route A — analytical and geometry-driven methods
+Still useful as intuition and baseline.
 
-### 2. Candidate generation + learned scoring
-Generate many grasps, then rank them with learned models.
-
-### 3. Direct 6-DoF grasp prediction
-Predict grasps directly from point clouds or depth scenes.
-
-### 4. Task-oriented grasping
-Pick grasps that help the next task, not just immediate pickup stability.
-
-### 5. Reactive / temporal grasping
-Handle dynamic scenes and re-evaluate while the robot acts.
+**Good for**
+- simple scenes
+- physically interpretable contacts
+- grasp wrench / closure reasoning
 
 ---
 
-## Must-read papers and projects
+### Route B — proposal + ranking pipelines
+Generate candidates, then score them.
 
-| Work | Venue / Year | Why it matters | Links |
-|---|---|---|---|
-| GPD: Grasp Pose Detection in Point Clouds | 2017 | Classic point-cloud grasp detection pipeline and strong baseline mentality | [Paper](https://arxiv.org/abs/1706.09911) · [Code](https://github.com/atenpas/gpd) |
-| GraspNet-1Billion: A Large-Scale Benchmark for General Object Grasping | CVPR 2020 | The benchmark that changed the scale and realism of 6-DoF grasp evaluation | [Project](https://graspnet.net/) · [Paper](https://openaccess.thecvf.com/content_CVPR_2020/papers/Fang_GraspNet-1Billion_A_Large-Scale_Benchmark_for_General_Object_Grasping_CVPR_2020_paper.pdf) |
-| Contact-GraspNet: Efficient 6-DoF Grasp Generation in Cluttered Scenes | ICRA 2021 | Widely used direct 6-DoF grasp generation model from raw scene point clouds | [Paper](https://research.nvidia.com/publication/2021-03_contact-graspnet-efficient-6-dof-grasp-generation-cluttered-scenes) · [Code](https://github.com/NVlabs/contact_graspnet) |
-| Graspness Discovery in Clutters for Fast and Accurate Grasp Detection | ICCV 2021 | Important bridge between scene understanding and dense grasp selection | [Project / Paper Links](https://graspnet.net/publications.html) |
-| AnyGrasp: Robust and Efficient Grasp Perception in Spatial and Temporal Domains | T-RO 2023 | Strong practical library for dense, robust, temporally smooth grasping | [Project](https://graspnet.net/anygrasp.html) · [Paper & Library](https://graspnet.net/publications.html) |
-| SuctionNet-1Billion | RA-L 2021 | Useful if suction grasping is relevant to industrial manipulation | [Project & Paper Links](https://graspnet.net/publications.html) |
+**Good for**
+- practical engineering stacks
+- integrating multiple cues
+- strong debugging visibility
+
+**Representative systems**
+- GPD
+- proposal-based 6-DoF pipelines
 
 ---
 
-## Benchmark and dataset map
+### Route C — point-cloud end-to-end grasp prediction
+A major route for modern cluttered-scene grasping.
+
+**Good for**
+- RGB-D or point-cloud robotics
+- 6-DoF grasp detection
+- real-time scene-conditioned inference
+
+**Representative systems**
+- GraspNet baseline ecosystem
+- Contact-GraspNet
+- AnyGrasp
+
+---
+
+### Route D — implicit / volumetric / reconstruction-aware grasping
+Blend geometry reconstruction with grasp scoring.
+
+**Good for**
+- single-view reconstruction
+- cluttered scenes
+- richer scene representation
+
+**Representative systems**
+- GIGA
+- VGN and related TSDF-based methods
+
+---
+
+### Route E — dexterous grasping
+Important when parallel-jaw assumptions break down.
+
+**Good for**
+- multi-finger hands
+- dexterous manipulation
+- future humanoid and hand-centric systems
+
+---
+
+### Route F — active perception and closed-loop grasping
+Choose better views or update the grasp online.
+
+**Good for**
+- partial observation
+- target-driven grasping
+- real-world clutter removal
+
+---
+
+## Frontier Watchlist (2024–2026)
+
+Grasping has fewer fully open 2025–2026 “headline foundation-model” releases than VLA, so this watchlist deliberately mixes recent high-value work from 2024 onward.
+
+| Work | Why it matters | Links |
+|---|---|---|
+| DexGraspNet 2.0 (2024/2025) | large-scale synthetic benchmark for dexterous grasping in clutter | [project](https://pku-epic.github.io/DexGraspNet2.0/) · [code](https://github.com/PKU-EPIC/DexGraspNet2) |
+| Active Perception for Grasp Detection via Neural Graspness Fields (2024) | pushes grasping beyond passive single-shot perception | [paper](https://proceedings.neurips.cc/paper_files/paper/2024/file/4364fef031fdf7bfd9d1c9c56b287084-Paper-Conference.pdf) |
+| Implicit Grasp Diffusion (2024) | bridges dense local features with diffusion-based grasp generation | [openreview](https://openreview.net/forum?id=VUhlMfEekm) |
+| Transparent-object grasping via TransCG | important for real-world difficult sensing regimes | [project](https://graspnet.net/transcg) |
+| ROS2 GPD wrappers and modernized ecosystems (2025+) | signals continuing engineering relevance of classical pipelines | [repo](https://github.com/socrob/grasp_detection_ros2) |
+
+---
+
+## Canonical Resources
 
 | Resource | Why it matters | Links |
 |---|---|---|
-| GraspNet-1Billion | standard large-scale 6-DoF grasp benchmark | [Project](https://graspnet.net/) |
-| SuctionNet-1Billion | suction-specific benchmark for industrial setups | [Publications page](https://graspnet.net/publications.html) |
-| TransCG | transparent-object depth completion and grasping | [Publications page](https://graspnet.net/publications.html) |
-| YCB | standard object set often used in grasping/manipulation pipelines | [YCB Benchmarks](http://ycb-benchmarks.s3-website-us-east-1.amazonaws.com/) |
+| GraspNet | large-scale benchmark and baseline ecosystem for 6-DoF grasping | [project](https://graspnet.net/) |
+| Contact-GraspNet | influential point-cloud-based 6-DoF grasp estimation | [project](https://contact-graspnet.github.io/) · [code](https://github.com/NVlabs/contact_graspnet) |
+| AnyGrasp | practical real-time grasp detection system | [official](https://graspnet.net/anygrasp.html) |
+| GPD | classic candidate-generation + ranking baseline | [code](https://github.com/atenpas/gpd) |
+| VGN | real-time volumetric grasp detection in clutter | [code](https://github.com/ethz-asl/vgn) |
+| GIGA | combines implicit geometry with grasp affordance prediction | [code](https://github.com/UT-Austin-RPL/GIGA) |
+| DexGraspNet | large-scale dexterous grasp dataset | [project](https://pku-epic.github.io/DexGraspNet/) · [code](https://github.com/PKU-EPIC/DexGraspNet) |
+| PointNetGPD | strong point-set-based grasp evaluation baseline | [code](https://github.com/lianghongzhuo/PointNetGPD) |
 
 ---
 
-## Practical open-source stack
+## Datasets and Benchmarks
 
-| Project | Best use case | Links |
-|---|---|---|
-| GPD | classic baseline, ROS-style integration, simpler grasp-candidate workflow | [Code](https://github.com/atenpas/gpd) |
-| Contact-GraspNet | direct 6-DoF grasp generation from scene point clouds | [Code](https://github.com/NVlabs/contact_graspnet) |
-| AnyGrasp | practical deployment-oriented dense grasp library | [Project](https://graspnet.net/anygrasp.html) |
-| GraspNet ecosystem | benchmark, evaluation, dataset, and libraries in one place | [Project](https://graspnet.net/) |
+### Core grasping resources
+- [GraspNet](https://graspnet.net/)
+- [DexGraspNet](https://pku-epic.github.io/DexGraspNet/)
+- [DexGraspNet 2.0](https://pku-epic.github.io/DexGraspNet2.0/)
+- [TransCG](https://graspnet.net/transcg)
 
----
+### Useful nearby resources
+- [PartNet-Mobility](https://sapien.ucsd.edu/browse)
+- [SAPIEN](https://sapien.ucsd.edu/)
+- [GAPartNet](https://pku-epic.github.io/GAPartNet/)
 
-## What to look for in grasping papers
-
-- **input modality**: depth, RGB-D, point cloud, segmentation, tactile feedback
-- **grasp representation**: contact pairs, 6-DoF pose, suction center, dense heatmap
-- **evaluation mode**: analytic metric, simulation, real robot, clutter, dynamics
-- **downstream task link**: is the grasp just stable, or useful for what comes next?
-- **runtime**: can the method operate fast enough for closed-loop deployment?
+These are not grasp-only resources, but they matter when grasping must serve articulation, part interaction, or downstream manipulation.
 
 ---
 
-## Common failure modes
+## Practical Reading Sequence
 
-- grasps that look stable but are unreachable
-- grasps that work in isolation but fail in clutter
-- grasp ranking that ignores object mass distribution or task intent
-- models that overfit to depth cleanliness or camera pose
-- evaluation protocols that do not match deployment conditions
+### Step 1 — understand the benchmark
+Start with:
+1. GraspNet
+2. Contact-GraspNet
+3. AnyGrasp
 
----
-
-## Good first projects
-
-### Beginner project
-Run **GPD** and **Contact-GraspNet** on the same point-cloud scenes and compare:
-- density of proposals
-- collision quality
-- runtime
-- grasp diversity
-
-### Intermediate project
-Take **AnyGrasp** or **GraspNet** grasps and add a **task-aware reranking module** based on object affordance or target pose.
-
-### Advanced project
-Study how grasp generation should change when:
-- the object is articulated,
-- the object is deformable,
-- the next task imposes a pose or interaction constraint.
+**Goal**
+Understand data representation, grasp metrics, and the difference between benchmark success and real-robot deployment.
 
 ---
 
-## Related paper lists
+### Step 2 — compare two families
+- proposal-based / geometry-driven methods
+- end-to-end learned point-cloud or volumetric methods
 
-- [Topic paper list — Grasping](../paper_lists/by_topic/grasping.md)
-- [CVPR selections](../paper_lists/by_conference/cvpr.md)
-- [ICCV selections](../paper_lists/by_conference/iccv.md)
-- [ICRA selections](../paper_lists/by_conference/icra.md)
-- [RA-L selections](../paper_lists/by_journal/ral.md)
-- [T-RO selections](../paper_lists/by_journal/tro.md)
+**Good comparisons**
+- GPD vs Contact-GraspNet
+- VGN vs GIGA
 
 ---
 
-## Closing thought
+### Step 3 — go beyond stable grasping
+Study:
+- task-oriented grasping
+- dexterous grasping
+- active perception
+- transparent-object grasping
 
-A grasp is valuable only when it is not merely possible, but **deployable, stable, and useful for the next stage of the task**.
+---
+
+## Build Paths
+
+### Build Path A — practical parallel-jaw stack
+Object segmentation → grasp proposal → geometric or learned scoring → controller → visualization.
+
+**Suggested stack**
+GraspNet / Contact-GraspNet / AnyGrasp + real-scene visualization.
+
+---
+
+### Build Path B — cluttered-scene research stack
+RGB-D / point cloud → VGN or GIGA → evaluate on clutter removal → add active perception.
+
+**Best for**
+- research on scene uncertainty
+- stronger geometry reasoning
+
+---
+
+### Build Path C — task-oriented grasping stack
+Affordance map or task description → grasp candidate generation → joint task score + geometry score.
+
+**Best for**
+- manipulation pipelines
+- pouring, handover, cutting, articulated tasks
+- research that links grasping to downstream success
+
+---
+
+### Build Path D — dexterous-hand route
+DexGraspNet → DexGraspNet 2.0 → multi-finger grasp modeling and contact reasoning.
+
+**Best for**
+- hand manipulation
+- humanoid dexterity
+- future grasp-to-manipulation integration
+
+---
+
+## What to inspect in any grasping result
+
+- whether grasp success is evaluated only at lift time or also after the downstream task
+- how partial observation is handled
+- whether the method uses single-view or multi-view assumptions
+- whether grasp width / orientation / collision are explicitly modeled
+- whether the system is robust to scene clutter and transparent or reflective objects
+- whether failed grasps are diagnosed or simply discarded
+
+---
+
+## Common Failure Modes
+
+- stable grasps are proposed, but the grasp blocks the downstream task
+- point-cloud quality quietly determines most of the result
+- clutter performance is overstated with easy object sets
+- candidate grasp ranking is good offline but poorly integrated with the controller
+- transparent or reflective objects break the sensing stack
+- grasp success is separated from task success too rigidly
+
+---
+
+## Open Questions
+
+- How should grasping and manipulation be scored jointly, not separately?
+- Can foundation-model semantics materially help grasp selection, or only object localization?
+- What is the right bridge between parallel-jaw grasping and dexterous grasping?
+- How much should grasping rely on active perception rather than single-shot inference?
+- Can grasping systems become more self-aware about uncertainty and failure before contact?
+
+---
+
+## Closing Thought
+
+The strongest grasp is not the one that merely holds.  
+It is the one that **holds in the service of a longer action**.
