@@ -1,70 +1,37 @@
 # Contributing Guide
 
-Thank you for contributing to **Embodied Intelligence Playbook**.
+Thank you for your interest in contributing to this repository.
 
-This repository values contributions that are not only correct, but also **clear**, **structured**, and **useful for future readers**.
+## You can contribute by
 
-## What kind of contributions are welcome?
-
+- adding paper summaries
 - improving roadmap pages
-- adding paper summaries or curated reading clusters
-- proposing better topic taxonomy
-- adding project reproduction notes
-- curating datasets, simulators, frameworks, or benchmarks
-- improving visuals, diagrams, or page design
+- organizing practical resources
+- fixing broken links
+- adding reproduction notes
+- refining benchmark or venue taxonomy
 
-## Style principles
+## Basic Principles
 
-Please try to keep contributions aligned with the design language of the repository:
+- keep entries structured and readable
+- prefer concise but informative summaries
+- include venue and year when adding papers
+- include project/code links when available
+- avoid duplicate entries
+- prioritize official project pages, official repositories, and primary paper links
 
-- **structured before verbose**
-- **insightful before exhaustive**
-- **visually readable before dense**
-- **curated before copied**
+## Recommended format for paper entries
 
-## When adding papers
-
-Include as many of the following as possible:
+Please include:
 
 - title
-- venue
+- venue / journal
 - year
-- main topic
-- keywords
-- short summary
-- why it matters
-- code link when available
-- practical relevance or reproduction notes
-
-## When editing roadmap pages
-
-Prefer sections such as:
-
-- what is this topic
-- why it matters
-- core problems
-- technical routes
-- failure modes
-- recommended starting points
-- open questions
+- one-line significance
+- paper link
+- project link if available
+- code link if available
 
 ## Pull requests
 
-Please keep each pull request focused.
-
-Good examples:
-- improving one roadmap page
-- adding one new resources page
-- adding a small, clean cluster of papers
-- fixing links and formatting in one specific area
-
-## Issues
-
-You are encouraged to open issues for:
-- missing topics
-- broken structure
-- unclear navigation
-- candidate paper collections
-- suggestions for visual improvements
-
-Thank you for helping shape this repository into a thoughtful long-term resource.
+Please keep pull requests focused and easy to review. Small, high-quality improvements are preferred over large unstructured dumps.

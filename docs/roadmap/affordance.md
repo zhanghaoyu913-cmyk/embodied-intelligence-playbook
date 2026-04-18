@@ -4,7 +4,7 @@
 
 # Affordance Learning
 
-> **Affordance is the meeting point of function and possibility.**
+> **Affordance is the language of possibility between perception and action.**
 
 <p align="center">
   <img src="../../assets/figures/flow_affordance.svg" alt="Affordance flow" width="92%"/>
@@ -12,227 +12,145 @@
 
 ---
 
-## Topic Mood
+## What this topic is really about
 
-Affordance learning is compelling because it gives action a semantic foothold.  
-Instead of asking only what an object looks like, it asks:
+Affordance learning studies what actions are possible on an object, **where** those actions should be applied, and sometimes **how** they should be executed.
 
-- what can be done with it?
-- where can that action happen?
-- what part of the object matters for this task?
-- how does function depend on context?
+This topic matters because it converts perception into something actionable:
 
-This turns perception from passive recognition into **action-oriented understanding**.
+- not just “this is a mug”
+- but “this region can be grasped”
+- not just “this is a drawer”
+- but “this handle affords pulling”
 
----
-
-## What is this topic?
-
-Affordance learning studies the relationship between:
-
-- objects or object parts
-- possible actions
-- task context
-- interaction regions
-- functional consequence
-
-An affordance is not just a label.  
-It is a bridge between **perception** and **use**.
-
-For embodied systems, this bridge is extremely valuable because it helps answer questions like:
-
-- where should I grasp?
-- what part can be pulled?
-- where should force be applied?
-- which region supports pouring, opening, pressing, or lifting?
+Affordance is often the missing bridge between semantic understanding and executable manipulation.
 
 ---
 
-## Why it matters
+## Research map
 
-Affordance reasoning matters because many interaction decisions are not purely geometric.  
-They are **functional**.
-
-Two regions may look similar, but only one is a handle.  
-Two stable grasps may exist, but only one supports the next task.  
-A single object may support multiple affordances depending on the goal.
-
-This makes affordance learning one of the most natural ways to connect:
-
-- visual semantics
-- geometry
-- task intent
-- manipulation planning
-- grasp reranking
+```mermaid
+flowchart LR
+    A[Object Observation] --> B[Affordance Representation]
+    B --> C[Actionable Region / Part]
+    C --> D[Trajectory / Grasp / Interaction]
+    D --> E[Task Outcome]
+```
 
 ---
 
-## The Central Question
+## Main problem families
 
-The central question is:
-
-> **How can an embodied system infer actionable structure rather than only descriptive structure?**
-
-That structure may be expressed at multiple levels:
-
-| Level | Example |
+| Problem family | Why it matters |
 |---|---|
-| object-level | this item can be opened |
-| part-level | this segment is the handle |
-| region-level | this local area is graspable |
-| task-conditioned | this area is good for lifting but poor for pouring |
-| relational | this affordance depends on pose, context, or tool state |
+| 2D affordance detection | useful for RGB or RGB-D interactive perception |
+| 3D affordance grounding | better aligns with geometry-aware robotic action |
+| articulated-object interaction | drawers, doors, handles, lids, knobs require function-aware reasoning |
+| cross-category affordance transfer | robots must act on unseen objects that share functionality, not appearance |
+| affordance + control coupling | predicting where to act is not enough; the system must still execute the action |
 
 ---
 
-## Typical Technical Routes
+## Must-read papers and projects
 
-### Route A — dense affordance prediction
-Predict affordance labels over pixels, points, or mesh regions.
-
-**Strengths**
-- explicit interaction localization
-- strong interpretability
-- useful for direct execution cues
-
-**Weaknesses**
-- annotation is expensive
-- multiple affordances may overlap
-
-### Route B — part-level functional understanding
-Represent objects through functional parts.
-
-**Strengths**
-- aligns naturally with manipulation
-- helps organize task semantics
-
-**Weaknesses**
-- part boundaries and functions are often ambiguous
-
-### Route C — retrieval or transfer-based affordance reasoning
-Transfer interaction priors from similar objects or stored experience.
-
-**Strengths**
-- useful under limited annotation
-- can exploit shape or feature similarity
-
-**Weaknesses**
-- transfer may be semantically wrong even when geometry looks similar
-
-### Route D — language-guided affordance grounding
-Use textual description or task language to specify the desired affordance.
-
-**Strengths**
-- flexible task conditioning
-- ties semantics directly to action goals
-
-**Weaknesses**
-- language ambiguity can migrate into the affordance prediction itself
+| Work | Venue / Year | Why it matters | Links |
+|---|---|---|---|
+| AffordanceNet: An End-to-End Deep Learning Approach for Object Affordance Detection | ICRA 2018 | Classic RGB affordance baseline; good historical starting point | [Paper](https://arxiv.org/abs/1709.07326) · [Code](https://github.com/nqanh/affordance-net) |
+| Where2Act: From Pixels to Actions for Articulated 3D Objects | 2021 | Very influential “from visual region to action” formulation for articulated objects | [Paper](https://arxiv.org/abs/2101.02692) · [Code](https://github.com/daerduoCarey/where2act) |
+| VAT-Mart: Learning Visual Action Trajectory Proposals for 3D Articulated Objects | ICLR 2022 | Extends affordance into actionable trajectory proposals for articulated interaction | [Project](https://hyperplane-lab.github.io/vat-mart/) |
+| 3D-AffordanceNet: A Benchmark for Visual Object Affordance Understanding | CVPR 2021 | Canonical 3D affordance benchmark for point-cloud-based work | [Project](https://andlollipopde.github.io/3D-AffordanceNet/) · [Paper](https://arxiv.org/abs/2103.16397) · [Code](https://github.com/Gorilla-Lab-SCUT/AffordanceNet) |
+| GAPartNet: Cross-Category Domain-Generalizable Object Perception and Manipulation via Generalizable and Actionable Parts | CVPR 2023 Highlight | Strong part-centric view that bridges perception and manipulation | [Project](https://pku-epic.github.io/GAPartNet/) · [Code](https://github.com/PKU-EPIC/GAPartNet) |
+| PartManip: Learning Cross-Category Generalizable Part Manipulation Policy from Point Cloud Observations | CVPR 2023 | Important if you care about manipulation on articulated parts from point clouds | [Code](https://github.com/PKU-EPIC/PartManip) |
+| AdaAfford: Learning to Adapt Manipulation Affordance for 3D Articulated Objects via Few-shot Interactions | 2021 | Useful for thinking about adaptation and test-time interaction | [Project](https://hyperplane-lab.github.io/AdaAfford) · [Code](https://github.com/wangyian-me/AdaAffordCode) |
+| Robo-ABC: Affordance Generalization Beyond Categories via Semantic Correspondence | 2024 | Good example of retrieval / correspondence-style affordance transfer | [Paper](https://arxiv.org/html/2401.07487v1) |
 
 ---
 
-## What Makes Affordance Learning Hard
+## Datasets and assets that matter
 
-### 1. The same object can mean different things
-A mug can be grasped, lifted, contained, displayed, or washed.
-
-### 2. Function is contextual
-A region that is safe for one action may be poor for another.
-
-### 3. Annotation is expensive and subtle
-Dense functional labeling is harder than ordinary object recognition.
-
-### 4. Geometry alone is not enough
-The system may need task semantics, prior experience, or temporal context.
+| Resource | Why it matters | Links |
+|---|---|---|
+| PartNet-Mobility | articulated objects with motion annotations; foundational for articulated affordance work | [Browse](https://sapien.ucsd.edu/browse) |
+| 3D-AffordanceNet | standard 3D benchmark for affordance understanding | [Project](https://andlollipopde.github.io/3D-AffordanceNet/) |
+| GAPartNet | part-centric dataset for cross-category actionable parts | [Project](https://pku-epic.github.io/GAPartNet/) |
+| SAPIEN assets | useful for articulated-object simulation and perception pipelines | [SAPIEN](https://sapien.ucsd.edu/) |
 
 ---
 
-## A Practical Taxonomy
+## Open-source project stack
 
-You can organize affordance work by the kind of output it produces.
-
-| Output style | What it gives you |
-|---|---|
-| binary affordance label | whether an action is possible |
-| dense region map | where the action should happen |
-| score field | how suitable different regions are |
-| task-conditioned map | how suitability changes with the goal |
-| executable interaction prior | a cue that can directly guide grasping or manipulation |
-
-The last category is especially valuable for embodied systems.
+| Project | Best use case | Links |
+|---|---|---|
+| AffordanceNet | 2D RGB affordance baseline | [Code](https://github.com/nqanh/affordance-net) |
+| Where2Act | articulated-object actionable-region prediction | [Code](https://github.com/daerduoCarey/where2act) |
+| VAT-Mart | region + trajectory proposal on articulated objects | [Project](https://hyperplane-lab.github.io/vat-mart/) |
+| 3D-AffordanceNet codebase | baseline implementations on the canonical 3D benchmark | [Code](https://github.com/Gorilla-Lab-SCUT/AffordanceNet) |
+| GAPartNet | part-centric perception and manipulation bridge | [Code](https://github.com/PKU-EPIC/GAPartNet) |
+| PartManip | articulated-part manipulation from point clouds | [Code](https://github.com/PKU-EPIC/PartManip) |
 
 ---
 
-## How Affordance Connects to Other Topics
+## How to read affordance papers
 
-### Affordance + grasping
-Affordance can rerank grasp candidates according to task intent.
+Ask these questions:
 
-### Affordance + manipulation
-Affordance can localize handles, support surfaces, pressable regions, or pull directions.
+1. **What is the affordance representation?**  
+   Pixel mask? pointwise label? part category? heatmap? prototype? contact point?
 
-### Affordance + world models
-Affordance can help define what state changes matter when modeling interaction.
+2. **What supervision is used?**  
+   Dense labels? interaction rollouts? pseudo-labels? retrieval memory? weak supervision?
 
-### Affordance + VLA
-Language can specify the desired action semantics, while affordance grounds them spatially.
+3. **Does the paper predict only “where”, or also “how”?**  
+   Many systems stop before trajectory or grasp execution.
 
----
+4. **How does it generalize?**  
+   New instances? new categories? new viewpoints? real sensor data?
 
-## Practical Failure Modes
-
-### Semantic failure
-The model predicts a region that looks plausible but is functionally wrong.
-
-### Localization failure
-The correct affordance is known in concept, but the region is misplaced.
-
-### Task mismatch
-The model predicts generic “graspability” when the task requires a very specific interaction.
-
-### Transfer failure
-Affordance is copied from a similar-looking object whose function differs in a crucial way.
+5. **Is affordance tied to action?**  
+   Good affordance work should eventually help manipulation, not only segmentation scores.
 
 ---
 
-## Build-First Project Ideas
+## Common failure modes
+
+- affordance regions that are semantically plausible but not executable
+- overfitting to category appearance instead of functional similarity
+- dense labels that ignore how the robot will actually approach the object
+- success on static benchmarks without gains in downstream manipulation
+- articulated-object assumptions that break on cluttered real scenes
+
+---
+
+## Build-first project ideas
 
 ### Beginner project
-Train a point-wise affordance predictor for a small set of object categories and visualize dense affordance fields.
+Take **3D-AffordanceNet** and benchmark a point-cloud affordance model on one affordance family.
 
 ### Intermediate project
-Use affordance scores to rerank grasp candidates and compare against geometry-only grasp selection.
+Use **Where2Act** or **VAT-Mart** and compare:
+- actionable region quality
+- trajectory quality
+- transfer to new articulated objects
 
 ### Advanced project
-Build a task-conditioned affordance system that predicts different interaction regions depending on textual or symbolic goals.
+Combine:
+- an affordance predictor,
+- a grasp generator,
+- and a task-aware reranker.
+
+Then study how much affordance helps real downstream success.
 
 ---
 
-## Reading Strategy
+## Related paper lists
 
-When reading affordance papers, ask:
-
-1. What is the unit of prediction — object, part, point, or region?
-2. Is the affordance task-conditioned?
-3. How expensive is the annotation pipeline?
-4. Does the output directly help execution?
-5. How is ambiguity handled when multiple affordances overlap?
+- [Topic paper list — Affordance](../paper_lists/by_topic/affordance.md)
+- [CVPR selections](../paper_lists/by_conference/cvpr.md)
+- [ICRA selections](../paper_lists/by_conference/icra.md)
+- [ICLR selections](../paper_lists/by_conference/iclr.md)
 
 ---
 
-## Representative Work Clusters to Curate Later
+## Closing thought
 
-- dense affordance perception
-- point-cloud and mesh-based affordance learning
-- task-conditioned affordance reasoning
-- retrieval-based affordance transfer
-- affordance-guided grasping and manipulation
-
----
-
-## Closing Thought
-
-Affordance learning becomes powerful when a model stops saying  
-“this is an object,”  
-and starts saying  
-**“this is where action can begin.”**
+Affordance learning becomes powerful only when it stops being descriptive and starts becoming **operationally useful** for action.

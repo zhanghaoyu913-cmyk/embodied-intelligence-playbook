@@ -4,8 +4,7 @@
 
 # World Models
 
-> **A world model is not just a predictor.**  
-> It is an attempt to decide what the world must look like internally so action can become more deliberate.
+> **A world model is not only a predictor. It is a choice of what future structure is worth imagining.**
 
 <p align="center">
   <img src="../../assets/figures/flow_world_model.svg" alt="World model flow" width="92%"/>
@@ -13,243 +12,150 @@
 
 ---
 
-## Topic Mood
+## What this topic is really about
 
-World models are attractive because they promise something deeply important:  
-an agent may not need to act blindly if it can **simulate, abstract, imagine, and compare futures before committing**.
+World models try to answer a deceptively simple question:
 
-That promise is powerful, but also dangerous.  
-A world model can be visually impressive while still being useless for control.  
-This topic is therefore about more than future prediction. It is about the relationship between:
+> **What internal model of the world makes action easier, safer, or more data efficient?**
 
-- representation
-- dynamics
-- uncertainty
-- planning
-- action consequence
+In embodied AI, a world model can play different roles:
 
----
-
-## What is this topic?
-
-A world model tries to build an internal description of how the environment evolves, especially under the agent's actions.
-
-Depending on the paper, that internal description might emphasize:
-
-- latent state
-- object-centric structure
-- geometry
-- contact and physical transitions
-- temporal abstraction
-- multimodal context
-- action-conditioned imagination
-
-The central question is not “can I predict the next frame?”  
-It is:
-
-> **What structure must be modeled so that prediction becomes useful for decision-making?**
+- a **latent simulator** for policy optimization
+- a **predictive model** for planning and control
+- a **3D or geometric dynamics model** for interaction forecasting
+- a **memory mechanism** for long-horizon reasoning
+- a **bridge across embodiments**, if actions are represented in a shared space
 
 ---
 
-## Why it matters
+## Research map
 
-A good world model can support:
-
-- long-horizon planning
-- data-efficient learning
-- recovery after deviation
-- transfer across tasks
-- reasoning about hidden state
-- compression of task-relevant environment structure
-
-This matters especially in embodied settings where trial-and-error on real hardware is expensive, risky, or slow.
-
----
-
-## Three Views of World Models
-
-### View A — the compression view
-A world model compresses the environment into a compact latent structure.
-
-This view is useful when the bottleneck is representation quality.
-
-### View B — the imagination view
-A world model lets the agent roll forward hypothetical futures.
-
-This view is useful when planning and counterfactual reasoning matter.
-
-### View C — the control view
-A world model is only as good as the action decisions it enables.
-
-This view is the most demanding, because it asks whether the learned internal world actually helps execution.
+```mermaid
+flowchart LR
+    A[Observations] --> B[State / Latent / Geometry]
+    C[Actions] --> D[Transition Model]
+    B --> D
+    D --> E[Predicted Future]
+    E --> F[Planning / MPC / Policy Improvement]
+    F --> C
+```
 
 ---
 
-## Typical Technical Routes
+## Three major families
 
-### Route A — latent dynamics models
-Encode observations into latent states and learn how those states evolve with actions.
+### 1. Latent-dynamics world models
+The classical model-based RL view: learn a compact latent state and imagine trajectories there.
 
-**Best for**
-- compact prediction
-- planning in latent space
-- long-horizon abstraction
+### 2. Video / sequence world models
+Predict future observations or tokens, often prioritizing rich visual rollout quality.
 
-**Main risk**
-- latent states may be predictive but not controllable or interpretable
-
-### Route B — visual future prediction
-Model future observations or scene states directly.
-
-**Best for**
-- intuitive visualization
-- explicit temporal behavior
-- perception-heavy tasks
-
-**Main risk**
-- beautiful predictions can still be strategically empty
-
-### Route C — object-centric world models
-Represent the world in terms of objects, relations, and interactions.
-
-**Best for**
-- compositional structure
-- interaction reasoning
-- better transfer under scene change
-
-**Main risk**
-- object extraction and persistent identity are hard
-
-### Route D — geometry-aware or 3D world models
-Build state around spatial structure rather than only image-level regularities.
-
-**Best for**
-- embodied planning
-- view consistency
-- physical scene understanding
-
-**Main risk**
-- representation complexity rises quickly
-
-### Route E — language- or task-conditioned world models
-Incorporate instruction or goal context into what is predicted and remembered.
-
-**Best for**
-- task-aware prediction
-- selective modeling of relevant future consequences
-
-**Main risk**
-- task conditioning may bias the model in ways that remove useful uncertainty
+### 3. 3D / geometry-aware world models
+Represent objects, surfaces, points, or scene geometry explicitly so that physical interaction is easier to model.
 
 ---
 
-## The Core Difficulty
+## Must-read papers
 
-A world model should not merely predict what is easy to predict.  
-It should emphasize what matters for action:
-
-- contact onset
-- object state change
-- recoverability
-- hidden constraints
-- branching outcomes under different actions
-
-This is where many systems fall short.  
-They often learn the smooth parts of the world better than the consequential parts.
+| Paper | Venue / Year | Why it matters | Links |
+|---|---|---|---|
+| PlaNet: Learning Latent Dynamics for Planning from Pixels | 2018 | Foundational latent-dynamics planning paper | [Paper](https://arxiv.org/abs/1811.04551) |
+| Dream to Control: Learning Behaviors by Latent Imagination | 2019 | The Dreamer line begins here; key for imagined rollouts | [Paper](https://arxiv.org/abs/1912.01603) |
+| DreamerV2: Mastering Atari with Discrete World Models | 2020 | Mature latent-world-model RL recipe with strong performance | [Paper](https://arxiv.org/abs/2010.02193) · [Code](https://github.com/danijar/dreamerv2) |
+| DreamerV3: Mastering Diverse Domains through World Models | Nature / 2025 | Strongest general reference for robust, scalable world-model RL | [Paper](https://arxiv.org/abs/2301.04104) · [Code](https://github.com/danijar/dreamerv3) |
+| TD-MPC2: Scalable, Robust World Models for Continuous Control | ICLR 2024 | A practical model-based control baseline that matters for continuous-control robotics | [Project](https://www.tdmpc2.com/) · [Code](https://github.com/nicklashansen/tdmpc2) |
+| PointWorld: Scaling 3D World Models for In-The-Wild Robotic Manipulation | 2026 | Important 3D world-model direction using point-flow state and action representations | [Project](https://point-world.github.io/) · [Paper](https://arxiv.org/abs/2601.03782) · [Code](https://github.com/NVlabs/PointWorld) |
 
 ---
 
-## A Practical Evaluation Lens
+## Why world models matter in robotics
 
-When reading world model work, ask these questions:
-
-| Question | Why it matters |
+| Use case | Why a world model helps |
 |---|---|
-| What state is being modeled? | determines whether the abstraction fits the task |
-| What action interface is assumed? | prediction without executable action can remain detached |
-| What uncertainty is represented? | important when futures branch or observations are partial |
-| How is planning done? | imagined futures need a decision rule |
-| Does better prediction improve action? | the ultimate test |
+| data efficiency | imagined rollouts reduce the burden on real interaction |
+| planning | future states can be scored before acting |
+| recovery | multi-step prediction can reveal drift earlier |
+| interaction modeling | articulated, deformable, or tool-based tasks need future structure |
+| embodiment transfer | shared geometric representations can generalize beyond robot-specific joints |
 
 ---
 
-## Common Failure Modes
+## Practical open-source stack
 
-### 1. Predictive but strategically weak
-The model predicts average futures well, yet does not help choose between actions.
-
-### 2. Visually plausible but physically wrong
-Frame-level realism hides mistakes in contact, timing, or object state.
-
-### 3. Long-horizon drift
-The imagined future becomes incoherent as rollout depth increases.
-
-### 4. The representation is not portable
-The latent state works for one embodiment, one view, or one task family only.
-
-### 5. Planning assumes more than the model knows
-The planner treats the world model as certain when it is not.
+| Project | Best use case | Links |
+|---|---|---|
+| DreamerV3 | robust starting point for imagined-rollout RL | [Code](https://github.com/danijar/dreamerv3) |
+| TD-MPC2 | continuous-control and multitask model-based control | [Project](https://www.tdmpc2.com/) · [Code](https://github.com/nicklashansen/tdmpc2) |
+| MuJoCo Playground | GPU-accelerated training and sim-to-real-oriented experiments | [Website](https://playground.mujoco.org/) · [Code](https://github.com/google-deepmind/mujoco_playground) |
+| PointWorld | action-conditioned 3D world modeling for manipulation | [Project](https://point-world.github.io/) · [Code](https://github.com/NVlabs/PointWorld) |
+| RoboNet | classic multi-robot dataset for video prediction and visual dynamics | [Blog](https://bair.berkeley.edu/blog/2019/11/26/robo-net/) · [Code](https://github.com/SudeepDasari/RoboNet) |
 
 ---
 
-## How World Models Meet Robotics
+## Datasets and environments that fit this topic
 
-In embodied intelligence, world models become interesting when they are attached to:
-
-- task planning
-- action proposal ranking
-- model-based reinforcement learning
-- error recovery
-- simulation acceleration
-- state abstraction for multimodal agents
-
-The field becomes richer when world models stop being isolated predictors and become part of an action loop.
+| Resource | Why it matters | Links |
+|---|---|---|
+| RoboNet | classic dataset for large-scale visual dynamics and transfer across robot platforms | [Paper](https://arxiv.org/abs/1910.11215) |
+| Open X-Embodiment | useful when studying embodiment diversity or action-interface alignment | [Project](https://robotics-transformer-x.github.io/) |
+| ManiSkill | broad manipulation tasks for model-based or data-driven control experiments | [Website](https://www.maniskill.ai/) |
+| Meta-World / DMControl / MyoSuite | common control benchmarks used in TD-MPC2-style evaluations | [TD-MPC2 page](https://www.tdmpc2.com/) |
 
 ---
 
-## Build-First Project Ideas
+## How to read world-model papers
 
-### Beginner project
-Learn an action-conditioned latent predictor for a simple simulated robot task and study where short-horizon and long-horizon predictions diverge.
+Ask these questions:
 
-### Intermediate project
-Compare:
-- image-space prediction
-- latent-state prediction
-- object-centric prediction
+1. **What is the state representation?**  
+   Latent categories? observations? tokens? point flow? object slots?
 
-Evaluate not only prediction quality, but whether each model helps planning.
+2. **How does action enter the model?**  
+   Robot-specific joints? end-effector control? embodiment-agnostic geometry?
 
-### Advanced project
-Use world-model rollouts to rank candidate action sequences or grasp candidates, then measure whether the imagined futures align with real outcomes.
+3. **What is predicted?**  
+   Reward only? latent state? images? 3D flow? contact-relevant structure?
 
----
+4. **How is the model used?**  
+   Policy optimization? MPC? action scoring? demonstration synthesis?
 
-## Reading Strategy
-
-Read papers by asking:
-
-1. **What exactly is the internal world here?**
-2. **What is predictable, and what is strategically consequential?**
-3. **How does this representation connect to control?**
-4. **Does the planner trust the model appropriately?**
-
-That sequence will reveal much more than simply asking whether the model is “generative.”
+5. **What makes the model fail?**  
+   Long horizon? contact discontinuity? partial observability? embodiment shift?
 
 ---
 
-## Representative Work Clusters to Curate Later
+## Common failure modes
 
-- model-based reinforcement learning
-- latent planning models
-- object-centric world models
-- 3D or geometry-aware world models
-- multimodal or language-conditioned world models
-- world models for manipulation and task planning
+- visually plausible but physically wrong rollouts
+- compounding error over long horizons
+- latent states that are compact but not actionable
+- action representations that lock the model to one robot embodiment
+- good simulator results without a viable bridge to real sensing
 
 ---
 
-## Closing Thought
+## Build-first project ideas
 
-A world model earns its name only when it captures **the right world for action**,  
-not merely a world that is easy to reconstruct.
+### Practical starter
+Train a DreamerV3 or TD-MPC2 baseline on a small manipulation/control benchmark, then inspect where imagined rollouts diverge.
+
+### Geometry-aware starter
+Use PointWorld-like 3D forecasting ideas on a reduced tabletop setup and evaluate action-conditioned point prediction.
+
+### Research-oriented starter
+Compare robot-specific action inputs against geometry-aware or end-effector-centric action representations and measure transfer across embodiments.
+
+---
+
+## Related paper lists
+
+- [Topic paper list — World Models](../paper_lists/by_topic/world_model.md)
+- [ICLR selections](../paper_lists/by_conference/iclr.md)
+- [T-RO selections](../paper_lists/by_journal/tro.md)
+
+---
+
+## Closing thought
+
+A good world model is not the one that predicts the future most beautifully.  
+It is the one that makes **decision-making under embodiment and physics** easier.

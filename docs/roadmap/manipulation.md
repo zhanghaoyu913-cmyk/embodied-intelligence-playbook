@@ -4,229 +4,161 @@
 
 # Manipulation
 
-> **Manipulation is where intelligence leaves description and enters consequence.**
+> **Manipulation is where perception becomes commitment.**
 
 <p align="center">
-  <img src="../../assets/figures/flow_manipulation.svg" alt="Manipulation loop" width="92%"/>
+  <img src="../../assets/figures/flow_manipulation.svg" alt="Manipulation flow" width="92%"/>
 </p>
 
 ---
 
-## Topic Mood
+## What this topic is really about
 
-Manipulation is the practical theater of embodied intelligence.  
-It is where planning meets contact, perception meets timing, and beautiful abstractions meet stubborn physics.
-
-A manipulation system is rarely judged by how elegant its model looks in isolation.  
-It is judged by whether tasks actually get finished:
+Manipulation studies how robots interact with objects to complete tasks such as:
 
 - pick and place
-- open and close
-- insert, align, push, pull
-- organize clutter
-- use tools
-- recover after deviation
+- opening drawers and doors
+- tool use
+- insertion
+- rearrangement
+- long-horizon multi-stage tabletop or mobile manipulation
 
-That is why manipulation is both deeply applied and conceptually rich.
-
----
-
-## What is this topic?
-
-Manipulation studies how robots interact with objects to produce purposeful state change.
-
-This sounds broad because it is broad. In practice, manipulation sits on top of several coupled problems:
-
-- scene understanding
-- object localization
-- reachability and motion generation
-- contact management
-- grasp selection
-- task sequencing
-- feedback and recovery
-
-A manipulation pipeline becomes interesting when these components cannot be treated independently anymore.
+It is a core embodied-AI topic because it exposes the full chain from **visual understanding → action selection → contact → recovery**.
 
 ---
 
-## Why it matters
+## Research map
 
-Manipulation matters because it is one of the clearest tests of whether an embodied system can do more than react.
-
-A strong manipulation system must show:
-
-- task completion
-- robustness under clutter
-- tolerance to perception noise
-- physical competence under contact
-- ability to recover when execution drifts
-
-It is also one of the best arenas for unifying perception, planning, control, affordance, and world modeling.
+```mermaid
+flowchart LR
+    A[Observation] --> B[Task Representation]
+    B --> C[Policy / Planner]
+    C --> D[Motion / Contact]
+    D --> E[Task Outcome]
+    E --> F[Recovery / Replanning]
+    F --> C
+```
 
 ---
 
-## The Core Structure of Manipulation
+## Key problem families
 
-A useful mental picture is:
-
-| Stage | Main question |
+| Problem family | Why it is hard |
 |---|---|
-| perceive | what matters in the scene right now? |
-| localize | where are the relevant objects, parts, and constraints? |
-| approach | how should the robot enter the interaction? |
-| interact | what force, pose, timing, or sequence changes the object state? |
-| recover | what happens if the nominal execution fails? |
-
-Many systems are strong on the first three and weak on the last two.
+| contact-rich execution | small pose errors can cause total task failure |
+| long-horizon structure | many tasks require staging, memory, and recovery |
+| clutter and occlusion | scene understanding is partial and changes during execution |
+| task generalization | policies must work across objects, layouts, and language variations |
+| embodiment mismatch | data collection, training, and deployment often happen on different robots |
 
 ---
 
-## Typical Technical Routes
+## Main technical routes
 
-### Route A — planning-heavy manipulation
-Use explicit models, motion planning, constraints, or symbolic structure to drive execution.
+### 1. Behavior cloning and imitation learning
+Fastest route to strong practical baselines when good demonstrations are available.
 
-**Strengths**
-- interpretable
-- compositional
-- often reliable when models are correct
+### 2. Diffusion and sequence policies
+Useful for multimodal or temporally coherent action prediction.
 
-**Weaknesses**
-- brittle to uncertainty
-- hard to scale to cluttered or ambiguous scenes
+### 3. 3D action-centric policies
+Represent observations and actions in voxel/point/3D spaces for stronger geometric priors.
 
-### Route B — imitation-driven manipulation
-Learn policies from demonstrations.
+### 4. Language-conditioned multi-task learning
+Useful when task identity changes often or instructions must generalize.
 
-**Strengths**
-- direct path from examples to behavior
-- practical for many short-horizon tasks
-- useful when specifying reward is difficult
-
-**Weaknesses**
-- covariate shift
-- limited recovery unless demonstrations include it
-- may imitate style rather than intention
-
-### Route C — reinforcement learning for interaction
-Optimize behavior through trial and feedback.
-
-**Strengths**
-- useful for contact-rich or non-trivial strategies
-- can discover robust behaviors
-
-**Weaknesses**
-- sample inefficiency
-- reward design burden
-- sim-to-real gap can dominate
-
-### Route D — hybrid systems
-Combine learned perception or policy modules with analytical planning or control.
-
-**Strengths**
-- often the most practical route
-- allows each component to do what it is best at
-
-**Weaknesses**
-- interfaces become the main engineering challenge
+### 5. Teleoperation-centered real-data pipelines
+A very practical route for real-world manipulation systems.
 
 ---
 
-## What Makes Manipulation Hard
+## Must-read papers
 
-### 1. Contact is not a small detail
-The moment the robot touches the object, uncertainty spikes.
-
-### 2. Success is sequential
-A task may fail because of an early alignment mistake even if the final action looks correct.
-
-### 3. The scene is not static
-Objects move, occlude each other, and change task affordances.
-
-### 4. Recovery is not optional
-A manipulation system without recovery is often a demo, not yet a tool.
+| Paper | Venue / Year | Why it matters | Links |
+|---|---|---|---|
+| PerAct: A Multi-Task Transformer for Robotic Manipulation | CoRL 2022 | A very influential 3D language-conditioned manipulation baseline | [Project](https://peract.github.io/) · [Code](https://github.com/peract/peract) |
+| Diffusion Policy: Visuomotor Policy Learning via Action Diffusion | RSS 2023 | One of the most practical and widely adopted modern policy baselines | [Project](https://diffusion-policy.cs.columbia.edu/) · [Code](https://github.com/real-stanford/diffusion_policy) |
+| Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware (ACT / ALOHA) | RSS 2023 | Important for fine-grained real-world imitation learning with action chunks | [Project](https://tonyzhaozh.github.io/aloha/) · [Code](https://github.com/tonyzhaozh/act) |
+| Mobile ALOHA: Learning Bimanual Mobile Manipulation with Low-Cost Whole-Body Teleoperation | CoRL 2024 | A practical bridge from tabletop manipulation to mobile, whole-body tasks | [Project](https://mobile-aloha.github.io/) · [Paper](https://arxiv.org/abs/2401.02117) |
+| VIMA: General Robot Manipulation with Multimodal Prompts | ICML 2023 | Important for prompt-centric and generalization-oriented manipulation research | [Project](https://vimalabs.github.io/) · [Code](https://github.com/vimalabs/vima) |
+| OpenVLA: An Open-Source Vision-Language-Action Model | CoRL 2024 | Useful as a modern open VLA manipulation stack | [Project](https://openvla.github.io/) · [Code](https://github.com/openvla/openvla) |
 
 ---
 
-## A Useful Taxonomy
+## Benchmarks and environments
 
-You can classify manipulation tasks by the kind of physical reasoning they demand.
-
-| Task family | Main difficulty |
-|---|---|
-| pick-and-place | grasp quality and placement precision |
-| articulated object manipulation | hidden kinematic or force constraints |
-| contact-rich insertion | alignment tolerance and force-sensitive control |
-| clutter manipulation | interaction coupling between multiple objects |
-| tool use | delayed consequence and relational reasoning |
-| long-horizon household tasks | sequencing, memory, and error accumulation |
-
-This taxonomy is often more helpful than grouping by benchmark name.
+| Benchmark / Env | What it is good for | Links |
+|---|---|---|
+| RLBench | diverse, structured, multi-task simulated manipulation | [Website](https://sites.google.com/view/rlbench) · [Code](https://github.com/stepjam/RLBench) |
+| CALVIN | long-horizon language-conditioned manipulation | [Project](https://calvin.cs.uni-freiburg.de/) · [Code](https://github.com/mees/calvin) |
+| LIBERO | transfer and lifelong robot learning evaluation | [Project](https://libero-project.github.io/main.html) · [Code](https://github.com/Lifelong-Robot-Learning/LIBERO) |
+| ManiSkill | scalable, open-source manipulation training and data generation | [Website](https://www.maniskill.ai/) · [Code](https://github.com/haosulab/maniskill) |
+| FurnitureBench | real-world long-horizon assembly benchmark | [Project](https://clvrai.github.io/furniture-bench/) |
+| BridgeData V2 | accessible real-robot data for scalable manipulation | [Project](https://rail-berkeley.github.io/bridgedata/) · [Code](https://github.com/rail-berkeley/bridge_data_v2) |
 
 ---
 
-## Practical Failure Modes
+## Open-source stacks worth knowing
 
-### Perception-led failure
-The system never identified the relevant handle, edge, or free space.
-
-### Geometry-led failure
-The plan exists, but the approach trajectory or gripper pose is poor.
-
-### Contact-led failure
-The interaction starts, but force, friction, or compliance breaks the behavior.
-
-### Sequencing-led failure
-Each short step is locally sensible, but the full task does not compose.
-
-### Recovery-led failure
-After the first deviation, the system continues as though nothing happened.
+| Stack | Why you would choose it | Links |
+|---|---|---|
+| robomimic | standardized offline imitation-learning baselines and datasets | [Project](https://robomimic.github.io/) · [Code](https://github.com/ARISE-Initiative/robomimic) |
+| LeRobot | practical model/dataset/deployment ecosystem | [Hub](https://huggingface.co/lerobot) · [Code](https://github.com/huggingface/lerobot) |
+| ACT + ALOHA | strong low-cost real-robot manipulation starting point | [Policy code](https://github.com/tonyzhaozh/act) · [Hardware](https://github.com/tonyzhaozh/aloha) |
+| Diffusion Policy | strong baseline for state and vision-based imitation learning | [Project](https://diffusion-policy.cs.columbia.edu/) · [Code](https://github.com/real-stanford/diffusion_policy) |
+| PerAct | good if you care about 3D language-conditioned manipulation | [Project](https://peract.github.io/) · [Code](https://github.com/peract/peract) |
 
 ---
 
-## Build-First Project Ideas
+## What strong manipulation papers usually get right
 
-### Beginner project
-Implement a clean pick-and-place pipeline in simulation and compare open-loop versus closed-loop execution.
-
-### Intermediate project
-Add explicit recovery logic to a manipulation task and measure how much end success depends on recovery rather than nominal accuracy.
-
-### Advanced project
-Compare a pure policy approach with a hybrid system that combines:
-- learned perception
-- grasping or affordance prior
-- motion planning
-- reactive correction
+- they evaluate in **closed loop**
+- they explain the **action interface**
+- they choose a benchmark that matches the claim
+- they analyze failure under drift, not only on nominal trajectories
+- they make clear whether the method depends on teleoperation, simulation, or large-scale pretraining
 
 ---
 
-## Reading Strategy
+## Common failure modes
 
-When reading manipulation papers, ask:
-
-1. Where does task structure come from?
-2. How much of the system is open loop?
-3. Where is recovery handled?
-4. What kind of contact is central?
-5. Is the benchmark exposing the hard part or hiding it?
-
-These questions often separate genuine progress from polished demonstration.
+- action distribution drift over long horizons
+- contact-sensitive tasks failing despite good visual grounding
+- low success under small viewpoint or object-pose changes
+- policies that are impressive offline but brittle online
+- evaluation setups that hide reset, recovery, or planning burdens
 
 ---
 
-## Representative Work Clusters to Curate Later
+## Build-first project ideas
 
-- imitation learning for manipulation
-- contact-rich manipulation
-- long-horizon task execution
-- articulated object interaction
-- language-conditioned manipulation
-- hybrid perception–planning systems
+### A good beginner stack
+- benchmark: RLBench or CALVIN
+- policy: Diffusion Policy or ACT
+- evaluation: task success in closed loop
+
+### A good research stack
+- benchmark: LIBERO or FurnitureBench
+- policy: PerAct / OpenVLA / ACT / Diffusion Policy
+- focus: transfer, recovery, or action representation
+
+### A good practical stack
+- data: BridgeData V2 or your own ALOHA-style demos
+- framework: LeRobot or robomimic
+- task: 2–5 tasks with carefully chosen evaluation metrics
 
 ---
 
-## Closing Thought
+## Related paper lists
 
-Manipulation is not just about moving objects.  
-It is about making intention survive contact.
+- [Topic paper list — Manipulation](../paper_lists/by_topic/manipulation.md)
+- [RSS selections](../paper_lists/by_conference/rss.md)
+- [CoRL selections](../paper_lists/by_conference/corl.md)
+- [ICML selections](../paper_lists/by_conference/icml.md)
+
+---
+
+## Closing thought
+
+Manipulation is not won by having the biggest model.  
+It is won by choosing the right **task interface, benchmark, and recovery strategy** for real interaction.

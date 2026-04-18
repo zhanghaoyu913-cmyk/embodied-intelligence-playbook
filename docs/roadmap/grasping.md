@@ -4,216 +4,146 @@
 
 # Grasping
 
-> **Grasping is the art of establishing meaningful contact.**
+> **A grasp is never just a pose. It is a prediction about stability, geometry, and the next task.**
 
 <p align="center">
-  <img src="../../assets/figures/flow_grasping.svg" alt="Grasping pipeline" width="92%"/>
+  <img src="../../assets/figures/flow_grasping.svg" alt="Grasping flow" width="92%"/>
 </p>
 
 ---
 
-## Topic Mood
+## What this topic is really about
 
-Grasping is often introduced as a subroutine, but in practice it is one of the most consequential primitives in embodied manipulation.
+Grasping asks how a robot should choose and execute **stable, task-relevant contact** on objects under:
 
-A poor grasp does not just fail locally.  
-It can:
+- partial observation
+- clutter
+- novel shapes
+- sensor noise
+- downstream task constraints
 
-- make downstream manipulation impossible
-- damage a long-horizon plan
-- force awkward recovery
-- hide task misunderstanding behind apparent mechanical failure
-
-That is why grasping sits at a fascinating junction of:
-- geometry
-- stability
-- uncertainty
-- embodiment
-- task intent
+It is the most direct place where **geometry, uncertainty, and action feasibility** meet.
 
 ---
 
-## What is this topic?
+## Research map
 
-Grasping studies how a robot should establish contact with an object so that interaction becomes stable, useful, and task-appropriate.
-
-There are at least three distinct questions hidden inside that sentence:
-
-1. **Where** should contact happen?
-2. **How** should the hand or gripper be configured?
-3. **Why this grasp**, given the downstream task?
-
-This last question is especially important.  
-A grasp that is mechanically stable may still be functionally poor.
+```mermaid
+flowchart LR
+    A[RGB / Depth / Point Cloud] --> B[Candidate Grasp Generation]
+    B --> C[Scoring / Filtering]
+    C --> D[Collision / Reachability Check]
+    D --> E[Execution]
+    E --> F[Feedback / Re-grasp]
+```
 
 ---
 
-## Why it matters
+## Main technical routes
 
-Grasping matters because it is a gateway action.  
-If the initial interaction is wrong, many later behaviors become either impossible or unnecessarily fragile.
+### 1. Analytic grasp synthesis
+Traditional route based on geometry, force closure, and hand/object contact models.
 
-It also serves as a compact microcosm of embodied AI:
+### 2. Candidate generation + learned scoring
+Generate many grasps, then rank them with learned models.
 
-- perception must identify shape and free space
-- representation must encode geometry and uncertainty
-- decision must balance stability and task constraints
-- control must execute contact without destabilization
-- verification must detect whether the grasp truly succeeded
+### 3. Direct 6-DoF grasp prediction
+Predict grasps directly from point clouds or depth scenes.
 
----
+### 4. Task-oriented grasping
+Pick grasps that help the next task, not just immediate pickup stability.
 
-## A Five-Stage View
-
-| Stage | Main concern |
-|---|---|
-| sense | what geometry and occlusion are visible? |
-| propose | what candidate grasps are even feasible? |
-| score | which grasp best matches stability and task intent? |
-| execute | can the robot realize the contact precisely? |
-| verify | did the actual interaction match the expected one? |
-
-A grasp pipeline is only as strong as its weakest stage.  
-Verification is especially under-emphasized in many systems.
+### 5. Reactive / temporal grasping
+Handle dynamic scenes and re-evaluate while the robot acts.
 
 ---
 
-## Main Technical Routes
+## Must-read papers and projects
 
-### Route A — analytical grasp synthesis
-Derive grasp quality from geometry and force closure style reasoning.
-
-**Strengths**
-- interpretable
-- physically motivated
-- useful when geometry is reliable
-
-**Weaknesses**
-- sensitive to modeling assumptions
-- can struggle with clutter, partial observation, or novel object variation
-
-### Route B — data-driven grasp detection
-Predict grasp candidates from depth, point clouds, images, or multimodal inputs.
-
-**Strengths**
-- strong empirical performance
-- scalable to many object classes
-- adapts to real-world messiness better than strict analytical pipelines
-
-**Weaknesses**
-- may be less transparent
-- grasp quality can depend strongly on dataset bias
-
-### Route C — task-oriented grasping
-Select grasps not only for stability, but for what comes after.
-
-**Strengths**
-- more aligned with manipulation
-- supports tool use, reorientation, and structured tasks
-
-**Weaknesses**
-- requires modeling future task consequences
-- harder to evaluate cleanly
-
-### Route D — multimodal grasping
-Use tactile signals, force feedback, vision, or language jointly.
-
-**Strengths**
-- better for uncertainty and verification
-- improves closed-loop adaptation
-
-**Weaknesses**
-- system complexity rises quickly
+| Work | Venue / Year | Why it matters | Links |
+|---|---|---|---|
+| GPD: Grasp Pose Detection in Point Clouds | 2017 | Classic point-cloud grasp detection pipeline and strong baseline mentality | [Paper](https://arxiv.org/abs/1706.09911) · [Code](https://github.com/atenpas/gpd) |
+| GraspNet-1Billion: A Large-Scale Benchmark for General Object Grasping | CVPR 2020 | The benchmark that changed the scale and realism of 6-DoF grasp evaluation | [Project](https://graspnet.net/) · [Paper](https://openaccess.thecvf.com/content_CVPR_2020/papers/Fang_GraspNet-1Billion_A_Large-Scale_Benchmark_for_General_Object_Grasping_CVPR_2020_paper.pdf) |
+| Contact-GraspNet: Efficient 6-DoF Grasp Generation in Cluttered Scenes | ICRA 2021 | Widely used direct 6-DoF grasp generation model from raw scene point clouds | [Paper](https://research.nvidia.com/publication/2021-03_contact-graspnet-efficient-6-dof-grasp-generation-cluttered-scenes) · [Code](https://github.com/NVlabs/contact_graspnet) |
+| Graspness Discovery in Clutters for Fast and Accurate Grasp Detection | ICCV 2021 | Important bridge between scene understanding and dense grasp selection | [Project / Paper Links](https://graspnet.net/publications.html) |
+| AnyGrasp: Robust and Efficient Grasp Perception in Spatial and Temporal Domains | T-RO 2023 | Strong practical library for dense, robust, temporally smooth grasping | [Project](https://graspnet.net/anygrasp.html) · [Paper & Library](https://graspnet.net/publications.html) |
+| SuctionNet-1Billion | RA-L 2021 | Useful if suction grasping is relevant to industrial manipulation | [Project & Paper Links](https://graspnet.net/publications.html) |
 
 ---
 
-## What Makes Grasping Deep
+## Benchmark and dataset map
 
-### 1. Partial observation
-The robot rarely sees the full object clearly.
-
-### 2. Stability is contextual
-A “good grasp” changes depending on the downstream task.
-
-### 3. Contact is noisy
-Execution error, compliance, friction, and material properties all matter.
-
-### 4. Verification is essential
-A predicted grasp is not yet a successful grasp.
+| Resource | Why it matters | Links |
+|---|---|---|
+| GraspNet-1Billion | standard large-scale 6-DoF grasp benchmark | [Project](https://graspnet.net/) |
+| SuctionNet-1Billion | suction-specific benchmark for industrial setups | [Publications page](https://graspnet.net/publications.html) |
+| TransCG | transparent-object depth completion and grasping | [Publications page](https://graspnet.net/publications.html) |
+| YCB | standard object set often used in grasping/manipulation pipelines | [YCB Benchmarks](http://ycb-benchmarks.s3-website-us-east-1.amazonaws.com/) |
 
 ---
 
-## Stability vs Usefulness
+## Practical open-source stack
 
-One of the most important distinctions in grasping is this:
-
-| Type | Optimization target |
-|---|---|
-| stable grasp | hold the object reliably |
-| task-oriented grasp | hold the object in a way that enables the next action |
-| recoverable grasp | allow re-adjustment or safe recovery if the first attempt is imperfect |
-
-A mature grasping system eventually needs all three.
+| Project | Best use case | Links |
+|---|---|---|
+| GPD | classic baseline, ROS-style integration, simpler grasp-candidate workflow | [Code](https://github.com/atenpas/gpd) |
+| Contact-GraspNet | direct 6-DoF grasp generation from scene point clouds | [Code](https://github.com/NVlabs/contact_graspnet) |
+| AnyGrasp | practical deployment-oriented dense grasp library | [Project](https://graspnet.net/anygrasp.html) |
+| GraspNet ecosystem | benchmark, evaluation, dataset, and libraries in one place | [Project](https://graspnet.net/) |
 
 ---
 
-## Practical Failure Modes
+## What to look for in grasping papers
 
-### Proposal failure
-The system never considered the right grasp family.
-
-### Scoring failure
-The right grasp was proposed, but ranked too low.
-
-### Execution failure
-The chosen grasp was good in principle, but motion or contact realization was poor.
-
-### Task mismatch
-The grasp is stable, but blocks the actual manipulation objective.
-
-### Verification failure
-The system assumes success even though the object slipped or rotated undesirably.
+- **input modality**: depth, RGB-D, point cloud, segmentation, tactile feedback
+- **grasp representation**: contact pairs, 6-DoF pose, suction center, dense heatmap
+- **evaluation mode**: analytic metric, simulation, real robot, clutter, dynamics
+- **downstream task link**: is the grasp just stable, or useful for what comes next?
+- **runtime**: can the method operate fast enough for closed-loop deployment?
 
 ---
 
-## Build-First Project Ideas
+## Common failure modes
+
+- grasps that look stable but are unreachable
+- grasps that work in isolation but fail in clutter
+- grasp ranking that ignores object mass distribution or task intent
+- models that overfit to depth cleanliness or camera pose
+- evaluation protocols that do not match deployment conditions
+
+---
+
+## Good first projects
 
 ### Beginner project
-Implement grasp proposal plus scoring on point clouds and visualize how ranking changes under scene perturbation.
+Run **GPD** and **Contact-GraspNet** on the same point-cloud scenes and compare:
+- density of proposals
+- collision quality
+- runtime
+- grasp diversity
 
 ### Intermediate project
-Compare geometry-only grasp ranking against a task-conditioned reranking module.
+Take **AnyGrasp** or **GraspNet** grasps and add a **task-aware reranking module** based on object affordance or target pose.
 
 ### Advanced project
-Integrate tactile or post-contact verification into the loop and measure how many nominal failures are recoverable.
+Study how grasp generation should change when:
+- the object is articulated,
+- the object is deformable,
+- the next task imposes a pose or interaction constraint.
 
 ---
 
-## Reading Strategy
+## Related paper lists
 
-When reading grasping papers, ask:
-
-1. Is the paper optimizing stability, usefulness, or both?
-2. What observation modality is assumed?
-3. How are candidates generated?
-4. Is execution realism evaluated?
-5. Does the method connect to downstream task success?
-
-That last question often changes how impressive a result actually is.
+- [Topic paper list — Grasping](../paper_lists/by_topic/grasping.md)
+- [CVPR selections](../paper_lists/by_conference/cvpr.md)
+- [ICCV selections](../paper_lists/by_conference/iccv.md)
+- [ICRA selections](../paper_lists/by_conference/icra.md)
+- [RA-L selections](../paper_lists/by_journal/ral.md)
+- [T-RO selections](../paper_lists/by_journal/tro.md)
 
 ---
 
-## Representative Work Clusters to Curate Later
+## Closing thought
 
-- analytical grasping
-- point-cloud-based grasp detection
-- clutter-aware grasping
-- task-oriented grasping
-- tactile or multimodal grasp verification
-
----
-
-## Closing Thought
-
-Grasping is where geometry first becomes intention.  
-It is not just about holding an object. It is about holding it **for something**.
+A grasp is valuable only when it is not merely possible, but **deployable, stable, and useful for the next stage of the task**.

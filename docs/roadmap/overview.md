@@ -4,213 +4,192 @@
 
 # Overview
 
-> **Embodied intelligence is not a single capability.**  
-> It is the coordination of perception, language, memory, action, control, and physical consequence.
-
----
-
-## Field Character
-
-Embodied AI becomes interesting the moment a system can no longer hide behind static prediction.  
-The world pushes back. Objects move, friction matters, occlusion breaks certainty, instructions are ambiguous, and actions have irreversible consequences.
-
-That is why embodied intelligence sits at the intersection of several traditions at once:
-
-- computer vision
-- machine learning
-- robotics
-- control
-- planning
-- human-computer interaction
-- simulation and physical modeling
-
-The field is not just about building agents that **see** or **speak**.  
-It is about building agents that can **form internal structure about the world and use it while acting inside the world**.
-
----
-
-## A Compact Mental Model
-
-Embodied AI can be read through five recurring layers:
-
-| Layer | Main question | Typical bottleneck |
-|---|---|---|
-| Perception | What is present in the scene? | ambiguity, partial observation, viewpoint shift |
-| Representation | What internal structure should be remembered? | brittle abstractions, poor generalization |
-| Decision | What should happen next? | weak planning, shallow reasoning |
-| Control | How do desired actions become motion? | instability, precision, latency |
-| Interaction outcome | What changed after the action? | contact uncertainty, cascading failures |
-
-A strong embodied system does not only optimize one layer well.  
-It **couples** these layers without allowing one of them to become the hidden failure source.
-
----
-
-## Visual Map
+> **Embodied intelligence is not one problem. It is a stack of coupled problems** — representation, action, memory, interaction, embodiment, and transfer.
 
 <p align="center">
-  <img src="../../assets/figures/topic_constellation.svg" alt="Embodied AI constellation" width="92%"/>
+  <img src="../../assets/figures/topic_constellation.svg" alt="Embodied AI topic constellation" width="92%"/>
 </p>
 
 ---
 
-## The Five Curated Axes in This Repository
+## The field at a glance
+
+Embodied AI sits at the intersection of:
+
+- **perception**, because the agent must read a changing scene
+- **language**, because goals are often specified abstractly
+- **control**, because behavior must be physically executed
+- **world modeling**, because action requires prediction
+- **interaction**, because objects respond to contact and force
+- **generalization**, because every new scene or embodiment changes the problem
+
+A useful way to think about the field is to separate three layers:
+
+| Layer | Main question | Typical outputs |
+|---|---|---|
+| perception & representation | what is in the scene and what matters? | object state, 3D geometry, task-relevant features |
+| decision & prediction | what should happen next and why? | plans, latent rollouts, subgoals, policies |
+| execution & adaptation | how do we make it work in the loop? | control actions, corrections, recoveries |
+
+---
+
+## Field map
+
+```mermaid
+flowchart LR
+    A[Perception & Geometry] --> B[Task Grounding]
+    B --> C[Policy / Planning]
+    C --> D[Closed-loop Execution]
+    D --> E[Feedback / Recovery]
+    E --> C
+    A --> F[Affordance]
+    F --> C
+    A --> G[World Model]
+    G --> C
+    H[Datasets & Benchmarks] --> A
+    H --> C
+    I[Simulators & Tooling] --> D
+```
+
+---
+
+## Five core topic families in this repository
 
 ### 1. Vision-Language-Action
-This axis asks how perception and language can be transformed into grounded behavior.  
-It is where instruction following, multimodal reasoning, and action policies begin to converge.
+Focuses on how vision and language become executable motor behavior.
+
+Open the page: [Vision-Language-Action](vla.md)
 
 ### 2. World Models
-This axis asks what kind of internal world representation lets an agent predict, imagine, plan, and transfer.  
-It is where state abstraction, latent dynamics, and long-horizon structure come into focus.
+Focuses on predicting latent or geometric future states so that a robot can imagine before acting.
+
+Open the page: [World Models](world_model.md)
 
 ### 3. Manipulation
-This axis asks how robots actually complete tasks under physical interaction.  
-It centers on task decomposition, contact, robustness, and task-conditioned motion.
+Focuses on task execution under contact, uncertainty, clutter, and long-horizon structure.
+
+Open the page: [Manipulation](manipulation.md)
 
 ### 4. Grasping
-This axis asks how a robot establishes stable and task-suitable contact with objects.  
-It is a deceptively small problem with deep geometric and functional consequences.
+Focuses on stable, task-relevant contact generation and grasp selection in cluttered scenes.
+
+Open the page: [Grasping](grasping.md)
 
 ### 5. Affordance Learning
-This axis asks what can be done to an object, where, and under what purpose.  
-It is one of the most natural bridges between visual understanding and action semantics.
+Focuses on where and how an object can be acted upon, often bridging perception and action.
+
+Open the page: [Affordance Learning](affordance.md)
 
 ---
 
-## Three Ways to Read the Field
+## Cross-cutting themes
 
-### Lens A — the systems lens
-Under this view, embodied AI is about **stack design**:
+These themes appear again and again across subfields:
 
-- sensors
-- scene understanding
-- representation
-- decision logic
-- control interface
-- feedback loop
-
-This lens is useful when you want to build a working system.
-
-### Lens B — the representation lens
-Under this view, embodied AI is about **what must be represented explicitly or implicitly**:
-
-- object state
-- agent state
-- task state
-- interaction possibilities
-- uncertainty
-- temporal evolution
-
-This lens is useful when you want to understand why one model generalizes and another collapses.
-
-### Lens C — the evaluation lens
-Under this view, embodied AI is about **what success actually means**:
-
-- one-step success
-- long-horizon stability
-- recovery ability
-- transfer across scenes or embodiments
-- efficiency of data, compute, and annotation
-
-This lens matters because many systems look strong until the metric becomes realistic.
-
----
-
-## Core Tensions That Keep Reappearing
-
-| Tension | What it means |
+| Theme | Why it matters |
 |---|---|
-| Rich models vs controllable systems | expressive models are useful, but often harder to stabilize in closed-loop control |
-| Generality vs precision | a model that does many tasks may still fail at fine motor execution |
-| Prediction vs intervention | generating future observations is not the same as knowing how to change them |
-| Scale vs interpretability | larger systems often gain breadth while losing tractability |
-| Simulation speed vs physical realism | fast iteration can conflict with contact fidelity and transfer value |
-
-Understanding embodied AI means learning how different papers choose sides in these trade-offs.
-
----
-
-## Typical Failure Modes Across the Field
-
-A useful way to read embodied work is to ask **where failure enters first**.
-
-### Perception-first failure
-The system never formed a reliable understanding of the scene.
-
-### Representation-first failure
-The system saw the input, but stored the wrong internal abstraction.
-
-### Decision-first failure
-The system understood the state, but selected an action sequence that does not compose.
-
-### Control-first failure
-The plan is fine in theory, but motion execution is too brittle.
-
-### Interaction-first failure
-The robot touches the world, and the world immediately reveals the hidden assumptions.
+| data interface | robot data comes in many formats, embodiments, and conventions |
+| action representation | joints, end-effector deltas, chunks, tokens, trajectories, and diffusion samples all behave differently |
+| 3D structure | many embodied tasks become easier once the system reasons over geometry rather than only pixels |
+| long-horizon credit assignment | even simple instructions can require memory, recovery, and multi-stage execution |
+| embodiment transfer | policies that work on one robot often fail silently on another if the action/state interface is not unified |
+| sim-to-real | simulation is useful only when the chosen benchmark and control abstractions preserve the right bottlenecks |
 
 ---
 
-## A Practical Reading Strategy
+## Canonical datasets, simulators, and frameworks
 
-### Stage 1 — learn the map
-Read topic roadmaps to understand vocabulary, task families, and design choices.
+### Datasets to know early
+- [Open X-Embodiment](../resources/datasets.md#open-x-embodiment)
+- [BridgeData V2](../resources/datasets.md#bridgedata-v2)
+- [CALVIN](../resources/datasets.md#calvin)
+- [LIBERO](../resources/datasets.md#libero)
+- [GraspNet-1Billion](../resources/datasets.md#graspnet-1billion)
+- [PartNet-Mobility](../resources/datasets.md#partnet-mobility)
+- [3D-AffordanceNet](../resources/datasets.md#3d-affordancenet)
 
-### Stage 2 — follow one buildable thread
-Pick one of:
-- VLA for multimodal policy design
-- world models for prediction and planning
-- manipulation for task execution
-- grasping for interaction primitives
-- affordance learning for perception-to-action semantics
+### Simulators to know early
+- [MuJoCo](../resources/simulators.md#mujoco)
+- [Isaac Lab](../resources/simulators.md#isaac-lab)
+- [ManiSkill](../resources/simulators.md#maniskill)
+- [RLBench](../resources/simulators.md#rlbench)
+- [Habitat 3.0](../resources/simulators.md#habitat-30)
+- [SAPIEN](../resources/simulators.md#sapien)
 
-### Stage 3 — connect neighboring topics
-Good embodied research rarely stays inside one neat box.
-
-Examples:
-- grasping often benefits from affordance reasoning
-- manipulation often needs robust grasping
-- VLA models often need world-model style structure
-- world models become much more meaningful when attached to action
-
-### Stage 4 — let evaluation shape your understanding
-Always ask how a method behaves:
-- under partial observation
-- under contact
-- over longer horizons
-- under embodiment change
-- after the first failure
+### Frameworks to know early
+- [LeRobot](../resources/frameworks.md#lerobot)
+- [robomimic](../resources/frameworks.md#robomimic)
+- [OpenVLA](../resources/frameworks.md#openvla)
+- [Octo](../resources/frameworks.md#octo)
+- [TD-MPC2](../resources/frameworks.md#td-mpc2)
+- [MuJoCo Playground](../resources/frameworks.md#mujoco-playground)
 
 ---
 
-## Recommended Starting Points
+## Major venues worth tracking
 
-| You are interested in… | Start here |
-|---|---|
-| multimodal instruction-following robots | [Vision-Language-Action](vla.md) |
-| planning, prediction, and latent dynamics | [World Models](world_model.md) |
-| building practical robot task systems | [Manipulation](manipulation.md) |
-| stable contact and task-oriented interaction | [Grasping](grasping.md) |
-| functional understanding of objects and regions | [Affordance Learning](affordance.md) |
+### Conferences
+- [ICRA](../paper_lists/by_conference/icra.md)
+- [RSS](../paper_lists/by_conference/rss.md)
+- [CoRL](../paper_lists/by_conference/corl.md)
+- [CVPR](../paper_lists/by_conference/cvpr.md)
+- [ICCV](../paper_lists/by_conference/iccv.md)
+- [ICLR](../paper_lists/by_conference/iclr.md)
+- [ICML](../paper_lists/by_conference/icml.md)
 
----
-
-## Open Questions Worth Caring About
-
-- What should be represented explicitly in embodied systems, and what can remain implicit?
-- How can learned world structure actually improve action, not just prediction aesthetics?
-- What kind of abstraction transfers across robot embodiments?
-- How should long-horizon success be measured when recovery matters as much as first-step accuracy?
-- Can affordance, geometry, language, and dynamics be unified without becoming too vague to execute?
+### Journals
+- [RA-L](../paper_lists/by_journal/ral.md)
+- [T-RO](../paper_lists/by_journal/tro.md)
 
 ---
 
-## Closing Thought
+## Three practical entry paths
 
-The field becomes easier to navigate when you stop asking,  
-“Which topic is the most important?”  
-and start asking,  
-**“At what interface does intelligence become difficult here?”**
+### A. New researcher
+1. Read this overview.
+2. Pick one roadmap page.
+3. Follow the “must-read papers” table there.
+4. Use the resources pages to choose one benchmark and one framework.
+5. Reproduce one open-source baseline.
 
-That is the spirit of this repository.
+### B. Engineer building a system
+1. Start from **manipulation** or **grasping**.
+2. Decide your action interface and evaluation benchmark first.
+3. Use **affordance** only when task-specific interaction regions matter.
+4. Add **world models** only when planning or data efficiency is the actual bottleneck.
+
+### C. Researcher interested in foundation models
+1. Start from **VLA**.
+2. Read **Open X / Octo / OpenVLA / RT-2**.
+3. Compare action interfaces and evaluation setups.
+4. Bring in **world models** when you need memory, prediction, or embodiment-agnostic planning.
+
+---
+
+## A note on reading papers in this area
+
+Read every paper through four questions:
+
+1. **What information enters the system?**  
+   RGB? RGB-D? point cloud? proprioception? language? action history?
+
+2. **What is the action interface?**  
+   Joint commands? end-effector deltas? action chunks? tokenized actions? trajectories?
+
+3. **What benchmark actually proves the claim?**  
+   Offline prediction is not the same as closed-loop execution.
+
+4. **Where does the method fail first?**  
+   Contact? recovery? long horizon? embodiment transfer? visual variation?
+
+These four questions make the literature dramatically easier to navigate.
+
+---
+
+## Closing thought
+
+Embodied AI becomes clearer when you stop asking “which topic is hottest?” and start asking:
+
+> **Which abstraction makes action more reliable under physical uncertainty?**
+
+That is the organizing principle behind this repository.
