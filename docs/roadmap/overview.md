@@ -4,181 +4,166 @@
 
 # Overview
 
-> **Embodied intelligence is not one problem.** It is a stack: perception, state representation, action, memory, reward, physics, and adaptation.
+> **Embodied intelligence is a stack, not a slogan.** Good systems work because perception, state, policy, interaction, learning, and deployment fit together.
 
 ---
 
-## Reading this repository the right way
+## In-page Navigation
 
-This repository treats embodied AI as a **system stack**, not a loose collection of papers:
-
-1. **Perception** — images, video, point clouds, proprioception, language, touch  
-2. **State** — latent scene structure, object states, affordance maps, world models  
-3. **Policy** — behavior cloning, diffusion policies, VLA systems, planners, RL agents  
-4. **Interaction** — grasping, contact-rich manipulation, locomotion, navigation, handoff  
-5. **Learning loop** — demonstrations, RL, synthetic data, world-model rollouts, evaluation  
-6. **Deployment** — simulation, sim-to-real, embodiment transfer, safety, monitoring, repair  
-
-A strong embodied system rarely wins on only one layer. Most impressive results come from the **coupling** between layers:
-- perception that exposes the right state variables
-- state representations that can support planning
-- policies that can recover after off-nominal execution
-- learning loops that can keep improving after the first deployment
+- [Reading the atlas](#reading-the-atlas)
+- [The six-layer stack](#the-six-layer-stack)
+- [The six topic roadmaps](#the-six-topic-roadmaps)
+- [Build routes](#build-routes)
+- [Resource and map layer](#resource-and-map-layer)
+- [How to read a paper](#how-to-read-a-paper)
+- [Research radar](#research-radar)
 
 ---
 
-## The six topic roadmaps in this repository
+## Reading the atlas
 
-| Roadmap | Core question | Best for |
+This repository is organized around one judgment:
+
+> embodied AI becomes understandable when you know **where a method sits in the system** and **what it lets you build next**.
+
+So the repository is not arranged primarily by year or conference. It is arranged by:
+
+1. stack placement
+2. classical backbone
+3. frontier watchlist
+4. reproducible tools
+5. build paths
+6. ecosystem maps
+
+---
+
+## The six-layer stack
+
+| Layer | Question | Main repository entry points |
 |---|---|---|
-| [Vision-Language-Action](vla.md) | how instructions become actions | readers tracking foundation-model robotics |
-| [World Models](world_model.md) | what kind of prediction actually helps control | readers interested in foresight and latent state |
-| [Reinforcement Learning](rl.md) | where improvement should sit in the stack | readers building adaptation loops |
-| [Manipulation](manipulation.md) | how robots complete tasks under contact and uncertainty | readers implementing real or simulated robot tasks |
-| [Grasping](grasping.md) | how the system chooses stable, task-useful contact | readers building pick-and-place or clutter pipelines |
-| [Affordance Learning](affordance.md) | what can be done, where, and why | readers linking perception to executable action |
+| Perception | what is in the scene and what matters now | [VLA](vla.md), [Grasping](grasping.md), [Affordance](affordance.md) |
+| State | what latent or structured representation supports control | [World Models](world_model.md), [Affordance](affordance.md) |
+| Policy | how instructions, plans, or rewards become action | [VLA](vla.md), [RL](rl.md), [Manipulation](manipulation.md) |
+| Interaction | how the robot actually contacts and changes the world | [Manipulation](manipulation.md), [Grasping](grasping.md), [Affordance](affordance.md) |
+| Learning loop | how the system improves after failure or new data | [RL](rl.md), [World Models](world_model.md) |
+| Deployment | how simulation, latency, embodiment, and monitoring affect success | [Simulators](../resources/simulators.md), [Frameworks](../resources/frameworks.md), [Sim-to-Real build path](../build_paths/sim2real.md) |
 
 ---
 
-## A map of the field by build path
+## Shared labels
 
-### Route A — language to action
-Use this if you want to understand the current foundation-model wave.
+Use these labels as navigation cues across roadmap tables:
 
-**Suggested sequence**
+- `classical`
+- `frontier-2025-2026`
+- `open-source`
+- `benchmark`
+- `simulator`
+- `industry-system`
+- `build-path`
+- `beginner-friendly`
+- `reproducible`
+- `industrial-signal`
+
+---
+
+## The six topic roadmaps
+
+| Topic | Core question | Best starting reader |
+|---|---|---|
+| [Vision-Language-Action](vla.md) | how instructions become grounded action | readers tracking foundation-model robotics |
+| [World Models](world_model.md) | what prediction actually helps control | readers interested in planning, sample efficiency, and foresight |
+| [Reinforcement Learning](rl.md) | where improvement should sit in the stack | readers building adaptation loops and control refinements |
+| [Manipulation](manipulation.md) | how robots finish tasks under contact and uncertainty | readers implementing real or simulated robot tasks |
+| [Grasping](grasping.md) | how contact is chosen for downstream success | readers building pick, place, or clutter pipelines |
+| [Affordance Learning](affordance.md) | what can be done, where, and why | readers linking perception to executable interaction |
+
+---
+
+## Build routes
+
+### Route A: Language to action
+
 1. [VLA](vla.md)
 2. [Manipulation](manipulation.md)
-3. [Grasping](grasping.md)
-4. [Datasets](../resources/datasets.md)
-5. [Frameworks](../resources/frameworks.md)
+3. [Benchmarks](../resources/benchmarks.md)
+4. [VLA Entry build path](../build_paths/vla_entry.md)
 
-**Typical project path**
-Open X-Embodiment → OpenVLA / Octo → BridgeData V2 / Mobile ALOHA / LeRobot → task-specific fine-tuning.
+Best for: readers who want an open-source route into current VLA systems.
 
----
+### Route B: Prediction to control
 
-### Route B — world model to control
-Use this if you care about planning, latent state, sample efficiency, and long-horizon prediction.
-
-**Suggested sequence**
 1. [World Models](world_model.md)
-2. [Reinforcement Learning](rl.md)
-3. [Manipulation](manipulation.md)
-4. [Simulators](../resources/simulators.md)
+2. [RL](rl.md)
+3. [Simulators](../resources/simulators.md)
+4. [World Model build path](../build_paths/world_model.md)
 
-**Typical project path**
-DreamerV3 / TD-MPC2 → MuJoCo Playground / Isaac Lab → policy improvement in simulation or learned world models.
+Best for: readers who care about sample efficiency, planning, and predictive state.
 
----
+### Route C: Perception to physical interaction
 
-### Route C — perception to physical interaction
-Use this if you want to connect perception with touch, contact, and action geometry.
-
-**Suggested sequence**
 1. [Grasping](grasping.md)
-2. [Affordance Learning](affordance.md)
+2. [Affordance](affordance.md)
 3. [Manipulation](manipulation.md)
-4. [Benchmarks](../resources/benchmarks.md)
+4. [Grasping + Affordance build path](../build_paths/grasping_affordance.md)
 
-**Typical project path**
-GraspNet / Contact-GraspNet → affordance maps / part reasoning → manipulation benchmarks such as CALVIN, LIBERO, and BEHAVIOR-1K.
+Best for: readers who want to connect visual understanding to contact and downstream action.
 
----
+### Route D: Simulation to deployment
 
-## What changed in 2025–2026
+1. [Benchmarks](../resources/benchmarks.md)
+2. [Simulators](../resources/simulators.md)
+3. [Frameworks](../resources/frameworks.md)
+4. [Sim-to-Real build path](../build_paths/sim2real.md)
 
-The field changed in an important way.
-
-Earlier waves often asked:
-- can large multimodal models touch robotics?
-- can imitation scale with more robot data?
-- can simulation transfer improve control?
-
-The newer wave asks:
-- where should **reasoning** live in a robot stack?
-- where should **RL** be inserted: in simulation, in a world model, or on the real robot?
-- what parts of the stack are now becoming **open-source and reproducible**?
-- how much of the robot stack can be moved from one embodiment to another?
-
-That is why this repository explicitly tracks:
-- VLA systems and open training stacks
-- world-model-based planning and RL
-- humanoid and mobile-manipulation system releases
-- low-cost real-robot build paths
-- institution and company ecosystems, not only papers
+Best for: readers who already have a simulator result and want to move toward hardware.
 
 ---
 
-## One practical way to read any paper in embodied AI
+## Resource and map layer
 
-When reading a paper or project, ask these four questions first:
+The roadmap pages are the backbone. The rest of the repository exists to make them executable.
 
-1. **What is the action interface?**  
-   Joint deltas, end-effector commands, chunks, skills, trajectories, tokens?
-
-2. **Where does the world state live?**  
-   Pixels, latent state, object graph, affordance map, memory buffer?
-
-3. **How does the system improve after failure?**  
-   Better prompts, more demonstrations, RL, test-time adaptation, world-model rollouts?
-
-4. **What changes when the embodiment changes?**  
-   Action head only, whole policy, prompt adapter, controller, data mix?
-
-If these questions remain vague, the work may be impressive but less reusable than it appears.
+| Need | Best page |
+|---|---|
+| choose an evaluation world | [Benchmarks](../resources/benchmarks.md) |
+| choose a dataset | [Datasets](../resources/datasets.md) |
+| choose a simulator | [Simulators](../resources/simulators.md) |
+| choose a codebase | [Frameworks](../resources/frameworks.md) |
+| know who to follow in academia | [Academia Map](../maps/academia.md) |
+| know which companies matter and why | [Industry Map](../maps/industry.md) |
 
 ---
 
-## How this repository differs from a plain paper list
+## How to read a paper
 
-This repository is built around four principles:
+When reading any embodied-AI paper, ask these four questions first:
 
-### 1. System placement matters
-A method is not only “good” or “bad”; it matters **where it sits in the stack**.
+1. What is the **action interface**?
+2. Where does the **state** live?
+3. How does the system **improve after failure**?
+4. What breaks when the **embodiment changes**?
 
-### 2. Open build paths matter
-Links to code, datasets, simulators, and tutorials matter as much as paper links.
-
-### 3. Classical backbone + frontier watchlist
-Each topic page separates:
-- **classical backbone**
-- **frontier watchlist (2025–2026)**
-- **open-source toolchains**
-- **build paths**
-- **failure modes**
-
-### 4. Aesthetic structure should aid memory
-The visual style is not decoration alone. It should make the field easier to remember.
+If a paper is unclear on those four questions, it may still be interesting, but it is harder to place inside a reusable system.
 
 ---
 
-## Recommended first-week reading plans
+## Research radar
 
-### If you are a beginner
-- Day 1: [VLA](vla.md)
-- Day 2: [Manipulation](manipulation.md)
-- Day 3: [Grasping](grasping.md)
-- Day 4: [Affordance Learning](affordance.md)
-- Day 5: [Datasets](../resources/datasets.md) + [Frameworks](../resources/frameworks.md)
+The field shifted materially in 2025-2026. The most important changes are not just "bigger models."
 
-### If you want to build a system
-- [Manipulation](manipulation.md)
-- [Grasping](grasping.md)
-- [Affordance Learning](affordance.md)
-- [Simulators](../resources/simulators.md)
-- [Frameworks](../resources/frameworks.md)
+Watch these axes:
 
-### If you want to do research
-- [World Models](world_model.md)
-- [Reinforcement Learning](rl.md)
-- [Academic Labs & Universities](../resources/academia_map.md)
-- [Conferences & Journals](../resources/venues.md)
+- reasoning layers inside robot stacks, not only perception-to-action mapping
+- RL inserted after imitation or inside world models, not only from scratch
+- on-device and whole-body deployment paths, not only lab demos
+- benchmark and tooling ecosystems that let outsiders reproduce parts of the stack
+- ecosystem nodes: labs, companies, and open-source communities that define default workflows
 
 ---
 
-## Closing Thought
+## Closing thought
 
-The best way to use this repository is not to read everything.
+The best way to use this repository is not to read every page.
 
-Pick a route, build one system, fail in a visible way, and then return to the map.  
-Embodied AI becomes much clearer once the abstractions are forced to meet contact, latency, and deployment.
+Pick one route, build one system, hit one visible failure mode, then come back to the atlas with a sharper question.

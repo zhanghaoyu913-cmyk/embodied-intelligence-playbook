@@ -4,7 +4,7 @@
 
 # Reinforcement Learning
 
-> **Reinforcement learning is the discipline of improvement under consequence.** In embodied AI, that means learning not only what to do, but what to keep doing when the world refuses to cooperate.
+> **Reinforcement learning is the discipline of improvement under consequence.** In embodied AI, the real question is where that improvement should happen and what signal pays for it.
 
 <p align="center">
   <img src="../../assets/figures/flow_rl.svg" alt="RL flow" width="92%"/>
@@ -12,290 +12,289 @@
 
 ---
 
+## In-page Navigation
+
+- [Topic Thesis](#topic-thesis)
+- [Why This Topic Matters](#why-this-topic-matters)
+- [Problem Decomposition](#problem-decomposition)
+- [Core Technical Routes](#core-technical-routes)
+- [Classical Backbone](#classical-backbone)
+- [Frontier Watchlist (2025-2026)](#frontier-watchlist-2025-2026)
+- [Open-source Projects & Toolchains](#open-source-projects--toolchains)
+- [Datasets / Benchmarks / Simulators](#datasets--benchmarks--simulators)
+- [Academic Labs & Company Systems](#academic-labs--company-systems)
+- [Practical Build Paths](#practical-build-paths)
+- [Common Failure Modes](#common-failure-modes)
+- [Reading Sequence](#reading-sequence)
+- [Research Radar](#research-radar)
+- [Open Questions](#open-questions)
+
+---
+
 ## Topic Thesis
 
-In embodied AI, RL is best understood not as a badge, but as a **placement decision in the system stack**:
+In embodied AI, RL is best understood as a **placement decision in the stack**:
 
-> **Where should the robot improve, from what signal, and at what interaction cost?**
+> where should the agent improve, from what signal, and at what interaction cost?
 
-That is the practical framing that matters more than asking whether RL is “better” than imitation learning.
+That framing matters more than asking whether RL is generally better than imitation learning.
 
 ---
 
-## Why this topic matters
+## Why This Topic Matters
 
 Demonstrations are powerful, but they are incomplete:
-- they may be suboptimal
-- they may not cover recovery behavior
-- they often fail on edge cases
-- they do not scale to every embodiment and environment shift
 
-RL matters whenever the agent must improve by interacting with consequences:
+- they may miss recovery behavior
+- they may be suboptimal
+- they may not cover embodiment drift
+- they often break on edge cases
+
+RL matters whenever improvement must come from consequences:
+
 - locomotion and balance
 - dexterous control
-- recovery after failed execution
-- long-horizon refinement after imitation learning
-- adaptation to new dynamics, tools, and layouts
+- failure recovery
+- precision refinement after behavior cloning
+- adaptation to new dynamics and tools
 
 ---
 
-## The five RL regimes that matter most in embodied AI
+## Problem Decomposition
 
-### 1. Online RL in simulation
-The classic workhorse for locomotion and control.
+### 1. Placement
 
-**Best for**
-- many repeated trials
-- rich simulation
-- motor skill discovery
-- dynamics randomization
+Where does RL sit?
 
----
+- online in simulation
+- offline on logged data
+- after behavior cloning
+- inside a learned world model
+- on a real robot
 
-### 2. Offline RL from datasets
-Useful when real robot interaction is expensive or unsafe.
+### 2. Signal
 
-**Best for**
-- demonstration-heavy settings
-- filtered robot logs
-- bridging imitation and optimization
+What drives improvement?
 
----
+- dense reward
+- sparse reward
+- task completion
+- VLM-based scoring
+- success classifiers
 
-### 3. Model-based RL
-Optimize behavior with the help of a learned predictive model.
+### 3. Cost
 
-**Best for**
-- sample efficiency
-- planning
-- tasks where imagined rollouts are good enough to be useful
+How expensive is the interaction loop?
 
----
+### 4. Transfer
 
-### 4. RL fine-tuning of pretrained policies
-A major 2025–2026 direction.
+Does the policy survive deployment or embodiment shift?
 
-**Best for**
-- improving VLA systems
-- manipulation tasks where BC is near-correct but not precise enough
-- cases where demonstrations are helpful but not optimal
+### 5. Credit assignment
 
----
-
-### 5. Real-world RL
-The most convincing and the hardest regime.
-
-**Best for**
-- adaptation
-- robustness
-- recovery behavior
-- research that cares about actual deployment
+Are failures caused by control, perception, planning, or all three?
 
 ---
 
 ## Core Technical Routes
 
-### Route A — model-free RL
-Examples: PPO, SAC, descendants.
+### Route A: model-free RL
 
-**Strengths**
-- strong baselines
-- stable optimization loops
-- excellent for simulation-heavy locomotion
+Examples: PPO, SAC.
 
-**Weaknesses**
-- expensive interaction
-- weak sample efficiency without careful engineering
+Best for: strong simulation baselines and locomotion-heavy settings.
 
----
+### Route B: model-based RL
 
-### Route B — model-based RL
 Examples: DreamerV3, TD-MPC2.
 
-**Strengths**
-- sample efficiency
-- latent planning
-- easier integration with predictive state abstraction
+Best for: sample efficiency and predictive control.
 
-**Weaknesses**
-- additional complexity
-- model quality becomes a bottleneck
+### Route C: imitation plus RL
 
----
+Pretrain on demonstrations, then refine with rewards.
 
-### Route C — imitation + RL
-A common modern recipe:
-1. pretrain with demonstrations
-2. fine-tune with RL
+Best for: manipulation and real-world systems that need a fast warm start.
 
-**Strengths**
-- faster start than RL from scratch
-- better exploration in manipulation
-- more realistic path for physical tasks
+### Route D: RL inside a learned world model
 
----
+Treat the learned world as the optimization environment.
 
-### Route D — RL inside a learned world model
-A newer route that treats the learned world as the environment.
+Best for: reducing real interaction cost and exploring post-training strategies.
 
-**Strengths**
-- reduced real interaction cost
-- can bootstrap from real data
-- promising bridge between VLA and policy improvement
+### Route E: real-world RL
 
-**Weaknesses**
-- world-model errors can induce reward hacking or brittle optimization
+Most convincing and most expensive regime.
 
----
+Best for: adaptation, robustness, and recovery.
 
-## Frontier Watchlist (2025–2026)
+### Placement matrix
 
-| Work | Why it matters | Links |
-|---|---|---|
-| World-Gymnast (2026) | RL fine-tuning of a robot policy inside an action-conditioned video world model | [paper](https://arxiv.org/abs/2602.02454) · [project](https://world-gymnast.github.io/) |
-| MuJoCo Playground (2025) | open-source, MJX-based robot RL stack with strong sim-to-real orientation | [project](https://playground.mujoco.org/) · [report](https://playground.mujoco.org/assets/playground_technical_report.pdf) |
-| Seed GR-RL (2025) | real-world RL post-training of a generalist VLA for dexterous manipulation | [official](https://seed.bytedance.com/en/gr_rl) · [technical report](https://seed.bytedance.com/public_papers/gr-rl-going-dexterous-and-precise-for-long-horizon-robotic-manipulation) |
-| FLARE (2025) | lightweight joint policy + latent future modeling from NVIDIA GEAR | [project](https://research.nvidia.com/labs/gear/flare/) |
-| V-JEPA 2 (2025) | not an RL method alone, but important for the predictive-model side of future RL stacks | [paper](https://ai.meta.com/research/publications/v-jepa-2-self-supervised-video-models-enable-understanding-prediction-and-planning/) |
-| RSL-RL ecosystem (2025+) | practically important because it underlies multiple modern training stacks | [repo](https://github.com/leggedrobotics/rsl_rl) |
+| RL placement | Signal source | What it improves | What it tends to break |
+|---|---|---|---|
+| online simulation RL | dense or shaped reward | motor skill and repeated control | realism and transfer assumptions |
+| offline RL | logged demonstrations or traces | data reuse and safe iteration | distribution shift |
+| post-BC refinement | sparse reward or task success | precision and recovery | reward overfitting on narrow tasks |
+| world-model RL | imagined rollouts | sample efficiency | model exploitation |
+| real-world RL | real task outcome | robustness and adaptation | cost, wear, and reproducibility |
 
 ---
 
 ## Classical Backbone
 
-| Work | Why start here | Links |
+| Work | Why it still matters | Labels |
 |---|---|---|
-| PPO | standard baseline for on-policy continuous control | [paper](https://arxiv.org/abs/1707.06347) |
-| SAC | canonical off-policy continuous-control method | [paper](https://arxiv.org/abs/1801.01290) |
-| DreamerV3 | broad and practical world-model RL reference | [project](https://danijar.com/project/dreamerv3/) · [code](https://github.com/danijar/dreamerv3) |
-| TD-MPC2 | strong modern model-based RL for continuous control | [project](https://www.tdmpc2.com/) · [code](https://github.com/nicklashansen/tdmpc2) |
-| Learning to Walk in 20 Minutes | persuasive real-world RL locomotion reference | [paper](https://www.roboticsproceedings.org/rss19/p056.pdf) |
-| OpenAI Dactyl / Rubik’s Cube | dexterous manipulation through RL, sim-to-real, and domain randomization | [Learning Dexterity](https://openai.com/index/learning-dexterity/) · [Rubik’s Cube](https://openai.com/index/solving-rubiks-cube/) |
+| [PPO](https://arxiv.org/abs/1707.06347) | standard on-policy baseline | classical, beginner-friendly |
+| [SAC](https://arxiv.org/abs/1801.01290) | canonical off-policy continuous-control method | classical, beginner-friendly |
+| [DreamerV3](https://danijar.com/project/dreamerv3/) | practical world-model RL reference | classical, open-source, reproducible |
+| [TD-MPC2](https://www.tdmpc2.com/) | strong planning-based RL baseline | classical, open-source, reproducible |
+| [Learning to Walk in 20 Minutes](https://www.roboticsproceedings.org/rss19/p056.pdf) | persuasive real-world RL locomotion reference | classical |
+| [Learning Dexterity](https://openai.com/index/learning-dexterity/) | landmark sim-to-real dexterous manipulation result | classical, industrial-signal |
+| [Solving Rubik's Cube](https://openai.com/index/solving-rubiks-cube/) | domain randomization and dexterity milestone | classical, industrial-signal |
 
 ---
 
-## Stacks, Benchmarks, and Frameworks Worth Knowing
+## Frontier Watchlist (2025-2026)
 
-### Simulation-first RL stacks
-- [Isaac Lab](https://isaac-sim.github.io/IsaacLab/)
-- [MuJoCo Playground](https://playground.mujoco.org/)
-- [legged_gym](https://github.com/leggedrobotics/legged_gym)
-- [RSL-RL](https://github.com/leggedrobotics/rsl_rl)
-
-### Dataset / imitation / offline hybrids
-- [robomimic](https://robomimic.github.io/)
-- [LeRobot](https://huggingface.co/docs/lerobot/index)
-- [BridgeData V2](https://rail-berkeley.github.io/bridgedata/)
-
-### Benchmarks to pair with RL
-- [Meta-World](https://meta-world.github.io/)
-- [LIBERO](https://libero-project.github.io/main.html)
-- [CALVIN](https://github.com/mees/calvin)
-- [BEHAVIOR-1K](https://behavior.stanford.edu/index.html)
+| Work | Why it matters | Labels |
+|---|---|---|
+| [World-Gymnast](https://world-gymnast.github.io/) | RL fine-tuning of robot policies inside a video world model | frontier-2025-2026 |
+| [MuJoCo Playground](https://playground.mujoco.org/) | open MJX-based robot RL stack with strong sim-to-real orientation | frontier-2025-2026, open-source, build-path |
+| [GR-RL](https://seed.bytedance.com/en/gr_rl) | real-world RL post-training for generalist VLA systems | frontier-2025-2026, industrial-signal |
+| [FLARE](https://research.nvidia.com/labs/gear/flare/) | lightweight joint policy plus future modeling | frontier-2025-2026, industrial-signal |
+| [V-JEPA 2](https://ai.meta.com/research/publications/v-jepa-2-self-supervised-video-models-enable-understanding-prediction-and-planning/) | predictive-state signal for future RL stacks | frontier-2025-2026, industrial-signal |
+| [RSL-RL](https://github.com/leggedrobotics/rsl_rl) | practically important stack underlying many training systems | frontier-2025-2026, open-source, reproducible, build-path |
+| [Isaac GR00T](https://developer.nvidia.com/isaac/gr00t) | relevant because humanoid post-training increasingly depends on RL loops | frontier-2025-2026, industrial-signal |
+| [RynnVLA-002](https://github.com/alibaba-damo-academy/RynnVLA-002) | useful signal that open embodied stacks are getting closer to post-training workflows | frontier-2025-2026, open-source |
 
 ---
 
-## Reading Ladders
+## Open-source Projects & Toolchains
 
-### Ladder A — locomotion
-1. PPO / SAC basics  
-2. legged_gym  
-3. Isaac Lab  
-4. MuJoCo Playground  
-5. compare against model-based alternatives like TD-MPC2
-
-**Goal**  
-Understand why RL still dominates for agile and repeated-control settings.
-
----
-
-### Ladder B — manipulation
-1. robomimic / LeRobot  
-2. strong imitation baseline  
-3. RL fine-tuning only after BC is competent  
-4. compare reward design and recovery gains
-
-**Goal**  
-Use RL where it adds precision and robustness, not where it replaces a good demonstration pipeline.
+| Project | Why it matters | Labels |
+|---|---|---|
+| [RSL-RL](https://github.com/leggedrobotics/rsl_rl) | battle-tested robotics RL training library | open-source, reproducible, build-path |
+| [legged_gym](https://github.com/leggedrobotics/legged_gym) | practical locomotion benchmark stack | open-source, reproducible, build-path |
+| [MuJoCo Playground](https://github.com/google-deepmind/mujoco_playground) | modern robot RL benchmark codebase | open-source, build-path |
+| [Isaac Lab](https://isaac-sim.github.io/IsaacLab/) | large-scale RL and robot simulation workflows | simulator, build-path |
+| [DreamerV3](https://github.com/danijar/dreamerv3) | world-model RL baseline | open-source, reproducible |
+| [TD-MPC2](https://github.com/nicklashansen/tdmpc2) | planning-based RL baseline | open-source, reproducible |
+| [robomimic](https://robomimic.github.io/) | useful BC baseline before RL refinement | open-source, beginner-friendly |
 
 ---
 
-### Ladder C — VLA post-training
-1. OpenVLA / Octo baseline  
-2. fixed task family + reward  
-3. World-Gymnast or GR-RL-style post-training ideas
+## Datasets / Benchmarks / Simulators
 
-**Goal**  
-Study how RL improves pre-trained robot policies instead of training from scratch.
-
----
-
-## Build Paths
-
-### Build Path A — benchmarked simulation control
-PPO / SAC / TD-MPC2 → Meta-World or MuJoCo tasks → scaling experiments.
-
-**Best for**
-- newcomers to RL
-- ablation-heavy research
-- reproducible comparisons
+| Resource | Why it matters | Best use |
+|---|---|---|
+| [Meta-World](https://meta-world.github.io/) | controlled RL baseline suite | ablations and algorithm comparison |
+| [MuJoCo Playground](https://playground.mujoco.org/) | robot RL tasks with open tooling | sim-to-real-oriented RL |
+| [Isaac Lab](https://isaac-sim.github.io/IsaacLab/) | large-scale robot training stack | locomotion, humanoids, scalable RL |
+| [LIBERO](https://libero-project.github.io/main.html) | compositional manipulation benchmark | BC plus RL refinement |
+| [CALVIN](https://github.com/mees/calvin) | instruction-conditioned manipulation | post-training for long-horizon tasks |
+| [BridgeData V2](https://rail-berkeley.github.io/bridgedata/) | demonstration corpus for warm starts | imitation plus RL |
 
 ---
 
-### Build Path B — legged or humanoid RL
-legged_gym / Isaac Lab / MuJoCo Playground → policy transfer → real robot.
+## Academic Labs & Company Systems
 
-**Best for**
-- locomotion
-- sim-to-real control
-- robotics-heavy RL
-
----
-
-### Build Path C — manipulation refinement
-Behavior-cloning or VLA baseline → reward shaping / sparse reward → RL fine-tuning on precision failures.
-
-**Best for**
-- dexterous tasks
-- long-horizon refinement
-- real-robot post-training
+| Node | Why track it | Representative signals |
+|---|---|---|
+| Berkeley | central node for robot learning and RL | BAIR, BridgeData, generalist policy work |
+| Carnegie Mellon | strong systems and learning depth | agent learning, robotics systems |
+| Google DeepMind | benchmark and RL ecosystem signal | MuJoCo Playground and robotics-adjacent stacks |
+| NVIDIA | humanoid and simulator-heavy RL workflows | Isaac Lab, GR00T, FLARE |
+| ByteDance Seed | RL post-training applied to generalist robot policies | GR-RL |
+| OpenAI | historical dexterity and sim-to-real anchors | Learning Dexterity, Rubik's Cube |
+| Legged Robotics ecosystem | practical training stacks for locomotion | RSL-RL, legged_gym |
 
 ---
 
-## What to inspect when a robotics RL paper claims success
+## Practical Build Paths
 
-- how much real-world interaction is used
-- whether the reward is hand-engineered, learned, or VLM-based
-- whether recovery behavior is shown, not just nominal success
-- whether deployment latency and stability are discussed
-- whether the baseline imitation policy is strong enough
-- whether the paper optimizes the whole task, or only a narrow subskill
+### Build Path A: benchmarked simulation control
+
+Use PPO, SAC, DreamerV3, or TD-MPC2 on Meta-World or MuJoCo tasks.
+
+Best for: clean comparison and first RL experiments.
+
+### Build Path B: legged or humanoid RL
+
+Use RSL-RL, legged_gym, Isaac Lab, or MuJoCo Playground.
+
+Best for: repeated-control settings where RL still dominates.
+
+### Build Path C: manipulation refinement
+
+Start from a behavior-cloning or VLA baseline, then add reward-driven post-training only where precision or recovery is missing.
+
+Best for: readers who want RL as a refinement tool rather than a default answer.
 
 ---
 
 ## Common Failure Modes
 
-- RL is used where a good BC baseline would have solved the problem more cheaply
-- reward design quietly encodes the solution
-- sim-to-real claims depend on narrow dynamics randomization
-- real-world fine-tuning is too expensive to be reusable
-- model-based claims omit world-model error analysis
-- long-horizon success is inflated by easier initializations or resets
+- using RL where a strong behavior-cloning baseline would be cheaper and clearer
+- reward design quietly solving the task
+- sim-to-real claims depending on easy initializations
+- treating perception failures as if they were only control failures
+- overclaiming from expensive real-world tuning that few others can reproduce
+
+---
+
+## Reading Sequence
+
+### Beginner
+
+1. PPO
+2. SAC
+3. Meta-World
+
+Goal: understand classic control baselines before adding embodied complexity.
+
+### Intermediate
+
+1. DreamerV3
+2. TD-MPC2
+3. MuJoCo Playground
+
+Goal: compare model-based and simulation-first RL routes.
+
+### Advanced
+
+1. GR-RL
+2. World-Gymnast
+3. Isaac Lab humanoid stacks
+
+Goal: inspect where RL now enters post-training and whole-body control.
+
+---
+
+## Research Radar
+
+Watch these questions now:
+
+- how much RL should happen after imitation rather than from scratch
+- when VLM- or model-based rewards become reliable enough
+- whether real-world RL becomes standard for manipulation or remains specialist
+- how RL interfaces with perception and language layers without hiding root causes
 
 ---
 
 ## Open Questions
 
-- What is the right interface between RL and VLA systems?
-- How much real-world interaction is actually necessary once pretrained policies become stronger?
-- Can VLM-based or world-model-based reward signals be made reliable enough for large-scale robot RL?
-- Will real-world RL become practical for general manipulation, or remain a specialist refinement stage?
-- How should RL credit assignment work when failures come from perception, not only control?
+- What is the right boundary between RL and VLA?
+- How much real-world interaction is still necessary once pretraining improves?
+- Can reward models become trustworthy for manipulation and whole-body tasks?
+- When does world-model RL materially outperform stronger non-RL baselines?
+- How should embodied RL papers separate control gains from perception bottlenecks?
 
 ---
 
-## Closing Thought
+## Related Pages
 
-RL becomes most interesting in embodied AI when it is not treated as an isolated algorithmic badge, but as a **system decision**:
-
-> where should the agent improve, against which signal, and with what cost of interaction?
+- [World Models](world_model.md)
+- [Manipulation](manipulation.md)
+- [Benchmarks](../resources/benchmarks.md)
+- [Simulators](../resources/simulators.md)
+- [Sim-to-Real build path](../build_paths/sim2real.md)

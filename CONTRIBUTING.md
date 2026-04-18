@@ -2,69 +2,97 @@
 
 Thank you for contributing to **Embodied Intelligence Playbook**.
 
-This repository values contributions that are not only correct, but also **clear**, **structured**, and **useful for future readers**.
+This repository is not maintained as a generic resource dump. It is maintained as a **structured atlas**. Contributions should strengthen navigation, judgment, and buildability.
 
-## What kind of contributions are welcome?
+## What kinds of contributions are welcome
 
-- improving roadmap pages
-- adding paper summaries or curated reading clusters
-- proposing better topic taxonomy
-- adding project reproduction notes
-- curating datasets, simulators, frameworks, or benchmarks
-- improving visuals, diagrams, or page design
+- upgrading roadmap pages with sharper system placement
+- adding benchmark, dataset, simulator, or framework comparisons
+- expanding ecosystem maps with better institution and company entries
+- adding or refining build paths
+- fixing broken links and outdated project references
+- adding reproduction notes that improve practical usability
 
-## Style principles
+## Atlas curation rules
 
-Please try to keep contributions aligned with the design language of the repository:
+Every addition should help readers answer at least one of these questions:
 
-- **structured before verbose**
-- **insightful before exhaustive**
-- **visually readable before dense**
-- **curated before copied**
+- where does this belong in the embodied stack
+- why does it matter
+- how buildable is it
+- what should the reader do next
 
-## When adding papers
+If a contribution does not improve one of those answers, it probably does not belong here.
 
-Include as many of the following as possible:
+## Required judgment
 
-- title
-- venue
-- year
-- main topic
-- keywords
-- short summary
+When adding a paper, project, dataset, benchmark, or company signal, include:
+
+- what it is
 - why it matters
-- code link when available
-- practical relevance or reproduction notes
+- whether it is `classical backbone`, `frontier`, `open-source`, `benchmark`, `simulator`, `company signal`, or `build-path relevant`
+- a direct official link when available
 
-## When editing roadmap pages
+Do not add links without a relevance note.
 
-Prefer sections such as:
+## Preferred source order
 
-- what is this topic
-- why it matters
-- core problems
-- technical routes
-- failure modes
-- recommended starting points
-- open questions
+1. official project page
+2. official code repository
+3. official paper page or publisher page
+4. only then secondary summaries if nothing else exists
 
-## Pull requests
+## Frontier standard
 
-Please keep each pull request focused.
+Use `frontier` for recent work that changes the direction of the field, not simply for anything new.
+
+Good frontier signals usually have one of these properties:
+
+- shift a system interface
+- open a new buildable stack
+- define a new benchmark or ecosystem anchor
+- materially change whole-body, VLA, RL, or deployment assumptions
+
+## Classical backbone standard
+
+Use `classical backbone` for items that still organize how new work is read.
+
+Typical examples:
+
+- canonical baselines
+- foundational system releases
+- benchmark-defining resources
+- methods that still shape modern design choices
+
+## Pull request scope
+
+Keep each pull request focused.
 
 Good examples:
-- improving one roadmap page
+
+- upgrading one roadmap page
 - adding one new resources page
-- adding a small, clean cluster of papers
-- fixing links and formatting in one specific area
+- improving one build path
+- fixing one ecosystem map cluster
 
-## Issues
+Less useful examples:
 
-You are encouraged to open issues for:
-- missing topics
-- broken structure
-- unclear navigation
-- candidate paper collections
-- suggestions for visual improvements
+- adding dozens of unstructured links
+- mixing unrelated edits across many areas without a clear theme
 
-Thank you for helping shape this repository into a thoughtful long-term resource.
+## Before submitting
+
+Check the following:
+
+- internal links work
+- the new content fits the section template
+- every new item has a one-line judgment
+- the contribution improves navigation, not just volume
+
+## Useful templates
+
+- [Topic Page Template](docs/templates/topic_page_template.md)
+- [Institution Entry Template](docs/templates/institution_entry_template.md)
+- [Build Path Template](docs/templates/build_path_template.md)
+
+Thank you for helping keep the repository coherent, practical, and worth revisiting.

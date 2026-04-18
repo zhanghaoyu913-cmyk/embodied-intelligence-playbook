@@ -4,7 +4,7 @@
 
 # World Models
 
-> **A world model is a bet:** that better prediction and state abstraction can reduce how much the robot must discover through painful trial and error.
+> **A world model is a bet:** that better prediction and state abstraction can reduce how much the robot must discover through costly trial and error.
 
 <p align="center">
   <img src="../../assets/figures/flow_world_model.svg" alt="World model flow" width="92%"/>
@@ -12,310 +12,308 @@
 
 ---
 
-## Topic Thesis
+## In-page Navigation
 
-World models are where embodied AI tries to become **anticipatory** rather than purely reactive.
-
-The central question is not simply:
-
-> *Can the model predict future pixels or video?*
-
-The practical question is:
-
-> **What kind of imagined future is operationally useful for control, planning, adaptation, and transfer?**
-
-A world model is only as good as what it helps the robot do:
-- plan more cheaply
-- recover faster
-- generalize farther
-- adapt with fewer real-world trials
+- [Topic Thesis](#topic-thesis)
+- [Why This Topic Matters](#why-this-topic-matters)
+- [Problem Decomposition](#problem-decomposition)
+- [Core Technical Routes](#core-technical-routes)
+- [Classical Backbone](#classical-backbone)
+- [Frontier Watchlist (2025-2026)](#frontier-watchlist-2025-2026)
+- [Open-source Projects & Toolchains](#open-source-projects--toolchains)
+- [Datasets / Benchmarks / Simulators](#datasets--benchmarks--simulators)
+- [Academic Labs & Company Systems](#academic-labs--company-systems)
+- [Practical Build Paths](#practical-build-paths)
+- [Common Failure Modes](#common-failure-modes)
+- [Reading Sequence](#reading-sequence)
+- [Research Radar](#research-radar)
+- [Open Questions](#open-questions)
 
 ---
 
-## Why this topic matters
+## Topic Thesis
 
-In embodied AI, raw interaction is expensive:
+The practical question for world models is not "can the model predict future frames?"
+
+The real question is:
+
+> **what kind of imagined future is operationally useful for control, planning, adaptation, and data generation?**
+
+A world model matters only if it changes what the robot can do:
+
+- plan more cheaply
+- adapt with fewer trials
+- evaluate more futures
+- recover faster
+
+---
+
+## Why This Topic Matters
+
+Embodied interaction is expensive:
+
 - real robots are slow
-- data collection is costly
-- contact failures are risky
-- long-horizon tasks compound error quickly
+- failure is costly
+- long-horizon tasks compound error
+- data collection is narrow and biased
 
-World models promise a partial escape route by providing:
-- compact latent state
+World models are attractive because they promise:
+
+- latent state abstraction
 - action-conditioned prediction
 - imagined rollouts
-- uncertainty-aware evaluation
-- better sample efficiency
+- sample efficiency
+- better integration between perception and control
 
-They matter most when the task needs:
-- foresight
-- counterfactual reasoning
-- planning under limited data
-- policy improvement beyond imitation
+They matter most when the bottleneck is not seeing the world, but **anticipating how it will change**.
 
 ---
 
 ## Problem Decomposition
 
 ### 1. State abstraction
+
 What should the model compress?
+
 - pixels
-- objects
+- latent state
+- objects and parts
 - scene geometry
 - affordances
-- latent dynamics
-- reward-relevant hidden variables
 
 ### 2. Prediction target
+
 What should it predict?
-- observations
-- latent states
-- rewards
-- success signals
-- contact events
-- action consequences
+
+- next observation
+- latent future
+- reward
+- success signal
+- contact event
+- task progress
 
 ### 3. Decision interface
-How is the world model used?
+
+How is the model used?
+
 - planner in latent space
 - policy improvement
-- reward estimation
 - exploration guidance
-- data generation
-- test-time adaptation
+- synthetic data generator
+- reward estimator
 
-### 4. Uncertainty and reliability
-Does the model know when it does **not** know enough?
+### 4. Uncertainty
+
+Can the model know when it should not be trusted?
 
 ### 5. Transfer
-Does the model generalize:
-- across scenes
-- across objects
-- across tasks
-- across embodiments
+
+Does the model generalize across scenes, tasks, objects, and embodiments?
 
 ---
 
-## Major Technical Routes
+## Core Technical Routes
 
-### Route A — latent dynamics models
-Compact internal state transitions conditioned on actions.
+### Route A: latent dynamics models
 
-**Good for**
-- planning
-- model-based RL
-- efficient control loops
+Predict compact internal state transitions.
 
-**Core idea**
-Predict in latent space rather than reconstructing every pixel.
+Best for: planning and model-based RL.
 
----
+### Route B: video world models
 
-### Route B — video world models
-Predict future visual observations or semantic videos.
+Predict future observations or semantically rich video.
 
-**Good for**
-- human-interpretable futures
-- trajectory imagination
-- integration with vision-language models
+Best for: interpretable rollouts and multimodal integration.
 
-**Main challenge**
-Good-looking video is not the same as decision-useful state.
+### Route C: object-centric and scene-centric models
 
----
+Represent the world as entities, parts, or relations.
 
-### Route C — object-centric and scene-centric models
-Represent the world as entities, parts, or relationships.
+Best for: manipulation, articulation, and relational reasoning.
 
-**Good for**
-- manipulation
-- articulated objects
-- relational reasoning
-- contact-aware planning
+### Route D: world model plus planner hybrids
 
----
+Tie prediction directly to trajectory optimization or search.
 
-### Route D — world model + planner hybrids
-Tie prediction directly to downstream decision-making.
+Best for: continuous control and decision-focused rollouts.
 
-**Good for**
-- continuous control
-- local trajectory optimization
-- high-value imagined rollouts
+### Route E: world model plus RL
 
----
+Use the learned world to reduce real interaction cost.
 
-### Route E — world model + RL
-Use the learned world to reduce the need for real interaction.
+Best for: sample efficiency and policy improvement.
 
-**Good for**
-- policy improvement
-- long-horizon optimization
-- bootstrapping from demonstrations
+### Route F: world models for data generation
 
----
+Use predictive models to create or filter synthetic experience.
 
-### Route F — world models for data generation
-Use predictive models to synthesize or transform training data.
+Best for: data scarcity and augmentation.
 
-**Good for**
-- reducing data scarcity
-- creating diverse robot experience
-- sim2real or real2real augmentation
+### Decision interface matrix
 
----
-
-## Frontier Watchlist (2025–2026)
-
-| Work | Why it matters | Links |
-|---|---|---|
-| V-JEPA 2 (2025) | self-supervised video world model with a clear understanding-prediction-planning story | [paper](https://ai.meta.com/research/publications/v-jepa-2-self-supervised-video-models-enable-understanding-prediction-and-planning/) · [project](https://ai.meta.com/research/vjepa/) |
-| World-Gymnast (2026) | directly trains robot policies with RL inside a learned action-conditioned video world model | [paper](https://arxiv.org/abs/2602.02454) · [project](https://world-gymnast.github.io/) · [code](https://github.com/world-gymnast/world-gymnast) |
-| FLARE (2025) | lightweight joint policy + latent future modeling from NVIDIA GEAR | [project](https://research.nvidia.com/labs/gear/flare/) |
-| Robotic World Model (2025) | neural-simulator framing for robust policy optimization | [code](https://github.com/leggedrobotics/robotic_world_model) |
-| GigaBrain-0 (2025) | VLA foundation model empowered by world-model-generated data; useful nearby signal | [paper](https://arxiv.org/abs/2510.19430) |
-| GR00T N1.5 / N1.6 (2025) | not a pure world-model project, but important for tracking predictive data and post-training trends in humanoid stacks | [N1.5](https://research.nvidia.com/labs/gear/gr00t-n1_5/) · [N1.6](https://research.nvidia.com/labs/gear/gr00t-n1_6/) |
+| Interface | What the model predicts | What it improves | What can go wrong |
+|---|---|---|---|
+| prediction only | next observation or latent future | representation quality | beautiful rollouts with no control gain |
+| planner in latent space | task-relevant future states | trajectory search and foresight | planner quality hides model limits |
+| RL with learned world | reward-bearing futures | sample efficiency | world-model exploitation and reward hacking |
+| data generation | synthetic trajectories or relabeled futures | dataset breadth | synthetic bias and compounding errors |
 
 ---
 
 ## Classical Backbone
 
-| Work | Why it matters | Links |
+| Work | Why it still matters | Labels |
 |---|---|---|
-| World Models (Ha & Schmidhuber) | canonical early statement that imagination can support control | [paper](https://arxiv.org/abs/1803.10122) |
-| PlaNet | compact latent planning with action-conditioned dynamics | [paper](https://arxiv.org/abs/1811.04551) |
-| DreamerV2 | major modern latent world-model RL milestone | [project](https://danijar.com/project/dreamerv2/) |
-| DreamerV3 | most practical current baseline for broad world-model RL reference | [project](https://danijar.com/project/dreamerv3/) · [code](https://github.com/danijar/dreamerv3) |
-| TD-MPC2 | latent planning with strong scaling across many continuous-control tasks | [project](https://www.tdmpc2.com/) · [code](https://github.com/nicklashansen/tdmpc2) |
-| MuZero | not robotics-specific, but crucial for understanding model-based decision interfaces | [paper](https://www.nature.com/articles/s41586-020-03051-4) |
+| [World Models](https://arxiv.org/abs/1803.10122) | canonical imagination-for-control framing | classical |
+| [PlaNet](https://arxiv.org/abs/1811.04551) | compact latent planning with action-conditioned dynamics | classical |
+| [DreamerV2](https://danijar.com/project/dreamerv2/) | major modern latent world-model RL milestone | classical |
+| [DreamerV3](https://danijar.com/project/dreamerv3/) | practical baseline for broad world-model RL reference | classical, open-source, reproducible, beginner-friendly |
+| [TD-MPC2](https://www.tdmpc2.com/) | strong latent planning baseline across control tasks | classical, open-source, reproducible |
+| [MuZero](https://www.nature.com/articles/s41586-020-03051-4) | crucial decision-interface reference even outside robotics | classical |
+| [V-JEPA](https://ai.meta.com/research/vjepa/) | predictive video modeling with embodied relevance | classical, industrial-signal |
 
 ---
 
-## Datasets, Simulators, and Nearby Resources
+## Frontier Watchlist (2025-2026)
 
-### Good datasets for world-model thinking
-- [Open X-Embodiment](https://robotics-transformer-x.github.io/)
-- [BridgeData V2](https://rail-berkeley.github.io/bridgedata/)
-- [BEHAVIOR-1K](https://behavior.stanford.edu/index.html)
-- [LIBERO](https://libero-project.github.io/main.html)
-
-### Good simulator / training environments
-- [MuJoCo Playground](https://playground.mujoco.org/)
-- [Isaac Lab](https://isaac-sim.github.io/IsaacLab/)
-- [Meta-World](https://meta-world.github.io/)
-- [ManiSkill](https://maniskill.ai/)
-
-### Useful nearby open baselines for comparison
-- [OpenVLA](https://openvla.github.io/)
-- [Octo](https://octo-models.github.io/)
-- [Open X-Embodiment](https://robotics-transformer-x.github.io/)
-
-These are not world models in the narrow sense, but they are excellent control baselines that help test whether the world model actually buys something.
+| Work | Why it matters | Labels |
+|---|---|---|
+| [V-JEPA 2](https://ai.meta.com/research/publications/v-jepa-2-self-supervised-video-models-enable-understanding-prediction-and-planning/) | self-supervised video world model with a clear understanding-prediction-planning story | frontier-2025-2026, industrial-signal |
+| [World-Gymnast](https://world-gymnast.github.io/) | RL fine-tuning inside an action-conditioned video world model | frontier-2025-2026 |
+| [FLARE](https://research.nvidia.com/labs/gear/flare/) | joint policy plus latent future modeling from NVIDIA GEAR | frontier-2025-2026, industrial-signal |
+| [Robotic World Model](https://github.com/leggedrobotics/robotic_world_model) | neural-simulator framing for robust policy optimization | frontier-2025-2026, open-source, reproducible |
+| [MuJoCo Playground](https://playground.mujoco.org/) | not a world model alone, but a major open evaluation stack for predictive-control ideas | frontier-2025-2026, open-source, build-path |
+| [GR00T N1.5](https://research.nvidia.com/labs/gear/gr00t-n1_5/) | tracks how predictive data and post-training enter humanoid stacks | frontier-2025-2026, industrial-signal |
+| [GR-RL](https://seed.bytedance.com/en/gr_rl) | useful signal for how policy refinement and predictive components may merge in embodied systems | frontier-2025-2026, industrial-signal |
+| [RynnVLA-002](https://github.com/alibaba-damo-academy/RynnVLA-002) | public signal that integrated embodied stacks are becoming more open | frontier-2025-2026, open-source |
 
 ---
 
-## A practical reading ladder
+## Open-source Projects & Toolchains
 
-### Level 1 — learn latent dynamics
-1. World Models
-2. PlaNet
-3. DreamerV2
-4. DreamerV3
-
-**Goal**  
-Understand why latent-space prediction can be enough for action selection.
-
----
-
-### Level 2 — learn planning in latent space
-1. TD-MPC2
-2. MuJoCo Playground
-3. compare world-model planning with PPO / SAC baselines
-
-**Goal**  
-Understand whether prediction helps enough to justify the added complexity.
+| Project | Why it matters | Labels |
+|---|---|---|
+| [DreamerV3](https://github.com/danijar/dreamerv3) | strongest accessible world-model RL reference | open-source, reproducible, beginner-friendly, build-path |
+| [TD-MPC2](https://github.com/nicklashansen/tdmpc2) | modern latent-planning baseline | open-source, reproducible, build-path |
+| [Robotic World Model](https://github.com/leggedrobotics/robotic_world_model) | robotics-specific world-model signal | open-source, reproducible |
+| [MuJoCo Playground](https://github.com/google-deepmind/mujoco_playground) | open benchmarking stack for control ideas | open-source, build-path |
+| [ManiSkill](https://maniskill.ai/) | useful for manipulation-side predictive evaluation | build-path, simulator |
+| [OpenVLA](https://openvla.github.io/) | good adjacent control baseline when asking if prediction buys anything | reproducible |
 
 ---
 
-### Level 3 — study the new frontier
-1. V-JEPA 2  
-2. World-Gymnast  
-3. FLARE  
-4. Robotic World Model  
+## Datasets / Benchmarks / Simulators
 
-**Goal**  
-Track the shift from “predict for representation” to “predict for policy improvement.”
-
----
-
-## Build Paths
-
-### Build Path A — clean benchmark path
-DreamerV3 or TD-MPC2 → small control benchmark → compare against PPO / SAC.
-
-**Best for**
-- beginners entering model-based RL
-- readers who want a controlled setting
+| Resource | Why it matters | Best use |
+|---|---|---|
+| [Meta-World](https://meta-world.github.io/) | clean control benchmark | first controlled experiments |
+| [MuJoCo Playground](https://playground.mujoco.org/) | open robot RL stack | predictive-control evaluation |
+| [ManiSkill](https://maniskill.ai/) | scalable manipulation simulation | harder interaction tasks |
+| [LIBERO](https://libero-project.github.io/main.html) | compositional manipulation benchmark | long-horizon manipulation evaluation |
+| [BEHAVIOR-1K](https://behavior.stanford.edu/index.html) | household-scale task breadth | human-centered generalization |
+| [BridgeData V2](https://rail-berkeley.github.io/bridgedata/) | real manipulation trajectories | offline or hybrid predictive training |
 
 ---
 
-### Build Path B — manipulation benchmark path
-Latent planner or predictive model → CALVIN / LIBERO / ManiSkill-like tasks → compare with BC or diffusion-policy baselines.
+## Academic Labs & Company Systems
 
-**Best for**
-- readers who want robotics relevance without jumping straight to real robots
-
----
-
-### Build Path C — VLA + world-model path
-Take a strong manipulation policy or VLA baseline → add predictive rollouts / imagined fine-tuning → evaluate recovery and scene transfer.
-
-**Best for**
-- advanced thesis-level work
-- researchers interested in bridging world models and foundation policies
+| Node | Why track it | Representative signals |
+|---|---|---|
+| Meta | strongest public predictive-video signal with embodied relevance | V-JEPA line |
+| Berkeley | RL and robot learning anchor for decision-focused state models | BAIR, BridgeData, Octo ecosystem |
+| Google DeepMind | planner, RL, and benchmark stack depth | MuJoCo ecosystem, model-based control history |
+| NVIDIA GEAR | prediction plus policy plus humanoid stack | FLARE, GR00T line |
+| Carnegie Mellon | embodied systems and predictive learning depth | self-supervised and agent-learning lines |
+| Stanford | household systems where predictive state matters | BEHAVIOR, TidyBot-style systems |
 
 ---
 
-## What to inspect in a world-model paper
+## Practical Build Paths
 
-- what variables are predicted: pixels, latent states, objects, rewards, success, contact, language-conditioned futures
-- whether uncertainty is represented or ignored
-- whether planning is explicit or only implied
-- whether the model helps downstream control more than a strong policy baseline
-- whether the “imagination” is causal enough to be operational
-- whether transfer is across scenes only, or across embodiments too
+### Build Path A: clean benchmark route
+
+Use [World Model build path](../build_paths/world_model.md) with DreamerV3 or TD-MPC2 on Meta-World or MuJoCo tasks.
+
+Best for: first reproducible predictive-control experiment.
+
+### Build Path B: manipulation benchmark route
+
+Use ManiSkill or LIBERO with a world-model baseline and a strong non-predictive baseline.
+
+Best for: testing whether prediction helps under contact and long horizons.
+
+### Build Path C: VLA bridge route
+
+Use a fixed visuomotor baseline, then ask whether predictive state, imagined rollout scoring, or policy post-training improves closed-loop outcomes.
+
+Best for: readers exploring world models as a subsystem rather than a standalone field.
 
 ---
 
 ## Common Failure Modes
 
-- beautiful predictions that do not improve control
-- latent states that are compact but not actionable
-- planning gains that disappear under realistic latency
-- overclaiming transfer from scene generalization to embodiment generalization
-- evaluation on toy tasks only
-- no comparison against a strong behavior-cloning or diffusion baseline
+- evaluating prediction quality instead of decision quality
+- using good-looking video forecasts that do not improve control
+- hiding planner weakness inside model weakness, or vice versa
+- ignoring uncertainty when model errors compound
+- comparing against weak baselines and overclaiming sample efficiency
+
+---
+
+## Reading Sequence
+
+### Beginner
+
+1. World Models
+2. PlaNet
+3. DreamerV3
+
+Goal: understand latent dynamics and why prediction must serve control.
+
+### Intermediate
+
+1. TD-MPC2
+2. MuZero
+3. ManiSkill or Meta-World evaluation
+
+Goal: compare planning interfaces and control relevance.
+
+### Advanced
+
+1. V-JEPA 2
+2. World-Gymnast
+3. FLARE
+
+Goal: track the convergence of predictive video, RL, and integrated robot stacks.
+
+---
+
+## Research Radar
+
+Watch these questions now:
+
+- when are video world models actually better than latent control models
+- how should uncertainty be exposed to planners and policies
+- where should world models sit in VLA or humanoid stacks
+- can predictive models become a reliable data-generation engine
 
 ---
 
 ## Open Questions
 
-- What is the right state granularity for robotics: latent vector, object graph, video tokens, or something hybrid?
-- Can video world models support precise contact-rich manipulation rather than only coarse foresight?
-- How should uncertainty enter control decisions in world-model robotics?
-- Can world models become a practical way to generate diverse robot data rather than just a research curiosity?
-- How should memory, planning, and embodiment adaptation be shared inside one predictive stack?
+- What is the right decision interface for world models in robotics?
+- How should models represent contact and hidden state?
+- When does predictive modeling help more than stronger behavior cloning?
+- How can world models stay trustworthy under embodiment change?
+- What benchmarks actually reveal long-horizon planning gains rather than short-horizon reconstruction gains?
 
 ---
 
-## Closing Thought
+## Related Pages
 
-The right question for world models is not:
-
-> *Can the robot imagine?*
-
-It is:
-
-> **What kind of imagination is operationally useful?**
-
-Useful world models are the ones that make better decisions cheaper.
+- [Reinforcement Learning](rl.md)
+- [VLA](vla.md)
+- [Simulators](../resources/simulators.md)
+- [Industry Map](../maps/industry.md)
+- [World Model build path](../build_paths/world_model.md)
