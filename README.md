@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/figures/hero_overview.svg" alt="Embodied Intelligence Playbook banner" width="100%"/>
+<img src="assets/figures/repo_logo.svg" alt="Embodied Intelligence Playbook logo" width="100%"/>
 
 # Embodied Intelligence Playbook
 
@@ -38,6 +38,12 @@ That means the repository is organized so readers can answer:
 
 ## Top Navigation
 
+### Latest Frontier Update
+
+- [2025-2026 Conference Frontier Digest](docs/paper_lists/frontier_2025_2026.md)
+
+Use this page as the first stop when you want the current top-conference signal across ICLR 2026, CoRL 2025, CVPR 2025, ICML 2025, and RSS 2025.
+
 ### Roadmaps
 
 - [Overview](docs/roadmap/overview.md)
@@ -71,6 +77,7 @@ That means the repository is organized so readers can answer:
 
 ### Paper Lists
 
+- [2025-2026 Conference Frontier Digest](docs/paper_lists/frontier_2025_2026.md)
 - [By Topic](docs/paper_lists/by_topic/)
 - [By Conference](docs/paper_lists/by_conference/)
 - [By Journal](docs/paper_lists/by_journal/)
@@ -143,6 +150,7 @@ These labels are meant to help readers scan the repository as a navigation syste
 
 | Goal | Recommended route |
 |---|---|
+| latest top-conference scan | [Frontier digest](docs/paper_lists/frontier_2025_2026.md) -> [VLA roadmap](docs/roadmap/vla.md) -> [World Models](docs/roadmap/world_model.md) |
 | open-source VLA entry | [VLA roadmap](docs/roadmap/vla.md) -> [Benchmarks](docs/resources/benchmarks.md) -> [VLA build path](docs/build_paths/vla_entry.md) |
 | predictive control and world models | [World Models](docs/roadmap/world_model.md) -> [RL](docs/roadmap/rl.md) -> [World Model build path](docs/build_paths/world_model.md) |
 | perception to physical interaction | [Grasping](docs/roadmap/grasping.md) -> [Affordance](docs/roadmap/affordance.md) -> [Grasping + Affordance build path](docs/build_paths/grasping_affordance.md) |
@@ -154,12 +162,11 @@ These labels are meant to help readers scan the repository as a navigation syste
 ## Visual field
 
 <p align="center">
-  <img src="assets/figures/readme_hero_agix.svg" alt="Embodied Intelligence Playbook hero with AGI-X mark" width="100%"/>
+  <img src="assets/figures/topic_constellation.svg" alt="Embodied intelligence topic constellation" width="100%"/>
 </p>
 
-<p align="center">
-  <img src="assets/figures/embodied_wordcloud_dynamic.gif" alt="Animated embodied AI word cloud" width="100%"/>
-</p>
+The original topic banners and word-cloud assets are kept under `assets/figures/` for reuse, while the README now uses a cleaner repository-level identity.
+
 ---
 
 ## Repository structure
@@ -198,6 +205,7 @@ This repository grows under a few fixed rules:
 - **official project pages over secondary summaries**
 - **reproducible paths over broad name-dropping**
 - **guide pages before list pages**
+- **conference signal must map back to a roadmap or build path**
 
 ---
 

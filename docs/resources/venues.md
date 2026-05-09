@@ -41,3 +41,7 @@ This page answers a practical question: where does each kind of embodied-AI work
 - Watch `CoRL`, `ICLR`, `ICML`, and `NeurIPS` for field direction.
 - Watch `RSS`, `ICRA`, `IROS`, and `RA-L` for grounded robotics systems.
 - Watch `CVPR`, `ICCV`, and `ECCV` when the topic is perception, affordance, 3D, or multimodal grounding.
+
+## Current digest
+
+For a compact cross-venue reading queue, start with [2025-2026 Conference Frontier Digest](../paper_lists/frontier_2025_2026.md). It connects ICLR 2026, CoRL 2025, CVPR 2025, ICML 2025, and RSS 2025 papers back to roadmap pages and build paths.

@@ -1,0 +1,58 @@
+<svg width="2048" height="680" viewBox="0 0 2048 680" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="2048" height="680" fill="#FFFFFF"/>
+  <defs>
+    <linearGradient id="titleGradient" x1="620" y1="0" x2="1985" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#062F5F"/>
+      <stop offset="0.62" stop-color="#0B4F91"/>
+      <stop offset="1" stop-color="#1678D2"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#0B3768" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <g transform="translate(72 74)" filter="url(#softShadow)">
+    <path d="M250 442C174 396 89 393 12 406L74 220C138 209 204 221 250 258C296 221 362 209 426 220L488 406C411 393 326 396 250 442Z" fill="#FFFFFF" stroke="#063A70" stroke-width="13" stroke-linejoin="round"/>
+    <path d="M250 258V442" stroke="#063A70" stroke-width="9" stroke-linecap="round"/>
+    <path d="M74 220C139 215 205 232 250 270" stroke="#35A6D2" stroke-width="8" stroke-linecap="round"/>
+    <path d="M426 220C361 215 295 232 250 270" stroke="#35A6D2" stroke-width="8" stroke-linecap="round"/>
+    <path d="M43 383C116 375 185 385 250 420C315 385 384 375 457 383" stroke="#0D4D88" stroke-width="12" stroke-linecap="round"/>
+    <path d="M80 198C85 127 136 61 211 35C285 10 367 28 420 81C471 131 494 203 480 269" stroke="#063A70" stroke-width="4" stroke-linecap="round" stroke-dasharray="14 13"/>
+    <path d="M99 210L167 151L249 189L334 148L407 207" stroke="#7E8B96" stroke-width="3" stroke-dasharray="9 10"/>
+    <path d="M139 300L209 265L269 312L348 266L424 302" stroke="#7E8B96" stroke-width="3" stroke-dasharray="9 10"/>
+    <path d="M166 151L209 265M249 189L269 312M334 148L348 266" stroke="#C3CBD1" stroke-width="2.5" stroke-dasharray="8 10"/>
+
+    <circle cx="211" cy="35" r="14" fill="#FFFFFF" stroke="#063A70" stroke-width="8"/>
+    <circle cx="97" cy="88" r="12" fill="#FFFFFF" stroke="#063A70" stroke-width="7"/>
+    <circle cx="420" cy="81" r="12" fill="#FFFFFF" stroke="#063A70" stroke-width="7"/>
+    <circle cx="22" cy="198" r="11" fill="#FFFFFF" stroke="#063A70" stroke-width="7"/>
+    <circle cx="482" cy="198" r="11" fill="#FFFFFF" stroke="#063A70" stroke-width="7"/>
+    <circle cx="167" cy="151" r="7" fill="#FFFFFF" stroke="#16A7CE" stroke-width="5"/>
+    <circle cx="249" cy="189" r="12" fill="#FFFFFF" stroke="#0B4F91" stroke-width="8"/>
+    <circle cx="334" cy="148" r="7" fill="#FFFFFF" stroke="#16A7CE" stroke-width="5"/>
+    <circle cx="139" cy="300" r="11" fill="#FFFFFF" stroke="#16A7CE" stroke-width="7"/>
+    <circle cx="209" cy="265" r="10" fill="#FFFFFF" stroke="#16A7CE" stroke-width="7"/>
+    <circle cx="269" cy="312" r="8" fill="#FFFFFF" stroke="#16A7CE" stroke-width="6"/>
+    <circle cx="348" cy="266" r="10" fill="#FFFFFF" stroke="#16A7CE" stroke-width="7"/>
+    <circle cx="424" cy="302" r="11" fill="#FFFFFF" stroke="#0B4F91" stroke-width="7"/>
+
+    <g transform="translate(205 92)">
+      <path d="M45 78V178" stroke="#243746" stroke-width="10" stroke-linecap="round"/>
+      <path d="M45 62V38" stroke="#243746" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="45" cy="28" r="8" fill="#FFFFFF" stroke="#243746" stroke-width="6"/>
+      <rect x="6" y="50" width="78" height="52" rx="26" fill="#FFFFFF" stroke="#4B5966" stroke-width="8"/>
+      <rect x="22" y="65" width="46" height="23" rx="11.5" fill="#063A70"/>
+      <circle cx="32" cy="77" r="5" fill="#14C8E7"/>
+      <circle cx="58" cy="77" r="5" fill="#14C8E7"/>
+      <circle cx="45" cy="110" r="12" fill="#FFFFFF" stroke="#0B4F91" stroke-width="7"/>
+      <circle cx="45" cy="178" r="10" fill="#FFFFFF" stroke="#0B4F91" stroke-width="7"/>
+    </g>
+  </g>
+
+  <g transform="translate(625 246)">
+    <text x="0" y="0" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="78" font-weight="800" fill="url(#titleGradient)">Embodied Intelligence Playbook</text>
+    <path d="M0 48H800" stroke="#063A70" stroke-width="4"/>
+    <circle cx="0" cy="48" r="8" fill="#FFFFFF" stroke="#14B8D8" stroke-width="5"/>
+    <text x="0" y="118" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="44" font-weight="430" fill="#46515C">Open-source atlas for embodied AI</text>
+  </g>
+</svg>

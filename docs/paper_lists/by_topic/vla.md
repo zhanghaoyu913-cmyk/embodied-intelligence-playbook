@@ -2,6 +2,12 @@
 
 ## 2025–2026 frontier
 
+- **[Embodied-R1](https://embodied-r1.github.io/)** — ICLR 2026; reinforced embodied reasoning and pointing as an intermediate interface.
+- **[WholeBodyVLA](https://github.com/OpenDriveLab/WholebodyVLA)** — ICLR 2026; unified latent VLA for humanoid loco-manipulation.
+- **[MemoryVLA](https://shihao1895.github.io/MemoryVLA/)** — ICLR 2026; perceptual-cognitive memory for temporally aware manipulation.
+- **[RoboInter](https://github.com/InternRobotics/RoboInter)** — ICLR 2026; intermediate representation suite for plan-then-execute manipulation.
+- **[Long-VLA](https://long-vla.github.io/)** — CoRL 2025; long-horizon VLA with task decomposition and phase-aware training.
+- **[DreamZero](https://dreamzero0.github.io/)** — 2026 WAM line; useful VLA comparison point because it argues physical-motion generalization can come from joint video-action modeling.
 - **Gemini Robotics** — official product / project portal for Google DeepMind’s robotics models.  
   https://deepmind.google/models/gemini-robotics/
 - **Gemini Robotics-ER 1.6** — embodied reasoning layer for task planning and success detection.  
@@ -23,6 +29,10 @@
   https://seed.bytedance.com/GR3
 - **OneTwoVLA / UniVLA** — ICLR 2026 poster, recent reasoning+acting unification.  
   https://openreview.net/forum?id=tWMfhoP3as
+
+## Cross-venue digest
+
+- **2025-2026 Conference Frontier Digest** — [frontier_2025_2026.md](../frontier_2025_2026.md)
 
 ## Compact classic foundation
 

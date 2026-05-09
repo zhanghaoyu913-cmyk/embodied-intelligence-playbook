@@ -293,6 +293,7 @@ Goal: track the convergence of predictive video, RL, and integrated robot stacks
 
 Watch these questions now:
 
+- whether World-Action Models become a durable bridge between VLA and world-model control
 - when are video world models actually better than latent control models
 - how should uncertainty be exposed to planners and policies
 - where should world models sit in VLA or humanoid stacks

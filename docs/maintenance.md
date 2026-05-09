@@ -7,6 +7,7 @@ This file turns the atlas from a one-time curation pass into a maintainable repo
 ### Monthly
 
 - review `frontier-2025-2026` entries in roadmap pages
+- refresh `docs/paper_lists/frontier_2025_2026.md` against the latest accepted-paper and proceedings pages
 - check whether one or two new releases materially change a build path
 - refresh company watch items in `docs/maps/industry.md`
 
@@ -31,10 +32,11 @@ Guide pages are canonical. List pages are secondary.
 The intended maintenance priority is:
 
 1. roadmap pages
-2. maps
-3. benchmarks, datasets, frameworks, simulators
-4. build paths
-5. paper lists
+2. frontier conference digest
+3. maps
+4. benchmarks, datasets, frameworks, simulators
+5. build paths
+6. paper lists
 
 ## Link checking rule
 
